@@ -1,14 +1,31 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        App\Entity\User: bcrypt
     providers:
-        users_in_memory: { memory: null }
+        my_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+        users_in_memory: { memory: ~}
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: lazy
+            form_login: 
+                login_path: login
+                check_path: login
+                provider: my_provider
             provider: users_in_memory
+            guard:
+                authenticators:
+                    - App\Security\UsersAuthentificationAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

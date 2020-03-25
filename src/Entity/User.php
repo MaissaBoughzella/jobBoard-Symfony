@@ -8,6 +8,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * @IgnoreAnnotation("User")
+ * @ORM\MappedSuperclass
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ */
+
+/**
  * @ORM\Entity
  * @UniqueEntity(fields="email", message="Email already taken")
  * @UniqueEntity(fields="username", message="Username already taken")
@@ -48,6 +54,8 @@ class User implements UserInterface
      * @ORM\Column(type="array")
      */
     private $roles;
+
+
 
     public function __construct() {
         $this->roles = array('ROLE_USER');
@@ -102,4 +110,6 @@ class User implements UserInterface
     public function eraseCredentials()
     {
     }
+
+
 }

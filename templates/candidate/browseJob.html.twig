@@ -31,6 +31,7 @@
 						<div class="col-xl-9 col-lg-8">
 							<h5 class="widget-title font-weight-700 text-uppercase">Recent Jobs</h5>
 							<ul class="post-job-bx">
+							{% for job in jobs %}
 								<li>
 									<a href="#">
 										<div class="d-flex m-b30">
@@ -38,164 +39,29 @@
 												<span><img src="images/logo/icon1.png"/></span>
 											</div>
 											<div class="job-post-info">
-												<h4>Digital Marketing Executive</h4>
+												<h4>{{ job.name }}</h4>
 												<ul>
-													<li><i class="fa fa-map-marker"></i> Sacramento, California</li>
-													<li><i class="fa fa-bookmark-o"></i> Full Time</li>
-													<li><i class="fa fa-clock-o"></i> Published 11 months ago</li>
+													<li><i class="fa fa-map-marker"></i> {{ job.location }}</li>
+													<li><i class="fa fa-bookmark-o"></i>{{ job.type.name }}</li>
+													<li><i class="fa fa-clock-o"></i> Published {{ job.createdAt|date('Y-m-d H:i:s') }}</li>
 												</ul>
 											</div>
 										</div>
 										<div class="d-flex">
 											<div class="job-time mr-auto">
-												<span>Full Time</span>
+												<span>{{ job.type.name }}</span>
 											</div>
 											<div class="salary-bx">
-												<span>$1200 - $ 2500</span>
+												<span>{{ job.wage }}</span>
 											</div>
 										</div>
-										<span class="post-like fa fa-heart-o"></span>
+									
 									</a>
 								</li>
-								<li>
-									<a href="#">
-										<div class="d-flex m-b30">
-											<div class="job-post-company">
-												<span><img src="images/logo/icon1.png"/></span>
-											</div>
-											<div class="job-post-info">
-												<h4>Digital Marketing Executive</h4>
-												<ul>
-													<li><i class="fa fa-map-marker"></i> Sacramento, California</li>
-													<li><i class="fa fa-bookmark-o"></i> Full Time</li>
-													<li><i class="fa fa-clock-o"></i> Published 11 months ago</li>
-												</ul>
-											</div>
-										</div>
-										<div class="d-flex">
-											<div class="job-time mr-auto">
-												<span>Full Time</span>
-											</div>
-											<div class="salary-bx">
-												<span>$1200 - $ 2500</span>
-											</div>
-										</div>
-										<span class="post-like fa fa-heart-o"></span>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<div class="d-flex m-b30">
-											<div class="job-post-company">
-												<span><img src="images/logo/icon1.png"/></span>
-											</div>
-											<div class="job-post-info">
-												<h4>Digital Marketing Executive</h4>
-												<ul>
-													<li><i class="fa fa-map-marker"></i> Sacramento, California</li>
-													<li><i class="fa fa-bookmark-o"></i> Full Time</li>
-													<li><i class="fa fa-clock-o"></i> Published 11 months ago</li>
-												</ul>
-											</div>
-										</div>
-										<div class="d-flex">
-											<div class="job-time mr-auto">
-												<span>Full Time</span>
-											</div>
-											<div class="salary-bx">
-												<span>$1200 - $ 2500</span>
-											</div>
-										</div>
-										<span class="post-like fa fa-heart-o"></span>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<div class="d-flex m-b30">
-											<div class="job-post-company">
-												<span><img src="images/logo/icon1.png"/></span>
-											</div>
-											<div class="job-post-info">
-												<h4>Digital Marketing Executive</h4>
-												<ul>
-													<li><i class="fa fa-map-marker"></i> Sacramento, California</li>
-													<li><i class="fa fa-bookmark-o"></i> Full Time</li>
-													<li><i class="fa fa-clock-o"></i> Published 11 months ago</li>
-												</ul>
-											</div>
-										</div>
-										<div class="d-flex">
-											<div class="job-time mr-auto">
-												<span>Full Time</span>
-											</div>
-											<div class="salary-bx">
-												<span>$1200 - $ 2500</span>
-											</div>
-										</div>
-										<span class="post-like fa fa-heart-o"></span>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<div class="d-flex m-b30">
-											<div class="job-post-company">
-												<span><img src="images/logo/icon1.png"/></span>
-											</div>
-											<div class="job-post-info">
-												<h4>Digital Marketing Executive</h4>
-												<ul>
-													<li><i class="fa fa-map-marker"></i> Sacramento, California</li>
-													<li><i class="fa fa-bookmark-o"></i> Full Time</li>
-													<li><i class="fa fa-clock-o"></i> Published 11 months ago</li>
-												</ul>
-											</div>
-										</div>
-										<div class="d-flex">
-											<div class="job-time mr-auto">
-												<span>Full Time</span>
-											</div>
-											<div class="salary-bx">
-												<span>$1200 - $ 2500</span>
-											</div>
-										</div>
-										<span class="post-like fa fa-heart-o"></span>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<div class="d-flex m-b30">
-											<div class="job-post-company">
-												<span><img src="images/logo/icon1.png"/></span>
-											</div>
-											<div class="job-post-info">
-												<h4>Digital Marketing Executive</h4>
-												<ul>
-													<li><i class="fa fa-map-marker"></i> Sacramento, California</li>
-													<li><i class="fa fa-bookmark-o"></i> Full Time</li>
-													<li><i class="fa fa-clock-o"></i> Published 11 months ago</li>
-												</ul>
-											</div>
-										</div>
-										<div class="d-flex">
-											<div class="job-time mr-auto">
-												<span>Full Time</span>
-											</div>
-											<div class="salary-bx">
-												<span>$1200 - $ 2500</span>
-											</div>
-										</div>
-										<span class="post-like fa fa-heart-o"></span>
-									</a>
-								</li>
+								{%endfor%}
 							</ul>
-							<div class="pagination-bx m-t30">
-								<ul class="pagination">
-									<li class="previous"><a href="#"><i class="ti-arrow-left"></i> Prev</a></li>
-									<li class="active"><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li class="next"><a href="#">Next <i class="ti-arrow-right"></i></a></li>
-								</ul>
+							<div class="pagination-bx m-t40" style="margin-left:90%;font-weight: 500;font-size:20px; font-family: 'Rubik', sans-serif">
+							{{ knp_pagination_render(jobs) }}	
 							</div>
 						</div>
 						<div class="col-xl-3 col-lg-4">
@@ -222,50 +88,15 @@
 									<div class="row">
 										<div class="col-lg-6 col-md-6 col-sm-6 col-6">
 											<div class="product-brand">
+												{% for type in types %}
 												<div class="custom-control custom-checkbox">
+												    
 													<input type="checkbox" class="custom-control-input" id="check1" name="example1">
-													<label class="custom-control-label" for="check1">Freelance</label>
+													<label class="custom-control-label" for="check1">{{type.name}}</label>
+													
 												</div>
-												<div class="custom-control custom-checkbox">
-													<input type="checkbox" class="custom-control-input" id="check2" name="example1">
-													<label class="custom-control-label" for="check2">Full Time</label>
-												</div>
-												<div class="custom-control custom-checkbox">
-													<input type="checkbox" class="custom-control-input" id="check3" name="example1">
-													<label class="custom-control-label" for="check3">Internship</label>
-												</div>
-												<div class="custom-control custom-checkbox">
-													<input type="checkbox" class="custom-control-input" id="check4" name="example1">
-													<label class="custom-control-label" for="check4">Part Time</label>
-												</div>
-												<div class="custom-control custom-checkbox">
-													<input type="checkbox" class="custom-control-input" id="check5" name="example1">
-													<label class="custom-control-label" for="check5">Temporary</label>
-												</div>
-											</div>
-										</div>
-										<div class="col-lg-6 col-md-6 col-sm-6 col-6">
-											<div class="product-brand">
-												<div class="custom-control custom-checkbox">
-													<input type="checkbox" class="custom-control-input" id="check8" name="example1">
-													<label class="custom-control-label" for="check8">Internship</label>
-												</div>
-												<div class="custom-control custom-checkbox">
-													<input type="checkbox" class="custom-control-input" id="check9" name="example1">
-													<label class="custom-control-label" for="check9">Part Time</label>
-												</div>
-												<div class="custom-control custom-checkbox">
-													<input type="checkbox" class="custom-control-input" id="check10" name="example1">
-													<label class="custom-control-label" for="check10">Temporary</label>
-												</div>
-												<div class="custom-control custom-checkbox">
-													<input type="checkbox" class="custom-control-input" id="check6" name="example1">
-													<label class="custom-control-label" for="check6">Freelance</label>
-												</div>
-												<div class="custom-control custom-checkbox">
-													<input type="checkbox" class="custom-control-input" id="check7" name="example1">
-													<label class="custom-control-label" for="check7">Full Time</label>
-												</div>
+											 {%endfor%}	
+												
 											</div>
 										</div>
 									</div>
@@ -273,11 +104,10 @@
 								<div class="clearfix">
 									<h5 class="widget-title font-weight-700 text-uppercase">Category</h5>
 									<select>
-										<option>Any Category</option>
-										<option>Automotive Jobs</option>
-										<option>Construction Facilities</option>
-										<option>Design, Art & Multimedia</option>
-										<option>Food Services</option>
+									    <option>Any Category</option>
+									{% for category in categories %}
+										<option>{{category.name}}</option>
+									{%endfor%}	
 									</select>
 								</div>
 							</div>

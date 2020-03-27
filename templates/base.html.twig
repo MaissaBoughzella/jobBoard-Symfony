@@ -125,15 +125,12 @@
                             <img src="images/logo-white.png" width="180" class="m-b15" alt=""/>
 							<p class="text-capitalize m-b20">Receive a weekly summary of advice and new recruiting companies.</p>
                             <div class="subscribe-form m-b20">
-								<form class="dzSubscribe" action="http://job-board.w3itexperts.com/xhtml/script/mailchamp.php" method="post">
-									<div class="dzSubscribeMsg"></div>
-									<div class="input-group">
-										<input name="dzEmail" required="required"  class="form-control" placeholder="Your Email Id" type="email">
-										<span class="input-group-btn">
-											<button name="submit" value="Submit" type="submit" class="site-button radius-xl">Subscribe</button>
-										</span> 
-									</div>
-								</form>
+								{{form_start(form)}}
+                                    {{form_widget(form)}}
+									<span class="input-group-btn">
+										<button name="submit" value="Submit" type="submit" class="site-button radius-xl">Subscribe</button>
+									</span> 
+								{{form_end(form)}}
 							</div>
 							<ul class="list-inline m-a0">
 								<li><a href="#" class="site-button white facebook circle "><i class="fa fa-facebook"></i></a></li>

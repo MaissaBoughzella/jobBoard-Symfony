@@ -1,0 +1,20 @@
+{{form_start(formS,{attr:{class:'filter'}})}}
+							<div class="sticky-top">
+								<div class="clearfix m-b30">
+									<h5 class="widget-title font-weight-700 text-uppercase">Keywords</h5>
+									{{form_row(formS.q)}}
+								</div>
+					
+								<div class="clearfix m-b30">
+									<h5 class="widget-title font-weight-700 text-uppercase">Job type</h5>
+									{{form_widget(formS.types)}}
+								</div>
+								<div class="clearfix">
+									<h5 class="widget-title font-weight-700 text-uppercase">Category</h5>
+									{{form_row(formS.categories)}}	
+					        	</div>	
+                                <span class="input-group-btn">
+									<button  type="submit" class="site-button" style="width:300%;margin-top:40%;margin-left:15%">Filter</button>
+								</span> 
+                            </div>
+{{form_end(formS)}}

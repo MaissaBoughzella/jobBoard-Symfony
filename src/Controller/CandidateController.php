@@ -23,23 +23,23 @@ use App\Entity\NewsLetter;
 use App\Repository\NewsLetterRepository;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
-
+use App\Data\SearchData;
+use App\Form\SearchForm;
+use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 class CandidateController extends AbstractController
 {
     /**
      * @Route("/job", name="job")
      */
-    public function index(JobRepository $repository,CategoryRepository $reposit,TypeJobRepository $repo,Request $request, PaginatorInterface $paginator)
+    public function index(JobRepository $repository,Request $request, PaginatorInterface $paginator)
     {   
-        $categories=$this->getDoctrine()->getRepository(Category::class)->findAll();
-        $types=$this->getDoctrine()->getRepository(TypeJob::class)->findAll();
-        $donnees = $this->getDoctrine()->getRepository(Job::class)->findBy([],['createdAt' => 'desc']);
-        $jobs = $paginator->paginate(
-            $donnees, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            5 // Nombre de résultats par page
-        );
-
+        $data=new SearchData();
+        $data->page=$request->get('page',1);
+        $formS=$this->createForm(SearchForm::class, $data);
+        $formS->handleRequest($request);
+        
+        $jobs = $repository->findSearch($data);
+       
         $contact = new NewsLetter;     
         # Add form fields
           $form = $this->createFormBuilder($contact)
@@ -61,7 +61,7 @@ class CandidateController extends AbstractController
       }
         
         return $this->render('candidate/browseJob.html.twig', 
-        ['jobs' => $jobs,"categories"=>$categories,"types"=>$types, 'form' => $form->createView()]);
+        ['jobs' => $jobs, 'form' => $form->createView(),'formS' => $formS->createView()]);
     }
 
     /**

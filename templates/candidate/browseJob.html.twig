@@ -45,8 +45,11 @@
 													<li><i class="fa fa-bookmark-o"></i>{{ job.type.name }}</li>
 													<li><i class="fa fa-clock-o"></i> Published {{ job.createdAt|date('Y-m-d H:i:s') }}</li>
 												</ul>
+												
 											</div>
 										</div>
+
+										
 										<div class="d-flex">
 											<div class="job-time mr-auto">
 												<span>{{ job.type.name }}</span>
@@ -60,59 +63,13 @@
 								</li>
 								{%endfor%}
 							</ul>
-							<div class="pagination-bx m-t40" style="margin-left:90%;font-weight: 500;font-size:20px; font-family: 'Rubik', sans-serif">
+							<div class="pagination-bx m-t40">
 							{{ knp_pagination_render(jobs) }}	
 							</div>
 						</div>
-						<div class="col-xl-3 col-lg-4">
-							<div class="sticky-top">
-								<div class="clearfix m-b30">
-									<h5 class="widget-title font-weight-700 text-uppercase">Keywords</h5>
-									<div class="">
-										<input type="text" class="form-control" placeholder="Search">
-									</div>
-								</div>
-								<div class="clearfix m-b10">
-									<h5 class="widget-title font-weight-700 m-t0 text-uppercase">Location</h5>
-									<input type="text" class="form-control m-b30" placeholder="Location">
-									<div class="input-group m-b20">
-										<input type="text" class="form-control" placeholder="120">
-										<select>
-											<option>Km</option>
-											<option>miles</option>
-										</select>
-									</div>
-								</div>
-								<div class="clearfix m-b30">
-									<h5 class="widget-title font-weight-700 text-uppercase">Job type</h5>
-									<div class="row">
-										<div class="col-lg-6 col-md-6 col-sm-6 col-6">
-											<div class="product-brand">
-												{% for type in types %}
-												<div class="custom-control custom-checkbox">
-												    
-													<input type="checkbox" class="custom-control-input" id="check1" name="example1">
-													<label class="custom-control-label" for="check1">{{type.name}}</label>
-													
-												</div>
-											 {%endfor%}	
-												
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="clearfix">
-									<h5 class="widget-title font-weight-700 text-uppercase">Category</h5>
-									<select>
-									    <option>Any Category</option>
-									{% for category in categories %}
-										<option>{{category.name}}</option>
-									{%endfor%}	
-									</select>
-								</div>
-							</div>
+		                <div class="col-xl-3 col-lg-4">
+						{% include 'filter.html.twig' with {formS:formS} only %}
 						</div>
-					</div>
 				</div>
 			</div>
             <!-- Browse Jobs END -->

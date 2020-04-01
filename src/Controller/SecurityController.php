@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use App\Entity\NewsLetter;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class SecurityController extends AbstractController
 {
@@ -23,7 +26,13 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
         //return $this->redirectToRoute('home');
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+
+        $contact = new NewsLetter;     
+        # Add form fields
+          $form = $this->createFormBuilder($contact)
+          ->add('email', EmailType::class, array('label'=> 'Email','attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+          ->getForm();
+        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error,'form' => $form->createView()]);
     }
 
     /**

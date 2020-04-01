@@ -2,9 +2,15 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
+use App\Entity\Job;
+use App\Entity\Category;
 use App\Entity\Company;
+use App\Repository\CategoryRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
  * @method Company|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +20,10 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class CompanyRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry,PaginatorInterface $paginator)
     {
         parent::__construct($registry, Company::class);
+        $this->paginator=$paginator;
     }
 
     // /**
@@ -47,4 +54,41 @@ class CompanyRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findSearch(SearchData $search): PaginationInterface
+    {
+       
+        $query=$this->createQueryBuilder('c')
+        ->select('c')
+        ->leftJoin('c.category', 'cat');
+        if(!empty($search->q))
+        { 
+            $query=$query
+            ->andWhere('c.name LIKE :q')
+            ->setParameter('q',"%{$search->q}%")
+            ->setMaxResults(10);
+        }
+
+        if(!empty($search->l))
+        { 
+            $query=$query
+            ->andWhere('c.location LIKE :l')
+            ->setParameter('l',"%{$search->l}%")
+            ->setMaxResults(10);
+        }
+
+        if(!empty($search->categories)){
+            $query=$query
+            ->andwhere('cat.id IN (:categories)')
+            ->setParameter('categories',$search->categories);
+        }
+
+        $query=$query->getQuery();
+        return $this->paginator->paginate(
+            $query,
+            $search->page,
+            2
+        );
+    }
+    
 }

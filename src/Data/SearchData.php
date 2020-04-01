@@ -15,6 +15,11 @@ public $page = 1;
 public $q=''; 
 
 /**
+ * @var string
+ */
+public $l=''; 
+
+/**
  * @var Category[]
  */
 public $categories=[];

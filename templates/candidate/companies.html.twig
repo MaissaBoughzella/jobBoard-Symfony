@@ -52,42 +52,14 @@
 								{%endfor%}
 							</ul>
 							
-							<div class="pagination-bx m-t40" style="margin-left:90%;font-weight: 500;font-size:20px; font-family: 'Rubik', sans-serif">
+						<div class="pagination-bx m-t40">
 							{{ knp_pagination_render(companies) }}	
-							</div>
-						
+						</div>
 						</div>
 						<div class="col-xl-3 col-lg-4">
-							<div class="sticky-top">
-								<div class="clearfix m-b30">
-									<h5 class="widget-title font-weight-700 text-uppercase">Keywords</h5>
-									<div class="">
-										<input type="text" class="form-control" placeholder="Search">
-									</div>
-								</div>
-								<div class="clearfix m-b10">
-									<h5 class="widget-title font-weight-700 m-t0 text-uppercase">Location</h5>
-									<input type="text" class="form-control m-b30" placeholder="Location">
-									<div class="input-group m-b20">
-										<input type="text" class="form-control" placeholder="120">
-										<select>
-											<option>Km</option>
-											<option>miles</option>
-										</select>
-									</div>
-								</div>
-								
-										
-								<div class="clearfix">
-									<h5 class="widget-title font-weight-700 text-uppercase">Category</h5>
-									<select>
-									    <option>Any Category</option>
-									{% for category in categories %}
-										<option>{{category.name}}</option>
-									{%endfor%}	
-									</select>
-								</div>
-							</div>
+						{% include 'filterCompany.html.twig' with {formS:formS} only %}
+						</div>
+						
 						</div>
 					</div>
 				</div>

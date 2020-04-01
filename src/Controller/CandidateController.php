@@ -24,6 +24,7 @@ use App\Repository\NewsLetterRepository;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use App\Data\SearchData;
+use App\Form\SearchCompany;
 use App\Form\SearchForm;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 class CandidateController extends AbstractController
@@ -37,7 +38,6 @@ class CandidateController extends AbstractController
         $data->page=$request->get('page',1);
         $formS=$this->createForm(SearchForm::class, $data);
         $formS->handleRequest($request);
-        
         $jobs = $repository->findSearch($data);
        
         $contact = new NewsLetter;     
@@ -67,16 +67,14 @@ class CandidateController extends AbstractController
     /**
      * @Route("/companies", name="companies")
      */
-    public function companies(CompanyRepository $repository,CategoryRepository $reposit,Request $request, PaginatorInterface $paginator)
+    public function companies(CompanyRepository $repository,Request $request, PaginatorInterface $paginator)
     {  
          
-        $categories=$this->getDoctrine()->getRepository(Category::class)->findAll();
-        $donnees = $this->getDoctrine()->getRepository(Company::class)->findAll();
-        $companies = $paginator->paginate(
-            $donnees, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            5 // Nombre de résultats par page
-        );
+      $data=new SearchData();
+      $data->page=$request->get('page',1);
+      $formS=$this->createForm(SearchCompany::class, $data);
+      $formS->handleRequest($request);
+      $companies = $repository->findSearch($data);
 
         
         $contact = new NewsLetter;     
@@ -99,7 +97,7 @@ class CandidateController extends AbstractController
       return $this->redirectToRoute("companies");   
       }
         return $this->render('candidate/companies.html.twig',
-        ['companies' => $companies,"categories"=>$categories, 'form' => $form->createView()]);
+        ['companies' => $companies, 'formS' => $formS->createView(),'form' => $form->createView()]);
     }
 
 

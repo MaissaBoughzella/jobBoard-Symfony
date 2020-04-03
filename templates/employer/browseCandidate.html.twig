@@ -27,19 +27,16 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xl-9 col-lg-8">
-							<div class="m-b30">
-								<input type="text" class="form-control" placeholder="Search freelancer services">
-							</div>
 							<ul class="post-job-bx">
 							{% for emp in employees %}
 								<li>
 									<a href="#">
 										<div class="d-flex m-b30">
 											<div class="job-post-company">
-												<span><img src="images/testimonials/pic1.jpg"/></span>
+												<span><img src="{{asset(emp.image)}}"/></span>
 											</div>
 											<div class="job-post-info">
-												<h4>{{ emp.username }}</h4>
+												<h4>{{ emp.name }} | {{ emp.prof }}</h4>
 												<ul>
 													<li><i class="fa fa-map-marker"></i>{{ emp.address }}</li>
 													<li><i class="fa fa-usd"></i> {{ emp.type.name }}</li>
@@ -62,56 +59,13 @@
 								</li>
 								{%endfor%}
 							</ul>
-							<div class="pagination-bx m-t40" style="margin-left:90%;font-weight: 500;font-size:20px; font-family: 'Rubik', sans-serif">
+						<div class="pagination-bx m-t40">
 							{{ knp_pagination_render(employees) }}	
-							</div>
+						</div>
 						</div>
 						<div class="col-xl-3 col-lg-4">
-							<div class="sticky-top">
-								<div class="clearfix m-b30">
-									<h5 class="widget-title font-weight-700 text-uppercase">Keywords</h5>
-									<div class="">
-										<input type="text" class="form-control" placeholder="Search">
-									</div>
-								</div>
-								<div class="clearfix m-b10">
-									<h5 class="widget-title font-weight-700 m-t0 text-uppercase">Location</h5>
-									<input type="text" class="form-control m-b30" placeholder="Location">
-									<div class="input-group m-b20">
-										<input type="text" class="form-control" placeholder="120">
-										<select>
-											<option>Km</option>
-											<option>miles</option>
-										</select>
-									</div>
-								</div>
-								<div class="clearfix m-b30">
-									<h5 class="widget-title font-weight-700 text-uppercase">Job type</h5>
-									<div class="row">
-										<div class="col-lg-6 col-md-6 col-sm-6 col-6">
-											<div class="product-brand">
-											{% for type in types %}
-												<div class="custom-control custom-checkbox">
-												    
-													<input type="checkbox" class="custom-control-input" id="check1" name="example1">
-													<label class="custom-control-label" for="check1">{{type.name}}</label>
-													
-												</div>
-											 {%endfor%}	
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="clearfix">
-									<h5 class="widget-title font-weight-700 text-uppercase">Category</h5>
-									<select>
-										<option>Any Category</option>
-									 	{% for category in categories %}
-										<option>{{category.name}}</option>
-									    {%endfor%}
-									</select>
-								</div>
-							</div>
+						    {% include 'filterEmployee.html.twig' with {formS:formS} only %}
+						</div>
 						</div>
 					</div>
 				</div>

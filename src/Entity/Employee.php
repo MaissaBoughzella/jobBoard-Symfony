@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EmployeeRepository")
  */
-class Employee extends User
+class Employee
 {
 
     public function __construct()
@@ -20,6 +20,11 @@ class Employee extends User
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -62,6 +67,11 @@ class Employee extends User
     private $created_at;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $image;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="employees")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -82,6 +92,18 @@ class Employee extends User
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
     public function getAddress(): ?string
@@ -204,7 +226,17 @@ class Employee extends User
         return $this;
     }
 
-  
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
 
 
 

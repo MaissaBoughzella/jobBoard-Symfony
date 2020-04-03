@@ -14,14 +14,28 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\NewsLetter;
 use App\Repository\NewsLetterRepository;
-
+use App\Repository\CompanyRepository;
+use App\Entity\Job;
+use App\Repository\JobRepository;
+use App\Entity\Company;
+use App\Data\SearchData;
+use App\Form\SearchHome;
+use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(Request $request)
+    public function index(CompanyRepository $repository,JobRepository $repo,Request $request)
     { 
+      $company=$this->getDoctrine()->getRepository(Company::class)->findAll();
+
+      $data=new SearchData();
+      $data->page=$request->get('page',1);
+      $formS=$this->createForm(SearchHome::class, $data);
+      $formS->handleRequest($request);
+      $jobs = $repo->findSearch($data);
+
         $contact = new NewsLetter;     
         # Add form fields
           $form = $this->createFormBuilder($contact)
@@ -42,7 +56,7 @@ class HomeController extends AbstractController
       return $this->redirectToRoute("home");   
       }
         return $this->render('home/index.html.twig', 
-            array('form' => $form->createView())
+            array('form' => $form->createView(), 'companies'=> $company,'jobs' => $jobs, 'formS' => $formS->createView())
         );
     }
   

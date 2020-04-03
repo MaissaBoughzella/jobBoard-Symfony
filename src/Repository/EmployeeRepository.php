@@ -1,10 +1,14 @@
 <?php
 
 namespace App\Repository;
-
+use App\Data\SearchData;
+use App\Entity\Job;
+use App\Entity\Category;
 use App\Entity\Employee;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
  * @method Employee|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,9 +18,10 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class EmployeeRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry,PaginatorInterface $paginator)
     {
         parent::__construct($registry, Employee::class);
+        $this->paginator=$paginator;
     }
 
     // /**
@@ -47,4 +52,60 @@ class EmployeeRepository extends ServiceEntityRepository
         ;
     }
     */
+
+     /**
+     * @return PaginationInterface
+     */
+    public function findSearch(SearchData $search ): PaginationInterface
+    {
+       
+        $query=$this->createQueryBuilder('e')
+        ->select('e')
+        ->leftJoin('e.category', 'c')
+        ->leftJoin('e.type', 't');
+        if(!empty($search->q))
+        { 
+            $query=$query
+            ->andWhere('e.prof LIKE :q')
+            ->setParameter('q',"%{$search->q}%")
+            ->orderBy('e.created_at', 'DESC');
+            
+        }
+
+        if(!empty($search->min))
+        { 
+            $query=$query
+            ->andWhere('e.salary >= :min')
+            ->setParameter('min',$search->min)
+            ->orderBy('e.created_at', 'DESC');
+            
+        }
+
+        if(!empty($search->max))
+        { 
+            $query=$query
+            ->andWhere('e.salary <= :max')
+            ->setParameter('max',$search->max)
+            ->orderBy('e.created_at', 'DESC');
+            
+        }
+
+        if(!empty($search->categories)){
+            $query=$query
+            ->andwhere('c.id IN (:categories)')
+            ->setParameter('categories',$search->categories);
+        }
+
+        if(!empty($search->types)){
+            $query=$query
+            ->andwhere('t.id IN (:types)')
+            ->setParameter('types',$search->types);
+        }
+        $query=$query->getQuery();
+        return $this->paginator->paginate(
+            $query,
+            $search->page,
+            1
+        );
+    }
 }

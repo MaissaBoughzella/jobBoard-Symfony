@@ -20,6 +20,16 @@ public $q='';
 public $l=''; 
 
 /**
+ * @var number
+ */
+public $min=0; 
+
+/**
+ * @var number
+ */
+public $max=0; 
+
+/**
  * @var Category[]
  */
 public $categories=[];

@@ -23,6 +23,10 @@ use App\Entity\NewsLetter;
 use App\Repository\NewsLetterRepository;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use App\Data\SearchData;
+use App\Form\SearchForm;
+use App\Form\SearchEmployee;
+use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 
 class EmployerController extends AbstractController
 {
@@ -30,16 +34,15 @@ class EmployerController extends AbstractController
      * @Route("/candidate", name="candidate")
      */
 
-    public function index(EmployeeRepository $repository,CategoryRepository $reposit,TypeJobRepository $repo,Request $request, PaginatorInterface $paginator)
+    public function index(EmployeeRepository $repository,Request $request, PaginatorInterface $paginator)
     {   
-        $categories=$this->getDoctrine()->getRepository(Category::class)->findAll();
-        $types=$this->getDoctrine()->getRepository(TypeJob::class)->findAll();
-        $donnees = $this->getDoctrine()->getRepository(Employee::class)->findBy([],['created_at' => 'desc']);
-        $jobs = $paginator->paginate(
-            $donnees, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            5 // Nombre de résultats par page
-        );
+
+        $data=new SearchData();
+        $data->page=$request->get('page',1);
+        $formS=$this->createForm(SearchEmployee::class, $data);
+        $formS->handleRequest($request);
+        $jobs = $repository->findSearch($data);
+ 
 
         $contact = new NewsLetter;     
         # Add form fields
@@ -62,7 +65,7 @@ class EmployerController extends AbstractController
       }
         
         return $this->render('employer/browseCandidate.html.twig', 
-        ['employees' => $jobs,"categories"=>$categories,"types"=>$types, 'form' => $form->createView()]);
+        ['employees' => $jobs, 'form' => $form->createView(),'formS' => $formS->createView()]);
     }
 
     /**

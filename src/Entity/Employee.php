@@ -82,6 +82,11 @@ class Employee
      * @ORM\JoinColumn(nullable=false)
      */
     private $type;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $email;
     
     
   
@@ -234,6 +239,18 @@ class Employee
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }

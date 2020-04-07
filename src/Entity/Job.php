@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,9 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
 class Job
 {
     public function __construct()
-{
-    $this->createdAt = new DateTime(); ;
-}
+    {
+        $this->createdAt = new DateTime();
+        $this->company = new ArrayCollection();
+    }
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -50,6 +53,51 @@ class Job
      * @ORM\JoinColumn(nullable=false)
      */
     private $type;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="jobs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $company;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $experience;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $offre;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $req;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $req2;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $req3;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $req4;
+
+   
+
+   
 
 
 
@@ -128,6 +176,106 @@ class Job
 
         return $this;
     }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    public function getExperience(): ?int
+    {
+        return $this->experience;
+    }
+
+    public function setExperience(int $experience): self
+    {
+        $this->experience = $experience;
+
+        return $this;
+    }
+
+    public function getOffre(): ?string
+    {
+        return $this->offre;
+    }
+
+    public function setOffre(string $offre): self
+    {
+        $this->offre = $offre;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getReq(): ?string
+    {
+        return $this->req;
+    }
+
+    public function setReq(string $req): self
+    {
+        $this->req = $req;
+
+        return $this;
+    }
+
+    public function getReq2(): ?string
+    {
+        return $this->req2;
+    }
+
+    public function setReq2(string $req2): self
+    {
+        $this->req2 = $req2;
+
+        return $this;
+    }
+
+    public function getReq3(): ?string
+    {
+        return $this->req3;
+    }
+
+    public function setReq3(string $req3): self
+    {
+        $this->req3 = $req3;
+
+        return $this;
+    }
+
+    public function getReq4(): ?string
+    {
+        return $this->req4;
+    }
+
+    public function setReq4(string $req4): self
+    {
+        $this->req4 = $req4;
+
+        return $this;
+    }
+
+
+
+
 
    
 

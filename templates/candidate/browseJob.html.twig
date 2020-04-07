@@ -13,7 +13,7 @@
 					<!-- Breadcrumb row -->
 					<div class="breadcrumb-row">
 						<ul class="list-inline">
-							<li><a href="#">Home</a></li>
+							<li><a href="{{path('home')}}">Home</a></li>
 							<li>Browse Jobs</li>
 						</ul>
 					</div>
@@ -33,7 +33,7 @@
 							<ul class="post-job-bx">
 							{% for job in jobs %}
 								<li>
-									<a href="#">
+									<a href="{{path('JobDetail',{ 'id': job.id})}}">
 										<div class="d-flex m-b30">
 											<div class="job-post-company">
 												<span><img src="images/logo/icon1.png"/></span>
@@ -43,7 +43,7 @@
 												<ul>
 													<li><i class="fa fa-map-marker"></i> {{ job.location }}</li>
 													<li><i class="fa fa-bookmark-o"></i>{{ job.type.name }}</li>
-													<li><i class="fa fa-clock-o"></i> Published {{ job.createdAt|date('Y-m-d H:i:s') }}</li>
+													<li><i class="fa fa-clock-o"></i> Published {{ job.createdAt|ago }}</li>
 												</ul>
 												
 											</div>

@@ -6,14 +6,14 @@
 <!-- Content -->
     <div class="page-content bg-white">
         <!-- inner page banner -->
-        <div class="dez-bnr-inr overlay-black-dark" style="background-image:url(images/banner/bnr1.jpg);">
+        <div class="dez-bnr-inr overlay-black-dark" style="background-image:url('{{asset('images/banner/bnr1.jpg')}}');">
             <div class="container">
                 <div class="dez-bnr-inr-entry">
                     <h1 class="text-white">Submit Resume</h1>
 					<!-- Breadcrumb row -->
 					<div class="breadcrumb-row">
 						<ul class="list-inline">
-							<li><a href="#">Home</a></li>
+							<li><a href="{{path('home')}}">Home</a></li>
 							<li>Submit Resume</li>
 						</ul>
 					</div>
@@ -27,63 +27,40 @@
 			<!-- Submit Resume -->
 			<div class="section-full bg-white submit-resume content-inner-2">
 				<div class="container">
-					<form>
+					{{form_start(form1)}}
 						<div class="form-group">
 							<label>Your name</label>
-							<input type="text" class="form-control" placeholder="Your Full Name">
+							
+							{{form_row(form1.name ,{ 'attr': {'class': 'form-control'}} )}}
+							
+						</div>
+						<div class="form-group">
+							<label>Photo</label>
+								{{form_row(form1.photo,{ 'attr': {'class': 'custom-file'}} )}}
 						</div>
 						<div class="form-group">
 							<label>Your email</label>
-							<input type="email" class="form-control" placeholder="info@gmail.com">
-						</div>
-						<div class="form-group">
-							<label>Region</label>
-							<select>
-								<option>New York</option>
-								<option>London</option>
-								<option>Los Angeles</option>
-							</select>
+							{{form_row(form1.email,{ 'attr': {'class': 'form-control'}} )}}
 						</div>
 						<div class="form-group">
 							<label>Professional title</label>
-							<input type="text" class="form-control" placeholder="Web Designer">
+							{{form_row(form1.profession,{ 'attr': {'class': 'form-control'}} )}}
 						</div>
 						<div class="form-group">
 							<label>Location</label>
-							<input type="text" class="form-control" placeholder="London">
+							{{form_row(form1.location,{ 'attr': {'class': 'form-control'}} )}}
 						</div>
 						<div class="form-group">
-							<label>Photo (optional)</label>
-							<div class="custom-file">
-								<input type="file" class="site-button" id="customFile">
-							</div>
+							<label>Resume</label>
+							{{form_row(form1.cv,{ 'attr': {'class': 'custom-file'}} )}}
 						</div>
 						<div class="form-group">
-							<label>Video (optional)</label>
-							<input type="text" class="form-control" placeholder="Video Link">
+							<label>Minimum rate/h (DT)</label>
+							{{form_row(form1.rate,{ 'attr': {'class': 'form-control'}} )}}
 						</div>
-						<div class="form-group">
-							<label>Minimum rate/h ($) (optional)</label>
-							<input type="text" class="form-control" placeholder="50 ($)">
-						</div>
-						<div class="form-group">
-							<label>Resume category</label>
-							<select>
-								<option>Designe</option>
-								<option>Construct</option>
-								<option>Food Service</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label>Resume Content</label>
-							<textarea class="form-control" placeholder="Your Content"></textarea>
-						</div>
-						<div class="form-group">
-							<label>Skills (optional)</label>
-							<input type="text" class="form-control" placeholder="Your Skills">
-						</div>
+
 						<button type="submit" class="site-button">Submit</button>
-					</form>
+					{{form_end(form1)}}
 				</div>
 			</div>
             <!-- Submit Resume END -->

@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<!-- Content -->
+    <div class="page-content bg-white">
+        <!-- inner page banner -->
+        <div class="dez-bnr-inr overlay-black-middle" style="background-image:url('{{asset('images/banner/bnr1.jpg')}}');">
+            <div class="container">
+                <div class="dez-bnr-inr-entry">
+                    <h1 class="text-white">Job Detail</h1>
+					<!-- Breadcrumb row -->
+					<div class="breadcrumb-row">
+						<ul class="list-inline">
+							<li><a href="{{path('home')}}">Home</a></li>
+							<li>Candidate Profile</li>
+						</ul>
+					</div>
+					<!-- Breadcrumb row END -->
+                </div>
+            </div>
+        </div>
+        <!-- inner page banner END -->
+        <!-- contact area -->
+        <div class="content-block">
+            <!-- Job Detail -->
+			<div class="section-full content-inner-1">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-4">
+							<div class="sticky-top">
+								<div class="row">
+									<div class="col-lg-12 col-md-6le" style="height:520px">
+										<div class="widget bg-white widget_getintuch radius-sm text-center style="margin-bottom: 20px;">
+											<img class="rounded-circle m-b10" style="width: 50%;" src="{{asset(employee.image)}}" alt="">
+										
+                                        <h5 class="text-center">{{employee.name}}</h5>
+                                        <p class="text-muted text-center">{{employee.prof}}</p>  
+                                        <ul class="text-left" style="margin-left:6%">
+                                            <li>
+                                                <i class="ti-desktop"></i><strong class="font-weight-700 text-black">Job Type</strong>
+                                                <span class="text-black-light">{{employee.type.name}}</span>
+                                            </li>
+                                             <li>
+                                                <i class="ti-settings"></i><strong class="font-weight-700 text-black">Job Category</strong>
+                                                <span class="text-black-light">{{employee.category.name}}</span>
+                                            </li> 
+                                            <li>
+                                                <i class="ti-money"></i><strong class="font-weight-700 text-black">Salary</strong>
+                                                <span class="text-black-light">{{employee.salary}}DT Per Hour</span>
+                                            </li>  
+												
+									    </ul>
+									</div>
+                                    </div>
+									<div class="col-lg-12 col-md-6">
+										<div class="widget bg-white p-lr20 p-t20  widget_getintuch radius-sm">
+											<h4 class="text-black font-weight-700 p-t10 m-b15">Candidate Info</h4>
+											<ul>
+												<li>
+                                                    <i class="ti-location-pin"></i><strong class="font-weight-700 text-black">Address</strong>
+                                                    <span class="text-black-light">{{employee.address}}</span>
+                                                </li>
+                                                <li>
+                                                    <i class="ti-mobile"></i><strong class="font-weight-700 text-black">Phone</strong>
+                                                    <span class="text-black-light">{{employee.tel}}</span>
+                                                </li>
+                                                <li>
+                                                    <i class="ti-email"></i><strong class="font-weight-700 text-black">E-mail</strong>
+                                                    <span class="text-black-light">{{employee.email}}</span>
+                                                </li>
+											</ul>
+										</div>
+									</div>
+								</div>
+                            </div>
+						</div>
+						<div class="col-lg-8">
+							<div class="job-info-box">
+								<h5 class="font-weight-600">Education</h5>
+								<div class="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>
+								<p>{{employee.education}}</p>
+								
+								<h5 class="font-weight-600">Professional Experience(s)</h5>
+                                <div class="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>
+								<p>{{employee.experience}}</p>
+                                <h5 class="font-weight-600">Skills</h5>
+                                <div class="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>								<ul class="list-num-count no-round">
+									<li>{{employee.comp1}}</li>
+                                    <li>{{employee.comp2}}</li>
+                                    <li>{{employee.comp3}}</li>
+                                    <li>{{employee.comp4}}</li>
+								
+								</ul>
+								<a href="" class="site-button">Hire Now</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+            <!-- Job Detail -->
+		</div>
+    </div>
+    <!-- Content END-->
+{% endblock %}

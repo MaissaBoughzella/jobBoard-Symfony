@@ -87,6 +87,21 @@ class Employee
      * @ORM\Column(type="string", length=255)
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $education;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $experience;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $tel;
     
     
   
@@ -251,6 +266,42 @@ class Employee
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getEducation(): ?string
+    {
+        return $this->education;
+    }
+
+    public function setEducation(string $education): self
+    {
+        $this->education = $education;
+
+        return $this;
+    }
+
+    public function getExperience(): ?string
+    {
+        return $this->experience;
+    }
+
+    public function setExperience(string $experience): self
+    {
+        $this->experience = $experience;
+
+        return $this;
+    }
+
+    public function getTel(): ?string
+    {
+        return $this->tel;
+    }
+
+    public function setTel(string $tel): self
+    {
+        $this->tel = $tel;
 
         return $this;
     }

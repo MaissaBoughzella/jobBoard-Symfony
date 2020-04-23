@@ -1,0 +1,161 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block body %}
+ <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-4">
+            <h1 class="m-0 text-dark">Member Profile</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-8">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item active"><a href="{{path('admin')}}">Home</a></li>
+              <li class="breadcrumb-item">Members</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+        <div class="col-md-3">
+        <div class="card card-primary card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                  <img class="profile-user-img img-fluid img-circle"
+                       src="{{asset(employee.image)}}"
+                       alt="User profile picture">
+                </div>
+
+                <h3 class="profile-username text-center">{{employee.name}}</h3>
+
+                <p class="text-muted text-center">{{employee.prof}}</p>
+
+                <ul class="list-group list-group-unbordered mb-3">
+                  <li class="list-group-item">
+                    <b>Job Category</b> <a class="float-right">{{employee.category.name}}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Job Type</b> <a class="float-right">{{employee.type.name}}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Salary</b> <a class="float-right">{{employee.salary}}DT/Hour</a>
+                  </li>
+                </ul>
+
+                
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- About Me Box -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">About Me</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+
+                <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+
+                <p class="text-muted">{{employee.address}}</p>
+
+                <hr>
+
+                <strong><i class="fas fa-phone-alt mr-1"></i> Phone</strong>
+
+                <p class="text-muted">(+216) {{employee.tel}}</p>
+                <hr>
+
+                <strong><i class="far fa-envelope mr-1"></i> Email</strong>
+
+                <p class="text-muted">{{employee.email}}</p> 
+
+                <a href="#" class="btn btn-primary btn-block"><b>Send Email</b></a>
+                      
+              </div>
+
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+         
+            <!-- /.card -->
+    
+          <!-- /.col -->
+          <div class="col-md-9">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="active tab-pane" id="activity">
+                    <!-- Post -->
+                    <div class="post">
+                      <div class="user-block">
+                        <span  class="username">
+                          <a style="margin-left: -50px;font-size: 20px;" href="#" >EDUCATION</a>
+                        </span>
+            
+                      </div>
+                      <!-- /.user-block -->
+                      <p style="font-size: 18px;">
+                     {{employee.education}}
+                      </p>
+                    </div>
+                    <!-- /.post -->
+
+                    <!-- Post -->
+                    <div class="post clearfix">
+                      <div class="user-block">
+                        <span class="username">
+                          <a style="margin-left: -50px;font-size: 20px;" href="#">PROFESSIONNEL EXPERIENCES</a>
+                        </span>
+                      </div>
+                      <!-- /.user-block -->
+                      <p style="font-size: 18px;">
+                        {{employee.experience}}
+                      </p>
+                    </div>
+                    <!-- /.post -->
+
+                    <!-- Post -->
+                    <div class="post">
+                      <div class="user-block">
+                        <span class="username">
+                          <a style="margin-left: -50px;font-size: 20px;" href="#">SKILLS</a>
+                        </span>
+                      </div>
+                      <!-- /.user-block -->
+                      <div class="row mb-3">
+                        <ol>
+						  <li style="font-size: 18px;">{{employee.comp1}}</li>
+                          <li style="font-size: 18px;">{{employee.comp2}}</li>
+                          <li style="font-size: 18px;">{{employee.comp3}}</li>
+                          <li style="font-size: 18px;">{{employee.comp4}}</li>
+						</ol>
+                      
+                      </div>
+                      <!-- /.row -->
+                    </div>
+                    <!-- /.post -->
+                  </div>
+                 <!-- /.card-body -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+        {% endblock %}

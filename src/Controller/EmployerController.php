@@ -168,4 +168,34 @@ class EmployerController extends AbstractController
             'form' => $form->createView(), 'form1' => $form1->createView()
         ]);
     }
+
+    /**
+     * @Route("/candidate/{id}", name="candidateDetail")
+    */
+    public function detail($id,Request $request)
+    {
+    $contact = new NewsLetter;     
+          # Add form fields
+            $form = $this->createFormBuilder($contact)
+            ->add('email', EmailType::class, array('label'=> 'Email','attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+            ->getForm();
+          # Handle form response
+            $form->handleRequest($request);
+    
+            if($form->isSubmitted() &&  $form->isValid()){
+                $this->addFlash('success','You are subscribed!');
+                $email = $form['email']->getData();
+          # set form data   
+                $contact->setEmail($email);                             
+          # finally add data in database
+                $sn = $this->getDoctrine()->getManager();      
+                $sn -> persist($contact);
+                $sn -> flush();
+        return $this->redirectToRoute("JobDetail");   
+        }
+
+    $e=$this->getDoctrine()->getRepository(employee::class)->find($id);
+    return $this->render('employer/CandidateDetail.html.twig',['employee'=>$e ,'form' => $form->createView()]);
+  }
+
 }

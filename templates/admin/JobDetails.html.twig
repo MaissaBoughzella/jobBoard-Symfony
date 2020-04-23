@@ -1,0 +1,124 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block body %}
+ <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-4">
+            <h1 class="m-0 text-dark">{{job.name}}</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-8">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item active"><a href="{{path('admin')}}">Home</a></li>
+              <li class="breadcrumb-item">Jobs</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
+            <!-- About Me Box -->
+            <div class="card card-primary card-outline">
+              <div class="card-body box-profile">
+              <div class="m-b30">
+								<img style="width:100%;margin-bottom: 30px;"src="{{asset('images/blog/grid/pic1.jpg')}}" alt="">
+							</div>
+          
+                <strong style="font-size: 21px;"><i class="fas fa-book mr-1"></i> Experience</strong>
+                <p style="font-size: 20px;margin-left: 15px;" class="text-muted">
+                   {{job.experience}} Year Experience 
+                </p>
+                <hr>
+
+                <strong style="font-size: 21px;"><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+                <p style="font-size: 20px;margin-left: 15px;" class="text-muted"> {{job.location}} </p>
+                <hr>
+
+                <strong style="font-size: 21px;"><i class="fas fa-dollar-sign mr-1"></i> Salary</strong>
+                <p style="font-size: 20px;margin-left: 15px;" class="text-muted">
+                    {{job.wage}}
+                </p>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-9">
+            <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="active tab-pane" id="activity">
+                    <!-- Post -->
+                    <div class="post">
+                      <div class="user-block">
+                        <span  class="username">
+                          <a style="margin-left: -50px;font-size: 20px;" href="#" >OFFER</a>
+                        </span>
+        
+                      </div>
+                      <!-- /.user-block -->
+                      <p style="font-size: 18px;">
+                      {{job.offre}}
+                      </p>
+                    </div>
+                    <!-- /.post -->
+
+                    <!-- Post -->
+                    <div class="post clearfix">
+                      <div class="user-block">
+                        <span class="username">
+                          <a style="margin-left: -50px;font-size: 20px;" href="#">DESCRIPTION</a>
+                        </span>
+                      </div>
+                      <!-- /.user-block -->
+                      <p style="font-size: 18px;">
+                      {{job.description}}
+                      </p>
+                    </div>
+                    <!-- /.post -->
+
+                    <!-- Post -->
+                    <div class="post">
+                      <div class="user-block">
+                        <span class="username">
+                          <a style="margin-left: -50px;font-size: 20px;" href="#">JOB REQUIREMENTS</a>
+                        </span>
+                      </div>
+                      <!-- /.user-block -->
+                      <div class="row mb-3">
+                        <ol>
+									        <li style="font-size: 18px;">{{job.req}}</li>
+                          <li style="font-size: 18px;">{{job.req2}}</li>
+                          <li style="font-size: 18px;">{{job.req3}}</li>
+                          <li style="font-size: 18px;">{{job.req4}}</li>
+							          </ol>
+                      
+                      </div>
+                      <!-- /.row -->
+                    </div>
+                    <!-- /.post -->
+                  </div>
+                 <!-- /.card-body -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+        {% endblock %}

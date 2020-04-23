@@ -1,0 +1,58 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block body %}
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" style="padding-bottom: calc(2rem + 1px);">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-4">
+            <h1 class="m-0 text-dark">Subscribers</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-8">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item active"><a href="{{path('admin')}}">Home</a></li>
+              <li class="breadcrumb-item">Subscribers</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    
+    <div class="card" style="    margin-right: 5%;margin-left: 5%;">
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th style="width: 10%;padding-left:3%;">
+                      <input type="checkbox" class="custom-control custom-checkbox" style="width: 30%;">
+                      </th>
+                      <th style="width: 20%;">ID</th>
+                      <th>Email</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {%for s in subscriber%}
+                    <tr>
+                      <td style="padding-left:3%;">
+                      <input type="checkbox" class="custom-control custom-checkbox" style="width: 30%;">
+                      </td>
+                      <td>{{s.id}}</td>
+                      <td>{{s.email}}</td>
+                    </tr>
+                {%endfor%}
+                  </tbody>
+                </table>
+              </div>
+            
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <div class="navigation" style="padding-left: 35%;padding-top: 3%;">
+                {{ knp_pagination_render(subscriber) }}
+            </div>
+          </div>
+         
+ {% endblock %}

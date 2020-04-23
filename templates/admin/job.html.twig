@@ -1,0 +1,76 @@
+
+{% extends 'adminBase.html.twig' %}
+
+{% block body %}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-4">
+            <h1 class="m-0 text-dark">Jobs</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-8">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item active"><a href="{{path('admin')}}">Home</a></li>
+              <li class="breadcrumb-item">Jobs</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+<!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      
+      <div class="card card-solid">
+        <div class="card-body pb-0">
+          <div class="row d-flex align-items-stretch">
+            {% for job in job%}
+            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch" style="height:340px">
+              <div class="card bg-light">
+                <div class="card-header text-muted border-bottom-0">
+                  {{job.company.name}}
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-8">
+                      <h2 class="lead"><b>{{job.name}} | {{job.category.name}}</b></h2>
+                      <p class="text-muted text-sm"><b>Description: </b> {{job.offre}}</p>
+                      <ul class="ml-4 mb-0 fa-ul text-muted">
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-business-time"></i></span>{{job.experience}} year(s) experience required</li>
+
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span>{{job.location}}</li>
+                      
+                      </ul>
+                    </div>
+                    <div class="col-4 text-center">
+                      <img src="{{asset('images/logo/icon1.png')}}" alt="" class="img-rectangle img-fluid">
+                    </div>
+                  </div>
+                </div>
+                       <div class="card-footer">
+                  <div class="text-right">
+                    <a href="{{path('jobDetailsAdmin',{ 'id': job.id})}}" class="btn btn-sm btn-primary">
+                      <i class="fas fa-cogs"></i> View Job
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div> {% endfor%}
+        </div>
+        <!-- /.card-body -->
+        <div class="navigation" style="padding-left: 40%;">
+            {{ knp_pagination_render(job) }}
+        </div>
+        <!-- /.card-footer -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  {% endblock %}

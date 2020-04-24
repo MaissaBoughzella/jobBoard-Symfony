@@ -40,6 +40,16 @@ class JobRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    public function findJ()
+    {
+        return $this->createQueryBuilder('j')
+            ->select('j')
+            ->orderBy('j.createdAt', 'DESC')
+            ->setMaxResults(8)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     
 
     /*

@@ -22,10 +22,19 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin", name="admin")
      */
-    public function index()
+    public function index(CompanyRepository $r1, JobRepository $r2, EmployeeRepository $r3, NewsLetterRepository $r4)
     {
+        $companies=$this->getDoctrine()->getRepository(Company::class)->findAll();
+        $jobs=$this->getDoctrine()->getRepository(Job::class)->findAll();
+        $employees=$this->getDoctrine()->getRepository(Employee::class)->findAll();
+        $subscribers=$this->getDoctrine()->getRepository(NewsLetter::class)->findAll();
+        $job=$this->getDoctrine()->getRepository(Job::class)->findJ();
+        $comp=$this->getDoctrine()->getRepository(Company::class)->findC();
+        $emp=$this->getDoctrine()->getRepository(Employee::class)->findE();
+        $new=$this->getDoctrine()->getRepository(NewsLetter::class)->findByN();
         return $this->render('admin/adminIndex.html.twig', [
-            'controller_name' => 'AdminController',
+            'c' => $companies, 'j' => $jobs, 'e' => $employees,'s' => $subscribers,'job'=>$job,'comp'=>$comp,
+            'emp'=>$emp,'new'=>$new
         ]);
     }
     /**
@@ -125,4 +134,54 @@ class AdminController extends AbstractController
     ]);
   }
 
+    /**
+    * @Route("/admin/member/delete/{id}", name="DeleteMember")
+    */
+    public function deleteM($id,Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $e=$this->getDoctrine()->getRepository(employee::class)->find($id);
+        
+        $entityManager->remove($e);
+        $entityManager->flush();
+        return $this->redirectToRoute('membersAdmin', [
+            'employee' => $e
+        ]);
+    }
+    /**
+    * @Route("/admin/companies/delete/{id}", name="DeleteCompany")
+    */
+    public function deleteC($id, Request $request, PaginatorInterface $paginator)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $c=$this->getDoctrine()->getRepository(company::class)->find($id);
+        $entityManager->remove($c);
+        $entityManager->flush();
+        return $this->redirectToRoute('companiesAdmin', [
+            'company' => $c
+        ]);
+    }
+    /**
+    * @Route("/admin/jobs/delete/{id}", name="DeleteJob")
+    */
+    public function deleteJ($id, Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $j=$this->getDoctrine()->getRepository(Job::class)->find($id);
+        $entityManager->remove($j);
+        $entityManager->flush();
+        return $this->redirectToRoute('jobsAdmin', ['job' => $j]);
+    }
+
+    /**
+    * @Route("/admin/subscribers/delete/{id}", name="DeleteSub")
+    */
+    public function deleteS($id, Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $s=$this->getDoctrine()->getRepository(NewsLetter::class)->find($id);
+        $entityManager->remove($s);
+        $entityManager->flush();
+        return $this->redirectToRoute('subscribersAdmin', ['s' => $s]);
+    }
 }

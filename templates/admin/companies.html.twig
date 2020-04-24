@@ -29,7 +29,7 @@
         <div class="card-body pb-0">
           <div class="row d-flex align-items-stretch">
             {% for company in company%}
-            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch" style="height:370px">
+            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
               <div class="card bg-light">
                 <div class="card-header text-muted border-bottom-0">
                   {{company.category.name}}
@@ -47,6 +47,14 @@
                     <div class="col-5 text-center">
                       <img src="{{asset(company.image)}}" alt="" class="img-rectangle img-fluid">
                     </div>
+                  </div>
+                </div>
+
+                  <div class="card-footer">
+                  <div class="text-right">
+                   <a href="{{path('DeleteCompany',{ 'id': company.id})}}" class="btn btn-sm btn-danger">
+                      <i class="fas fa-trash"></i> Delete Company
+                    </a>
                   </div>
                 </div>
             

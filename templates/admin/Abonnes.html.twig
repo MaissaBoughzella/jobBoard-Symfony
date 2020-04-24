@@ -31,6 +31,7 @@
                       </th>
                       <th style="width: 20%;">ID</th>
                       <th>Email</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -41,6 +42,11 @@
                       </td>
                       <td>{{s.id}}</td>
                       <td>{{s.email}}</td>
+                      <td style="width: 76px;">
+                      <a href="{{path('DeleteSub',{ 'id':s.id})}}" class="btn btn-sm btn-danger">
+                        <i class="fas fa-trash"></i>
+                      </a>
+                      </td>
                     </tr>
                 {%endfor%}
                   </tbody>

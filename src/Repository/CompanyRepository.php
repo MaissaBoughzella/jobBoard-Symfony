@@ -55,6 +55,16 @@ class CompanyRepository extends ServiceEntityRepository
     }
     */
 
+    public function findC()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->setMaxResults(8)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function findSearch(SearchData $search): PaginationInterface
     {
        

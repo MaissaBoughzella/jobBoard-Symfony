@@ -51,10 +51,13 @@
                     </div>
                   </div>
                 </div>
-                       <div class="card-footer">
+                <div class="card-footer">
                   <div class="text-right">
                     <a href="{{path('jobDetailsAdmin',{ 'id': job.id})}}" class="btn btn-sm btn-primary">
                       <i class="fas fa-cogs"></i> View Job
+                    </a>
+                    <a href="{{path('DeleteJob',{ 'id': job.id})}}" class="btn btn-sm btn-danger">
+                      <i class="fas fa-trash"></i> Delete Job
                     </a>
                   </div>
                 </div>

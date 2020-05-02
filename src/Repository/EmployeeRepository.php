@@ -53,6 +53,17 @@ class EmployeeRepository extends ServiceEntityRepository
     }
     */
 
+    public function findE()
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e')
+            ->orderBy('e.created_at', 'DESC')
+            ->setMaxResults(8)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
      /**
      * @return PaginationInterface
      */

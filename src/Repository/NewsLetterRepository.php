@@ -19,6 +19,7 @@ class NewsLetterRepository extends ServiceEntityRepository
         parent::__construct($registry, NewsLetter::class);
     }
 
+    
     // /**
     //  * @return NewsLetter[] Returns an array of NewsLetter objects
     //  */
@@ -36,15 +37,24 @@ class NewsLetterRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?NewsLetter
+    
+    public function findByN()
     {
         return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        ->select('n')
+        ->setMaxResults(8)
+        ->getQuery()
+        ->getResult()
+    ;
     }
-    */
+    
+    // public function findN()
+    // {
+    //     return $this->createQueryBuilder('n')
+    //         ->select('n')
+    //         ->setMaxResults(8)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
 }

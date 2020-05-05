@@ -34,7 +34,7 @@ class JobRepository extends ServiceEntityRepository
             ->leftJoin('j.category', 'c')
             ->andWhere('j.category = :val')
             ->setParameter('val', $value)
-            ->orderBy('j.createdAt', 'DESC')
+            ->orderBy('j.createdAt', 'ASC')
             ->setMaxResults(4)
             ->getQuery()
             ->getResult()

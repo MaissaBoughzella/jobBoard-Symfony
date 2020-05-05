@@ -140,13 +140,15 @@
 							<p class="text-capitalize m-b20">Receive a weekly summary of advice and new recruiting companies.</p>
                             <div class="subscribe-form m-b20">
 								{{form_start(form)}}
-                                    {{form_widget(form)}}
-									<span class="input-group-btn">
-										<button name="submit" value="Submit" type="submit" class="site-button radius-xl">Subscribe</button>
-									</span> 
+                                    {{form_row(form.email)}}
+									<div class="col-xs-12">
+                                <br>
+                                {{form_row(form.subscribe,{ 'attr': {'class': 'site-button radius-xl'}} )}}
+
+                            </div>
 								{{form_end(form)}}
 							</div>
-							<ul class="list-inline m-a0">
+							<ul class="list-inline m-a0" style="margin-top:15%">
 								<li><a href="#" class="site-button white facebook circle "><i class="fa fa-facebook"></i></a></li>
 								<li><a href="#" class="site-button white google-plus circle "><i class="fa fa-google-plus"></i></a></li>
 								<li><a href="#" class="site-button white linkedin circle "><i class="fa fa-linkedin"></i></a></li>

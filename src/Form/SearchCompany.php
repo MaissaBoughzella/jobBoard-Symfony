@@ -4,6 +4,7 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use App\Entity\Category;
 use App\Entity\Company;
@@ -43,6 +44,11 @@ class SearchCompany extends AbstractType
                 'multiple'=> true,
 
             ])
+            ->add('filter', SubmitType::class, array(
+                'label' => 'filter',
+                'attr'=>array('style' => 'margin-top:5%;width:100%','class' => 'site-button'),
+                //'attr' => array('class' => 'site-button')
+            ))
             
             ;
     }

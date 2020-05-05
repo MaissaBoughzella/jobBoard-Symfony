@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\NewsLetter;
 use App\Repository\NewsLetterRepository;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 
@@ -24,6 +25,11 @@ class RegisterController extends Controller
         # Add form fields
           $form = $this->createFormBuilder($contact)
           ->add('email', EmailType::class, array('label'=> 'Email','attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+          ->add('subscribe', SubmitType::class, array(
+            'label' => 'Subscribe',
+            'attr'=>array('style' => 'margin-top:-5%;')
+           // 'attr' => array('class' => 'site-button')
+        ))
           ->getForm();
         # Handle form response
           $form->handleRequest($request);

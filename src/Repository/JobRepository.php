@@ -72,6 +72,7 @@ class JobRepository extends ServiceEntityRepository
        
         $query=$this->createQueryBuilder('j')
         ->select('j')
+        ->orderBy('j.createdAt', 'DESC')
         ->leftJoin('j.category', 'c')
         ->leftJoin('j.type', 't');
         if(!empty($search->q))

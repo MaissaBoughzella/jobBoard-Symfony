@@ -40,6 +40,11 @@ class HomeController extends AbstractController
         # Add form fields
           $form = $this->createFormBuilder($contact)
           ->add('email', EmailType::class, array('label'=> 'Email','attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+          ->add('subscribe', SubmitType::class, array(
+            'label' => 'Subscribe',
+            'attr'=>array('style' => 'margin-top:-5%;')
+           // 'attr' => array('class' => 'site-button')
+        ))
           ->getForm();
         # Handle form response
           $form->handleRequest($request);

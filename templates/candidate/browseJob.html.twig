@@ -43,7 +43,7 @@
 												<ul>
 													<li><i class="fa fa-map-marker"></i> {{ job.location }}</li>
 													<li><i class="fa fa-bookmark-o"></i>{{ job.type.name }}</li>
-													<li><i class="fa fa-clock-o"></i> Published {{ job.createdAt|ago }}</li>
+													<li><i class="fa fa-clock-o"></i> Published {{ job.createdAt.modify('-1 hours')|ago}}</li>
 												</ul>
 												
 											</div>

@@ -72,6 +72,7 @@ class EmployeeRepository extends ServiceEntityRepository
        
         $query=$this->createQueryBuilder('e')
         ->select('e')
+        ->orderBy('e.created_at', 'DESC')
         ->leftJoin('e.category', 'c')
         ->leftJoin('e.type', 't');
         if(!empty($search->q))

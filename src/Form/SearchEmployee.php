@@ -62,8 +62,8 @@ class SearchEmployee extends AbstractType
                 ]
             ])
             ->add('filter', SubmitType::class, array(
-                'label' => 'filter',
-                'attr'=>array('style' => 'margin-top:5%;width:100%','class' => 'site-button'),
+                'label' => 'Filter',
+                'attr'=>array('style' => 'margin-top:10%;width:100%','class' => 'site-button'),
                 //'attr' => array('class' => 'site-button')
             ))
             ;

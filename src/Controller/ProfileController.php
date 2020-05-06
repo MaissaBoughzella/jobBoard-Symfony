@@ -31,6 +31,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use App\Data\SearchData;
 use App\Form\SearchForm;
+use App\Form\ProfileFormType;
+use App\Form\PhotoFormType;
 use App\Form\SearchEmployee;
 use App\Form\ResumeType;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
@@ -108,50 +110,21 @@ class ProfileController extends AbstractController
 
   $employee = new Employee();
   $employee = $this->getDoctrine()->getRepository(Employee::class)->find($id);
-  
-        $formE = $this->createFormBuilder($employee)
-          ->add('name', TextType::class,[ 'label'=>false],array('attr' => array('class' => 'form-control')))
-          ->add('email', EmailType::class, [ 'label'=>false],array('attr' => array('class' => 'form-control')))
-          ->add('tel', TextType::class, [ 'label'=>false],array('attr' => array('class' => 'form-control')))
-          ->add('address', TextType::class,[ 'label'=>false], array('attr' => array('class' => 'form-control')))
-          ->add('prof', TextType::class, [ 'label'=>false],array('attr' => array('class' => 'form-control')))
-          ->add('education', TextareaType::class,[ 'label'=>false], array('attr' => array('class' => 'form-control')))
-          ->add('experience', TextareaType::class, [ 'label'=>false], array('attr' => array('class' => 'form-control')))
-          ->add('comp1', TextType::class,[ 'label'=>false], array('attr' => array('class' => 'form-control')))
-          ->add('salary', NumberType::class,[ 'label'=>false], array('attr' => array('class' => 'form-control')))
-          ->add('type',EntityType::class,[
-            'label'=>false,
-            'required'=>false,
-            'class'=> TypeJob::class,
-          ])
-          ->add('image',FileType::class,[
-            'required'=>true,
-            'label'=>false,
-            "data_class"=> NULL,
-            'constraints' => [
-                new File([
-                    'maxSize' => '1024k',
-                    'mimeTypes' => [
-                        'image/jpeg',
-                        'image/png',
-                        'image/jpg'
-                    ],
-                    
-                    'mimeTypesMessage' => 'Please upload a valid Image',
-                ])
-            ],
-        ])
-            ->add('save', SubmitType::class, array(
-                'label' => 'Save changes',
-               // 'attr' => array('class' => 'site-button')
-            ))
-          ->getForm();
-  
-        $formE->handleRequest($request);
-  
-        if($formE->isSubmitted() && $formE->isValid()) {
 
-            $imageFile = $formE['image']->getData();
+  $formE=$this->createForm(ProfileFormType::class, $employee);
+  $formE->handleRequest($request);
+    if($formE->isSubmitted() && $formE->isValid()) {
+
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->flush();
+
+      return $this->redirectToRoute('profile', ['id'=>$id]);
+    }
+    $formP=$this->createForm(PhotoFormType::class, $employee);
+    $formP->handleRequest($request);
+        if($formP->isSubmitted() && $formP->isValid()) {
+            
+            $imageFile = $formP['image']->getData();
             if ($imageFile) {
               $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
               // this is needed to safely include the file name as part of the URL
@@ -179,10 +152,8 @@ class ProfileController extends AbstractController
           return $this->redirectToRoute('profile', ['id'=>$id]);
         }
 
-       
-  
     $emp=$this->getDoctrine()->getRepository(employee::class)->find($id);
-    return $this->render('profile/edit.html.twig',['emp'=>$emp ,'form' => $form->createView(),'formE' => $formE->createView()]);
+    return $this->render('profile/edit.html.twig',['employee'=>$emp ,'form' => $form->createView(),'formE' => $formE->createView(),'formP' => $formP->createView()]);
   }
 
 

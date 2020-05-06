@@ -33,7 +33,7 @@
 									<a href="{{path('candidateDetail',{ 'id': emp.id})}}">
 										<div class="d-flex m-b30">
 											<div class="job-post-company">
-												<span><img src="{{asset(emp.image)}}"/></span>
+												<span><img src="{{asset('uploads/photos/'~ emp.image) }}"/></span>
 											</div>
 											<div class="job-post-info">
 												<h4>{{ emp.name }} | {{ emp.prof }}</h4>

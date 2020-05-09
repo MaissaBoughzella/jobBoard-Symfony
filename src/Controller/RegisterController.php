@@ -46,7 +46,7 @@ class RegisterController extends Controller
       return $this->redirectToRoute("register");   
       }
         // 1) build the form
-        $user = new User();
+        $user = new User;
         $form1 = $this->createForm(UserType::class, $user);
 
         // 2) handle the submit (will only happen on POST)

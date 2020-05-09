@@ -16,14 +16,28 @@ use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * Require ROLE_ADMIN for only this controller method.
+ *
+ * @IsGranted("ROLE_ADMIN")
+ */
 class AdminController extends AbstractController
 {
-    /**
-     * @Route("/admin", name="admin")
-     */
+/**
+ * Require ROLE_ADMIN for only this controller method.
+ *
+ * @IsGranted("ROLE_ADMIN")
+ * @Route("/admin", name="admin")
+*/
     public function index(CompanyRepository $r1, JobRepository $r2, EmployeeRepository $r3, NewsLetterRepository $r4)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // or add an optional message - seen by developers
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+
         $companies=$this->getDoctrine()->getRepository(Company::class)->findAll();
         $jobs=$this->getDoctrine()->getRepository(Job::class)->findAll();
         $employees=$this->getDoctrine()->getRepository(Employee::class)->findAll();

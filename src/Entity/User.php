@@ -51,14 +51,15 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="array")
+     * @var array
+     *
+     * @ORM\Column(type="json")
      */
-    private $roles;
+    private $roles = [];
 
 
 
     public function __construct() {
-        $this->roles = array('ROLE_USER');
     }
 
     // other properties and methods
@@ -101,12 +102,17 @@ class User implements UserInterface
         // You *may* need a real salt if you choose a different encoder.
         return null;
     }
-
-    public function getRoles()
+    public function getRoles(): array
     {
-        return $this->roles;
-    }
+        $roles = $this->roles;
 
+        // Afin d'être sûr qu'un user a toujours au moins 1 rôle
+        if (empty($roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+
+        return array_unique($roles);
+    }
     public function eraseCredentials()
     {
     }

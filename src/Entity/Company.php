@@ -5,28 +5,26 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
+use Doctrine\ORM\Mapping\InheritanceType;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+/**
+ * @Entity @Table(name="company")
+ */
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CompanyRepository")
  */
-class Company
+class Company extends User
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+   /**
+     * @Id @OneToOne(targetEntity="User",cascade={"persist"})
+     * @JoinColumn(name="id", referencedColumnName="id")
+     **/
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $location;
+ 
 
    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="Company")
@@ -42,17 +40,13 @@ class Company
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $contact;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $image;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Job", mappedBy="company")
      */
     private $jobs;
+
 
     public function __construct()
     {
@@ -66,45 +60,10 @@ class Company
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getLocation(): ?string
-    {
-        return $this->location;
-    }
-
-    public function setLocation(string $location): self
-    {
-        $this->location = $location;
-
-        return $this;
-    }
-
+    
     public function getDescription(): ?string
     {
         return $this->description;
-    }
-
-    public function setContact(string $contact): self
-    {
-        $this->contact = $contact;
-
-        return $this;
-    }
-
-    public function getContact(): ?string
-    {
-        return $this->contact;
     }
 
     public function setDescription(string $description): self

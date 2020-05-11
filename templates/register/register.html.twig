@@ -33,7 +33,7 @@
 				</div>
                 <div class="row">
 					<div class="col-md-12 m-b30">
-						<div class="p-a30 border-1  max-w500 m-auto" style="height:480px">
+						<div class="p-a30 border-1  max-w500 m-auto" style="height:720px">
 							<div class="tab-content">
 							
 									<h4 class="font-weight-700">PERSONAL INFORMATION</h4>
@@ -42,6 +42,9 @@
 
 										{{ form_row(form1.username) }}
 										{{ form_row(form1.email) }}
+										{{ form_row(form1.location) }}
+										{{ form_row(form1.phone) }}
+										{{ form_row(form1.roles) }}
 										{{ form_row(form1.password) }}
 										<br><button class="site-button pull-left button-lg">Create</button>
 								{{ form_end(form1) }}

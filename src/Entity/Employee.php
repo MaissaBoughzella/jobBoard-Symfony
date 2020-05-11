@@ -3,33 +3,34 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use App\Entity\User;
+use Doctrine\ORM\Mapping\MappedSuperclass; 
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\InheritanceType;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
+/**
+ * @Entity @Table(name="employee")
+ */
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EmployeeRepository")
  */
-class Employee
+class Employee extends User
 {
 
     public function __construct()
     {
        // $this->created_at = new DateTime();
     }
+
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+     * @Id @OneToOne(targetEntity="User",cascade={"persist", "update"})
+     * @JoinColumn(name="id", referencedColumnName="id")
+     **/
     private $id;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -86,11 +87,6 @@ class Employee
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $education;
 
     /**
@@ -98,10 +94,7 @@ class Employee
      */
     private $experience;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $tel;
+   
     
     
   
@@ -114,29 +107,6 @@ class Employee
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(string $address): self
-    {
-        $this->address = $address;
-
-        return $this;
-    }
 
     public function getProf(): ?string
     {
@@ -258,18 +228,6 @@ class Employee
         return $this;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
     public function getEducation(): ?string
     {
         return $this->education;
@@ -294,17 +252,7 @@ class Employee
         return $this;
     }
 
-    public function getTel(): ?string
-    {
-        return $this->tel;
-    }
 
-    public function setTel(string $tel): self
-    {
-        $this->tel = $tel;
-
-        return $this;
-    }
 
 
 

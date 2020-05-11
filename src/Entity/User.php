@@ -6,19 +6,25 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-
-/**
- * @IgnoreAnnotation("User")
- * @ORM\MappedSuperclass
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- */
-
+use Doctrine\ORM\Mapping\MappedSuperclass; 
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use App\Entity\Employee;
+use Doctrine\ORM\Mapping\InheritanceType;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
 /**
  * @ORM\Entity
  * @UniqueEntity(fields="email", message="Email already taken")
  * @UniqueEntity(fields="username", message="Username already taken")
  */
-class User implements UserInterface
+
+/**
+ * @MappedSuperclass
+ * @Entity @Table(name="user")
+ * @InheritanceType("JOINED")
+ */
+ class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -56,7 +62,16 @@ class User implements UserInterface
      * @ORM\Column(type="json")
      */
     private $roles = [];
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $location;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $phone;
 
 
     public function __construct() {
@@ -113,6 +128,38 @@ class User implements UserInterface
 
         return array_unique($roles);
     }
+
+    public function setRoles($roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(string $location): self
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
     public function eraseCredentials()
     {
     }

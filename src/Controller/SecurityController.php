@@ -39,10 +39,7 @@ class SecurityController extends AbstractController
            // 'attr' => array('class' => 'site-button')
         ))
           ->getForm();
-        
-        if(TRUE== $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
-          return $this->redirectToRoute('admin');
-        }
+       
        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error,'form' => $form->createView()]);
       
     

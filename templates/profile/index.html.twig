@@ -1,4 +1,4 @@
-{% extends 'baseEmployee.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
 <!-- Content -->
@@ -33,7 +33,7 @@
 										<div class="widget bg-white widget_getintuch radius-sm text-center style="margin-bottom: 20px;">
 											<img class="rounded-circle m-b10" style="width: 50%;" src="{{asset('uploads/photos/'~ employee.image) }}" alt="">
 										
-                                        <h5 class="text-center">{{employee.name}}</h5>
+                                        <h5 class="text-center">{{employee.username}}</h5>
                                         <p class="text-muted text-center">{{employee.prof}}</p>  
                                         <ul class="text-left" style="margin-left:6%">
                                             <li>
@@ -58,11 +58,11 @@
 											<ul>
 												<li>
                                                     <i class="ti-location-pin"></i><strong class="font-weight-700 text-black">Address</strong>
-                                                    <span class="text-black-light">{{employee.address}}</span>
+                                                    <span class="text-black-light">{{employee.location}}</span>
                                                 </li>
                                                 <li>
                                                     <i class="ti-mobile"></i><strong class="font-weight-700 text-black">Phone</strong>
-                                                    <span class="text-black-light">{{employee.tel}}</span>
+                                                    <span class="text-black-light">{{employee.phone}}</span>
                                                 </li>
                                                 <li>
                                                     <i class="ti-email"></i><strong class="font-weight-700 text-black">E-mail</strong>
@@ -84,7 +84,8 @@
                                 <div class="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>
 								<p>{{employee.experience}}</p>
                                 <h5 class="font-weight-600">Skills</h5>
-                                <div class="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>								<ul class="list-num-count no-round">
+                                <div class="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>
+                                <ul class="list-num-count no-round">
 									<li>{{employee.comp1}}</li>
                                     <li>{{employee.comp2}}</li>
                                     <li>{{employee.comp3}}</li>

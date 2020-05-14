@@ -29,21 +29,17 @@ class Category
      */
     private $jobs;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Company", mappedBy="Category")
-     */
-    private $companies;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Employee", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="category")
      */
-    private $employees;
+    private $users;
 
     public function __construct()
     {
         $this->jobs = new ArrayCollection();
-        $this->companies = new ArrayCollection();
-        $this->employees = new ArrayCollection();
+        
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -54,13 +50,7 @@ class Category
         return $this->jobs;
     }
 
-    /**
-     * @return Collection|companies[]
-     */
-    public function getCompanies(): Collection
-    {
-        return $this->companies;
-    }
+ 
 
     public function getId(): ?int
     {
@@ -80,30 +70,30 @@ class Category
     }
 
     /**
-     * @return Collection|Employee[]
+     * @return Collection|user[]
      */
-    public function getEmployees(): Collection
+    public function getUsers(): Collection
     {
-        return $this->employees;
+        return $this->users;
     }
 
-    public function addEmployee(Employee $employee): self
+    public function addUser(User $user): self
     {
-        if (!$this->employees->contains($employee)) {
-            $this->employees[] = $employee;
-            $employee->setCategory($this);
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeEmployee(Employee $employee): self
+    public function removeUser(User $user): self
     {
-        if ($this->employees->contains($employee)) {
-            $this->employees->removeElement($employee);
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
             // set the owning side to null (unless already changed)
-            if ($employee->getCategory() === $this) {
-                $employee->setCategory(null);
+            if ($user->getCategory() === $this) {
+                $user->setCategory(null);
             }
         }
 

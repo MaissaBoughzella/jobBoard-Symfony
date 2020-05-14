@@ -47,14 +47,4 @@ class NewsLetterRepository extends ServiceEntityRepository
         ->getResult()
     ;
     }
-    
-    // public function findN()
-    // {
-    //     return $this->createQueryBuilder('n')
-    //         ->select('n')
-    //         ->setMaxResults(8)
-    //         ->getQuery()
-    //         ->getResult()
-    //     ;
-    // }
 }

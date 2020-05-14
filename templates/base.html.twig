@@ -66,7 +66,7 @@
                 <div class="container clearfix">
                     <!-- website logo -->
                     <div class="logo-header mostion">
-						<a href="index-2.html"><img src="{{asset('images/logo.png')}}" class="logo" alt=""></a>
+						<a href="{{path('home')}}"><img src="{{asset('images/logo.png')}}" class="logo" alt=""></a>
 					</div>
                     <!-- nav toggle button -->
                     <!-- nav toggle button -->
@@ -76,13 +76,21 @@
 						<span></span>
 					</button>
                     <!-- extra nav -->
-                    <div class="extra-nav">
+					{% if is_granted('ROLE_EMPLOYEE') or is_granted('ROLE_COMPANY')%}
+                    <div class="extra-nav" style="margin-right: -75px;">
+                          <div class="extra-cell" style="margin-right:40px">
+							<a href="{{path('profile',{ 'id': employee})}}" class="site-button"><i class="fa fa-user"></i><span>  </span>My Account</a>
+							<a href="{{ path('app_logout') }}" class="site-button"><i class="fa fa-sign-out"></i></i><span>  </span>Logout</a>
+						</div>
+                    </div>
+					{%else%}
+					<div class="extra-nav">
                         <div class="extra-cell">
 							<a href="{{ path('register') }}" class="site-button"><i class="fa fa-user"></i> Sign Up</a>
                             <a href="{{ path('login') }}" class="site-button"><i class="fa fa-lock"></i> Sign In</a>
-
 						</div>
                     </div>
+					{%endif%}
                     <!-- Quik search -->
                     <div class="dez-quik-search bg-primary">
                         <form action="#">
@@ -90,7 +98,38 @@
                             <span id="quik-search-remove"><i class="flaticon-close"></i></span>
                         </form>
                     </div>
+					{% if is_granted('ROLE_EMPLOYEE') %}
+					 <!-- main nav -->
+                    <div class="header-nav navbar-collapse collapse justify-content-start" id="navbarNavDropdown">
+                        <ul class="nav navbar-nav">
+							<li class="active" style="margin: 0 20px 0 20px;"><a href="{{ path('home') }}">Home</a></li>
+							<li style="margin: 0 20px 0 0;"><a href="{{ path('about') }}" class="dez-page">About Us</a></li>
+							<li style="margin: 0 20px 0 0;"><a href="{{ path('job') }}" class="dez-page">Browse Job</a></li>
+							<li style="margin: 0 20px 0 0;"><a href="{{ path('companies') }}" class="dez-page">Companies</a></li>
+							<li style="margin: 0 20px 0 0;"><a href="{{ path('contact') }}" class="dez-page">Contact Us</a></li>
+						</ul>			
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- main header END -->
                     <!-- main nav -->
+		{%elseif is_granted('ROLE_COMPANY')%}
+							 <!-- main nav -->
+                    <div class="header-nav navbar-collapse collapse justify-content-start" id="navbarNavDropdown">
+                        <ul class="nav navbar-nav">
+							<li class="active" style="margin: 0 20px 0 20px;"><a href="{{ path('home') }}">Home</a></li>
+							<li style="margin: 0 20px 0 0;"><a href="{{ path('about') }}" class="dez-page">About Us</a></li>
+							<li style="margin: 0 20px 0 0;"><a href="{{ path('candidate') }}" class="dez-page">Browse Candidate</a></li>
+							<li style="margin: 0 20px 0 0;"><a href="#" class="dez-page">Jobs</a></li>
+							<li style="margin: 0 20px 0 0;"><a href="{{ path('contact') }}" class="dez-page">Contact Us</a></li>
+						</ul>			
+                    </div>
+                </div>
+            </div>
+        </div>		
+		
+		{%else%}	
                     <div class="header-nav navbar-collapse collapse justify-content-start" id="navbarNavDropdown">
                         <ul class="nav navbar-nav">
 							<li class="active">
@@ -124,6 +163,7 @@
                 </div>
             </div>
         </div>
+		{%endif%}
         <!-- main header END -->
     </header>
     <!-- header END -->

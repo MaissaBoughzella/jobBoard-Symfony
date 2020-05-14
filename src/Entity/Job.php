@@ -14,7 +14,7 @@ class Job
     public function __construct()
     {
         $this->createdAt = new DateTime();
-        $this->company = new ArrayCollection();
+        $this->user = new ArrayCollection();
     }
     /**
      * @ORM\Id()
@@ -55,10 +55,10 @@ class Job
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="jobs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="jobs")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $company;
+    private $user;
 
     /**
      * @ORM\Column(type="integer")
@@ -177,14 +177,14 @@ class Job
         return $this;
     }
 
-    public function getCompany(): ?Company
+    public function getUser(): ?user
     {
-        return $this->company;
+        return $this->user;
     }
 
-    public function setCompany(?Company $company): self
+    public function setUser(?User $user): self
     {
-        $this->company = $company;
+        $this->user = $user;
 
         return $this;
     }

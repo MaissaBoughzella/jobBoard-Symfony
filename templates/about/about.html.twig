@@ -91,26 +91,32 @@
 					</div>
 					<div class="blog-carousel owl-carousel owl-btn-center-lr owl-btn-3 owl-theme owl-btn-center-lr owl-btn-1">
 					{% for company in companies %}
+						{% for role in company.roles%}
+							{% if role=='ROLE_COMPANY'%}
 						<div class="item">
 							<div class="blog-post blog-grid blog-style-1">
 								<div class="dez-post-media dez-img-effect radius-sm"> <a href="#"><img src="{{asset(company.image)}}" alt="" style="height: 300px"></a> </div>
 								<div class="dez-info">
 									 <div class="dez-post-meta">
 										<ul class="d-flex align-items-center">
+									
 											<li class="post-date"><i class="fa fa-map-marker"></i>{{company.location}}</li>
 										</ul>
 									</div>
 									<div class="dez-post-title ">
-										<h5 class="post-title font-20"><a href="#">{{company.name}}</a></h5>
+									
+										<h5 class="post-title font-20"><a href="#">{{company.username}}</a></h5>
 									</div>
 									<div class="dez-post-text">
 										<p>{{company.description}}</p>
 									</div>
 									
 								</div>
+								
 							</div>
 						</div>
-						
+						{%endif%}
+						{%endfor%}
 				{%endfor%}		
 					</div>
 				</div>

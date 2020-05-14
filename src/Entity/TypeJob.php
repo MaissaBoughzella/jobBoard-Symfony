@@ -24,9 +24,9 @@ class TypeJob
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Employee", mappedBy="typr")
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="typr")
      */
-    private $employees;
+    private $users;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Job", mappedBy="type")
@@ -35,7 +35,7 @@ class TypeJob
 
     public function __construct()
     {
-        $this->employees = new ArrayCollection();
+        $this->users = new ArrayCollection();
         $this->jobs = new ArrayCollection();
     }
 
@@ -57,30 +57,30 @@ class TypeJob
     }
 
     /**
-     * @return Collection|Employee[]
+     * @return Collection|user[]
      */
-    public function getEmployees(): Collection
+    public function getUsers(): Collection
     {
-        return $this->employees;
+        return $this->users;
     }
 
-    public function addEmployee(Employee $employee): self
+    public function addUser(user $user): self
     {
-        if (!$this->employees->contains($employee)) {
-            $this->employees[] = $employee;
-            $employee->setTypr($this);
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setTypr($this);
         }
 
         return $this;
     }
 
-    public function removeEmployee(Employee $employee): self
+    public function removeUser(user $user): self
     {
-        if ($this->employees->contains($employee)) {
-            $this->employees->removeElement($employee);
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
             // set the owning side to null (unless already changed)
-            if ($employee->getTypr() === $this) {
-                $employee->setTypr(null);
+            if ($user->getTypr() === $this) {
+                $user->setTypr(null);
             }
         }
 

@@ -29,18 +29,21 @@
 						<div class="col-xl-9 col-lg-8">
 							<ul class="post-job-bx">
 							{% for company in companies %}
+								{% for role in company.roles%}
+										{% if role=='ROLE_COMPANY'%}
 								<li>
 									<a href="#">
 										<div class="d-flex m-b30">
 											<div class="job-post-company" style="width: 300px;">
 												<span style="width: 200px;height: 200px;"><img style="height: 100%;" src="{{asset(company.image)}}"/></span>
 											</div>
+											
 											<div class="job-post-info">
-												<h4>{{ company.name }}</h4>
+												<h4>{{ company.username }}</h4>
 												<ul>
 													<li><i class="fa fa-map-marker"></i>{{ company.location }}</li>
 													<li><i class="fa fa-cogs"></i>{{company.category.name}}</li>
-													<li><i class="fa fa-phone"></i>{{ company.contact }}</li>
+													<li><i class="fa fa-phone"></i>{{ company.phone }}</li>
 												</ul>
 												<br>
 												<h6 style="font-weight:200;font-size:18px"> {{ company.description }} </h6>
@@ -48,7 +51,10 @@
 										</div>
 										
 									</a>
+
 								</li>
+								{%endif%}
+								{%endfor%}
 								{%endfor%}
 							</ul>
 							

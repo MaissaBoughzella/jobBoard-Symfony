@@ -17,6 +17,7 @@ use App\Entity\Employee;
 use App\Repository\JobRepository;
 use App\Repository\CompanyRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\UserRepository;
 use App\Repository\TypeJobRepository;
 use App\Repository\EmployeeRepository;
 use App\Entity\NewsLetter;
@@ -72,7 +73,7 @@ class CandidateController extends AbstractController
     /**
      * @Route("/companies", name="companies")
      */
-    public function companies(CompanyRepository $repository,Request $request, PaginatorInterface $paginator)
+    public function companies(UserRepository $repository,Request $request, PaginatorInterface $paginator)
     {  
          
       $data=new SearchData();
@@ -139,6 +140,7 @@ class CandidateController extends AbstractController
                 $sn -> flush();
         return $this->redirectToRoute("JobDetail");   
         }
+        $e = $user->getId(); 
 
     $j=$this->getDoctrine()->getRepository(job::class)->find($id);
     

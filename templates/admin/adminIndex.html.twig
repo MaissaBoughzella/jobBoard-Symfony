@@ -112,11 +112,15 @@
                   <div class="card-body">
                     <ul class="users-list clearfix">
                     {%for c in comp%}
+                      {% for role in c.roles%}
+							        {% if role=='ROLE_COMPANY'%}
                       <li>
                         <img src="{{asset(c.image)}}" alt="User Image">
-                        <a class="users-list-name" href="#">{{c.name}}</a>
+                        <a class="users-list-name" href="#">{{c.username}}</a>
                         <span class="users-list-date">{{c.category.name}}</span>
                       </li>
+                      {%endif%}
+                      {%endfor%}
                       {%endfor%}
                     </ul>
                     <!-- /.users-list -->
@@ -146,11 +150,15 @@
                   <div class="card-body">
                     <ul class="users-list clearfix">
                     {%for e in emp%}
+                      {% for role in e.roles%}
+							        {% if role=='ROLE_EMPLOYEE'%}
                       <li>
                         <img src="{{asset(e.image)}}" alt="User Image">
-                        <a class="users-list-name" href="{{path('ProfileDetailsAdmin',{ 'id': e.id})}}">{{e.name}}</a>
+                        <a class="users-list-name" href="{{path('ProfileDetailsAdmin',{ 'id': e.id})}}">{{e.username}}</a>
                         <span class="users-list-date">{{e.createdAt|ago}}</span>
                       </li>
+                      {%endif%}
+                    {%endfor%}
                     {%endfor%}
                     </ul>
                     <!-- /.users-list -->

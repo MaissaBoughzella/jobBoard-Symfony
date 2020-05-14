@@ -6,10 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Company;
 use App\Repository\CompanyRepository;
-use App\Entity\Job;
-use App\Repository\JobRepository;
-use App\Entity\Employee;
 use App\Repository\EmployeeRepository;
+use App\Entity\Job;
+use App\Repository\UserRepository;
+use App\Entity\User;
+use App\Repository\JobRepository;
 use App\Entity\NewsLetter;
 use App\Repository\NewsLetterRepository;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
@@ -20,31 +21,29 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * Require ROLE_ADMIN for only this controller method.
- *
  * @IsGranted("ROLE_ADMIN")
  */
 class AdminController extends AbstractController
 {
 /**
  * Require ROLE_ADMIN for only this controller method.
- *
  * @IsGranted("ROLE_ADMIN")
  * @Route("/admin", name="admin")
 */
-    public function index(CompanyRepository $r1, JobRepository $r2, EmployeeRepository $r3, NewsLetterRepository $r4)
+    public function index(UserRepository $r1,JobRepository $r2, NewsLetterRepository $r4)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         // or add an optional message - seen by developers
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
 
-        $companies=$this->getDoctrine()->getRepository(Company::class)->findAll();
+        $companies=$this->getDoctrine()->getRepository(User::class)->findAll();
         $jobs=$this->getDoctrine()->getRepository(Job::class)->findAll();
-        $employees=$this->getDoctrine()->getRepository(Employee::class)->findAll();
+        $employees=$this->getDoctrine()->getRepository(User::class)->findAll();
         $subscribers=$this->getDoctrine()->getRepository(NewsLetter::class)->findAll();
         $job=$this->getDoctrine()->getRepository(Job::class)->findJ();
-        $comp=$this->getDoctrine()->getRepository(Company::class)->findC();
-        $emp=$this->getDoctrine()->getRepository(Employee::class)->findE();
+        $comp=$this->getDoctrine()->getRepository(User::class)->findU();
+        $emp=$this->getDoctrine()->getRepository(User::class)->findU();
         $new=$this->getDoctrine()->getRepository(NewsLetter::class)->findByN();
         return $this->render('admin/adminIndex.html.twig', [
             'c' => $companies, 'j' => $jobs, 'e' => $employees,'s' => $subscribers,'job'=>$job,'comp'=>$comp,
@@ -53,10 +52,15 @@ class AdminController extends AbstractController
     }
     /**
      * @Route("/admin/companies", name="companiesAdmin")
+     * @IsGranted("ROLE_ADMIN")
      */
-    public function companies(CompanyRepository $repository,Request $request, PaginatorInterface $paginator)
+    public function companies(UserRepository $repository,Request $request, PaginatorInterface $paginator)
     {
-        $companies=$this->getDoctrine()->getRepository(Company::class)->findAll();
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // or add an optional message - seen by developers
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+        $companies=$this->getDoctrine()->getRepository(User::class)->findAll();
         $company = $paginator->paginate(
             // Doctrine Query, not results
             $companies,
@@ -71,9 +75,14 @@ class AdminController extends AbstractController
     }
     /**
      * @Route("/admin/jobs", name="jobsAdmin")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function jobs(JobRepository $repository,Request $request, PaginatorInterface $paginator)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // or add an optional message - seen by developers
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $jobs=$this->getDoctrine()->getRepository(Job::class)->findAll();
         $job = $paginator->paginate(
             // Doctrine Query, not results
@@ -89,10 +98,15 @@ class AdminController extends AbstractController
     }
     /**
      * @Route("/admin/members", name="membersAdmin")
+     * @IsGranted("ROLE_ADMIN")
      */
-    public function members(EmployeeRepository $repository,Request $request, PaginatorInterface $paginator)
+    public function members(UserRepository $repository,Request $request, PaginatorInterface $paginator)
     {
-        $employees=$this->getDoctrine()->getRepository(Employee::class)->findAll();
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // or add an optional message - seen by developers
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+        $employees=$this->getDoctrine()->getRepository(User::class)->findAll();
         $employee = $paginator->paginate(
             // Doctrine Query, not results
             $employees,
@@ -108,10 +122,15 @@ class AdminController extends AbstractController
 
     /**
      *@Route("/admin/subscribers", name="subscribersAdmin")
+     *@IsGranted("ROLE_ADMIN")
      */
 
     public function subscribers(NewsLetterRepository $repository,Request $request, PaginatorInterface $paginator)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // or add an optional message - seen by developers
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $subscribers=$this->getDoctrine()->getRepository(NewsLetter::class)->findAll();
         $subscriber = $paginator->paginate(
             // Doctrine Query, not results
@@ -127,9 +146,14 @@ class AdminController extends AbstractController
     }
     /**
      * @Route("/admin/job/{id}", name="jobDetailsAdmin")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function detail($id,Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // or add an optional message - seen by developers
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
 
     $j=$this->getDoctrine()->getRepository(job::class)->find($id);
     
@@ -139,10 +163,15 @@ class AdminController extends AbstractController
 
       /**
      * @Route("/admin/member/{id}", name="ProfileDetailsAdmin")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function detailProfile($id,Request $request)
     {
-    $e=$this->getDoctrine()->getRepository(employee::class)->find($id);
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // or add an optional message - seen by developers
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+    $e=$this->getDoctrine()->getRepository(User::class)->find($id);
     // $employees=$this->getDoctrine()->getRepository(employee::class)->findByCat($e->getCategory());
     return $this->render('admin/ProfileDetails.html.twig',['employee'=>$e ,//'employees'=>$employees
     ]);
@@ -150,11 +179,16 @@ class AdminController extends AbstractController
 
     /**
     * @Route("/admin/member/delete/{id}", name="DeleteMember")
+    *@IsGranted("ROLE_ADMIN")
     */
     public function deleteM($id,Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // or add an optional message - seen by developers
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $entityManager = $this->getDoctrine()->getManager();
-        $e=$this->getDoctrine()->getRepository(employee::class)->find($id);
+        $e=$this->getDoctrine()->getRepository(User::class)->find($id);
         
         $entityManager->remove($e);
         $entityManager->flush();
@@ -164,11 +198,16 @@ class AdminController extends AbstractController
     }
     /**
     * @Route("/admin/companies/delete/{id}", name="DeleteCompany")
+    * @IsGranted("ROLE_ADMIN")
     */
     public function deleteC($id, Request $request, PaginatorInterface $paginator)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // or add an optional message - seen by developers
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $entityManager = $this->getDoctrine()->getManager();
-        $c=$this->getDoctrine()->getRepository(company::class)->find($id);
+        $c=$this->getDoctrine()->getRepository(User::class)->find($id);
         $entityManager->remove($c);
         $entityManager->flush();
         return $this->redirectToRoute('companiesAdmin', [
@@ -177,9 +216,14 @@ class AdminController extends AbstractController
     }
     /**
     * @Route("/admin/jobs/delete/{id}", name="DeleteJob")
+    * @IsGranted("ROLE_ADMIN")
     */
     public function deleteJ($id, Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // or add an optional message - seen by developers
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $entityManager = $this->getDoctrine()->getManager();
         $j=$this->getDoctrine()->getRepository(Job::class)->find($id);
         $entityManager->remove($j);
@@ -189,9 +233,14 @@ class AdminController extends AbstractController
 
     /**
     * @Route("/admin/subscribers/delete/{id}", name="DeleteSub")
+    * @IsGranted("ROLE_ADMIN")
     */
     public function deleteS($id, Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // or add an optional message - seen by developers
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $entityManager = $this->getDoctrine()->getManager();
         $s=$this->getDoctrine()->getRepository(NewsLetter::class)->find($id);
         $entityManager->remove($s);

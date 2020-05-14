@@ -9,19 +9,17 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Job;
-use App\Entity\Company;
 use App\Entity\Category;
 use App\Entity\TypeJob;
-use App\Entity\Employee;
 use App\Repository\JobRepository;
-use App\Repository\CompanyRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\TypeJobRepository;
-use App\Repository\EmployeeRepository;
 use App\Entity\NewsLetter;
+use App\Entity\User;
 use App\Entity\Resume;
 use App\Repository\NewsLetterRepository;
 use App\Repository\ResumeRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -74,7 +72,7 @@ class ProfileController extends AbstractController
         return $this->redirectToRoute("JobDetail");   
         }
 
-    $e=$this->getDoctrine()->getRepository(employee::class)->find($id);
+    $e=$this->getDoctrine()->getRepository(User::class)->find($id);
     return $this->render('profile/index.html.twig',['employee'=>$e ,'form' => $form->createView()]);
   }
 
@@ -108,8 +106,8 @@ class ProfileController extends AbstractController
   return $this->redirectToRoute("EditProfile");   
   }
 
-  $employee = new Employee();
-  $employee = $this->getDoctrine()->getRepository(Employee::class)->find($id);
+  $employee = new User();
+  $employee = $this->getDoctrine()->getRepository(User::class)->find($id);
 
   $formE=$this->createForm(ProfileFormType::class, $employee);
   $formE->handleRequest($request);
@@ -152,7 +150,7 @@ class ProfileController extends AbstractController
           return $this->redirectToRoute('profile', ['id'=>$id]);
         }
 
-    $emp=$this->getDoctrine()->getRepository(employee::class)->find($id);
+    $emp=$this->getDoctrine()->getRepository(User::class)->find($id);
     return $this->render('profile/edit.html.twig',['employee'=>$emp ,'form' => $form->createView(),'formE' => $formE->createView(),'formP' => $formP->createView()]);
   }
 

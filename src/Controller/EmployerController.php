@@ -13,12 +13,12 @@ use App\Entity\Job;
 use App\Entity\Company;
 use App\Entity\Category;
 use App\Entity\TypeJob;
-use App\Entity\Employee;
+use App\Entity\User;
 use App\Repository\JobRepository;
 use App\Repository\CompanyRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\TypeJobRepository;
-use App\Repository\EmployeeRepository;
+use App\Repository\UserRepository;
 use App\Entity\NewsLetter;
 use App\Entity\Resume;
 use App\Repository\NewsLetterRepository;
@@ -33,14 +33,14 @@ use App\Form\SearchEmployee;
 use App\Form\ResumeType;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
+use Symfony\Component\Security\Core\User\UserInterface;
 class EmployerController extends AbstractController
 {
     /**
      * @Route("/candidate", name="candidate")
      */
 
-    public function index(EmployeeRepository $repository,Request $request, PaginatorInterface $paginator)
+    public function index(UserInterface $user,UserRepository $repository,Request $request, PaginatorInterface $paginator)
     {   
 
         $data=new SearchData();
@@ -74,9 +74,10 @@ class EmployerController extends AbstractController
               $sn -> flush();
       return $this->redirectToRoute("candidate");   
       }
+      $e = $user->getId(); 
         
         return $this->render('employer/browseCandidate.html.twig', 
-        ['employees' => $jobs, 'form' => $form->createView(),'formS' => $formS->createView()]);
+        ['employees' => $jobs,'employee'=> $e, 'form' => $form->createView(),'formS' => $formS->createView()]);
     }
 
     /**
@@ -209,7 +210,7 @@ class EmployerController extends AbstractController
         return $this->redirectToRoute("JobDetail");   
         }
 
-    $e=$this->getDoctrine()->getRepository(employee::class)->find($id);
+    $e=$this->getDoctrine()->getRepository(User::class)->find($id);
     return $this->render('employer/CandidateDetail.html.twig',['employee'=>$e ,'form' => $form->createView()]);
   }
 

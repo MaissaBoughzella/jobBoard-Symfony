@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\CompanyRepository;
-use App\Entity\Company;
+use App\Repository\UserRepository;
+use App\Entity\User;
 use App\Entity\NewsLetter;
 use App\Repository\NewsLetterRepository;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -19,10 +19,10 @@ class AboutController extends AbstractController
     /**
      * @Route("/about", name="about")
      */
-    public function index(CompanyRepository $repository, Request $request)
+    public function index(UserRepository $repository, Request $request)
     {
 
-        $company=$this->getDoctrine()->getRepository(Company::class)->findAll();
+        $company=$this->getDoctrine()->getRepository(User::class)->findAll();
 
         $contact = new NewsLetter;     
         # Add form fields

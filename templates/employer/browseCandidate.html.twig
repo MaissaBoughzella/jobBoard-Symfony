@@ -29,6 +29,8 @@
 						<div class="col-xl-9 col-lg-8">
 							<ul class="post-job-bx">
 							{% for emp in employees %}
+							{% for role in emp.roles%}
+							{% if role=='ROLE_EMPLOYEE'%}
 								<li>
 									<a href="{{path('candidateDetail',{ 'id': emp.id})}}">
 										<div class="d-flex m-b30">
@@ -36,9 +38,9 @@
 												<span><img src="{{asset('uploads/photos/'~ emp.image) }}"/></span>
 											</div>
 											<div class="job-post-info">
-												<h4>{{ emp.name }} | {{ emp.prof }}</h4>
+												<h4>{{ emp.username }} | {{ emp.prof }}</h4>
 												<ul>
-													<li><i class="fa fa-map-marker"></i>{{ emp.address }}</li>
+													<li><i class="fa fa-map-marker"></i>{{ emp.location }}</li>
 													<li><i class="fa fa-usd"></i> {{ emp.type.name }}</li>
 													<li><i class="fa fa-clock-o"></i> Published {{ emp.createdAt.modify('-1 hours')|ago}}</li>
 												</ul>
@@ -57,6 +59,8 @@
 										</div>
 									</a>
 								</li>
+								{%endif%}
+								{%endfor%}
 								{%endfor%}
 							</ul>
 						<div class="pagination-bx m-t40">

@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Employee;
+use App\Entity\User;
 use App\Entity\TypeJob;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -51,7 +51,7 @@ class PhotoFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Employee::class,
+            'data_class' => User::class,
         ]);
     }
 }

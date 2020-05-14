@@ -54,7 +54,7 @@ class RegisterController extends Controller
       }
         // 1) build the form
         $user = new User;
-        $employee=new Employee;
+      
 
         $form1 = $this->createForm(UserType::class, $user);
 

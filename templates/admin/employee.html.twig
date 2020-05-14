@@ -29,6 +29,8 @@
         <div class="card-body pb-0">
           <div class="row d-flex align-items-stretch">
             {% for employee in employee%}
+              {% for role in employee.roles%}
+							{% if role=='ROLE_EMPLOYEE'%}
             <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch" >
               <div class="card bg-light">
                 <div class=" row card-header text-muted border-bottom-0">
@@ -40,11 +42,11 @@
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
-                      <h2 class="lead"><b>{{employee.name}}</b></h2>
+                      <h2 class="lead"><b>{{employee.username}}</b></h2>
                        <p class="text-muted text-sm"><b>Skills: </b> {{employee.comp1}} / {{employee.comp2}} / {{employee.comp3}} / {{employee.comp4}}</p>
                     
                         <ul class="ml-4 mb-0 fa-ul text-muted">
-                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span>{{employee.address}}</li>
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span>{{employee.location}}</li>
                         <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span>{{employee.email}}</li>
                       </ul>
                     </div>
@@ -69,7 +71,9 @@
                 </div>
             
               </div>
-            </div> {% endfor%}
+            </div> {% endif%}
+             {% endfor%}
+              {% endfor%}
         </div>
         <!-- /.card-body -->
         <div class="navigation" style="padding-left: 40%;">

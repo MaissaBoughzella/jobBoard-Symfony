@@ -16,8 +16,8 @@ security:
             anonymous: true
             form_login: 
                 login_path: login
-                check_path: login 
-                always_use_default_target_path: false       
+                check_path: login   
+                default_target_path: home   
                 provider: my_provider
             provider: users_in_memory
             guard:

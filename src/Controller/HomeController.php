@@ -19,16 +19,16 @@ use App\Repository\JobRepository;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Data\SearchData;
+use App\Form\SearchHomeCompany;
 use App\Form\SearchHome;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Security\Core\User\UserInterface;
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(UserInterface $user,UserRepository $repository,JobRepository $repo,Request $request,AuthenticationUtils $authenticationUtils)
+    public function index(UserRepository $repository,JobRepository $repo,Request $request,AuthenticationUtils $authenticationUtils)
     { 
       $company=$this->getDoctrine()->getRepository(User::class)->findAll();
 
@@ -61,18 +61,68 @@ class HomeController extends AbstractController
               $sn -> persist($contact);
               $sn -> flush();
       return $this->redirectToRoute("home");   
+
       }
-      $e = $user->getId(); 
-                 // get the login error if there is one
-                 $error = $authenticationUtils->getLastAuthenticationError();
-                 // last username entered by the user
-                 $lastUsername = $authenticationUtils->getLastUsername();
-                 if(TRUE== $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
-                   return $this->redirectToRoute('admin');
-                 }
+      // get the login error if there is one
+      $error = $authenticationUtils->getLastAuthenticationError();
+      // last username entered by the user
+      $lastUsername = $authenticationUtils->getLastUsername();
+     
+      if(TRUE== $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
+        return $this->redirectToRoute('admin');
+      }
+      if(TRUE== $this->get('security.authorization_checker')->isGranted('ROLE_COMPANY')){
+          return $this->redirectToRoute('company');
+      }
+     
         return $this->render('home/index.html.twig', 
-            array('form' => $form->createView(),'employee'=> $e, 'companies'=> $company,'jobs' => $jobs, 'formS' => $formS->createView())
+            array('form' => $form->createView(),'companies'=> $company,'jobs' => $jobs, 'formS' => $formS->createView())
         );
     }
 
+
+     /**
+     * @Route("/company", name="company")
+     */
+    public function indexCompany(UserRepository $repository,JobRepository $repo,Request $request,AuthenticationUtils $authenticationUtils)
+    { 
+      $emp=$this->getDoctrine()->getRepository(User::class)->findAll();
+      $data=new SearchData();
+      $data->page=$request->get('page',1);
+      $formS=$this->createForm(SearchHomeCompany::class, $data);
+      $formS->handleRequest($request);
+      $employees = $repository->findSearch($data);
+
+        $contact = new NewsLetter;     
+        # Add form fields
+          $form = $this->createFormBuilder($contact)
+          ->add('email', EmailType::class, array('label'=> 'Email','attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+          ->add('subscribe', SubmitType::class, array(
+            'label' => 'Subscribe',
+            'attr'=>array('style' => 'margin-top:-5%;')
+           // 'attr' => array('class' => 'site-button')
+        ))
+          ->getForm();
+        # Handle form response
+          $form->handleRequest($request);
+  
+          if($form->isSubmitted() &&  $form->isValid()){
+              $this->addFlash('success','You are subscribed!');
+              $email = $form['email']->getData();
+        # set form data   
+              $contact->setEmail($email);                             
+         # finally add data in database
+              $sn = $this->getDoctrine()->getManager();      
+              $sn -> persist($contact);
+              $sn -> flush();
+      return $this->redirectToRoute("company");   
+
+      }
+     
+        return $this->render('home/indexCompany.html.twig', 
+            array('form' => $form->createView(),'employee'=> $emp,'employees' => $employees, 'formS' => $formS->createView())
+        );
+    }
+
+    
   }

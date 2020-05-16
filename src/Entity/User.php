@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+//use Symfony\Component\Validator\Constraints\DateTime;
 /**
  * @ORM\Entity
  * @UniqueEntity(fields="email", message="Email already taken")
@@ -23,6 +24,10 @@ use Doctrine\Common\Collections\Collection;
  /**
   * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
   */
+  /**
+ * @Entity
+ * @Table(name="User")
+ */
 
  class User implements UserInterface
 {
@@ -115,7 +120,6 @@ use Doctrine\Common\Collections\Collection;
      * @ORM\Column(type="integer")
      */
     private $salary;
-
     /**
      * @ORM\Column(type="datetime" ,options={"default": "CURRENT_TIMESTAMP"})
      */
@@ -152,6 +156,8 @@ use Doctrine\Common\Collections\Collection;
 
 
     public function __construct() {
+        $this->type=1;
+        $this->created_at = new \DateTime();
         $this->jobs = new ArrayCollection();
     }
 
@@ -179,17 +185,7 @@ use Doctrine\Common\Collections\Collection;
 
         return $this;
     }
-    public function getGenre()
-    {
-        return $this->genre;
-    }
 
-    public function setGenre(string $genre): self
-    {
-        $this->genre = $genre;
-
-        return $this;
-    }
      /**
      * @return Collection|Job[]
      */
@@ -361,7 +357,6 @@ use Doctrine\Common\Collections\Collection;
 
         return $this;
     }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;

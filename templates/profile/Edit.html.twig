@@ -129,8 +129,14 @@
 
                          <div class="form-group">
                           <div class="col-xs-6">
-                              <label for="comp"><h5 style="margin-top: 12px;">Competence</h5></label>
-							{{form_row(formE.comp1,{ 'attr': {'class': 'form-control'}} )}}
+                              <label for="comp"><h5 style="margin-top: 12px;">Competences</h5></label>
+                              <div class="row" style="margin-left: 3px;">
+                              {{form_row(formE.comp1,{ 'attr': {'class': 'form-control col-xs-3'}} )}}
+                              {{form_row(formE.comp2,{ 'attr': {'class': 'form-control col-xs-3'}} )}}
+                              {{form_row(formE.comp3,{ 'attr': {'class': 'form-control col-xs-3'}} )}}
+                              {{form_row(formE.comp4,{ 'attr': {'class': 'form-control col-xs-3'}} )}}
+
+                            </div>
                           </div>
                          </div>
 

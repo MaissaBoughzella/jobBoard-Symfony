@@ -1,0 +1,163 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+    <!-- Content -->
+    <div class="page-content">
+		<!-- Section Banner -->
+		<div class="dez-bnr-inr dez-bnr-inr-md overlay-black-dark" style="background-image:url(images/main-slider/slide1.jpg);">
+            <div class="container">
+                <div class="dez-bnr-inr-entry align-m text-white">
+					<div class=" job-search-form">
+						<h2 class="text-center">The Easiest Way to Get Your New Job</h2>
+						<h3>Find Jobs, Employment & Career Opportunities</h3>
+						{{form_start(formS)}}
+							<div class="input-group">
+								{{form_row(formS.q)}}
+								<div class="input-group-prepend">
+									<button class="site-button" style="width:210px;">Search</button>
+								</div>
+							</div>
+						{{form_end(formS)}}
+					</div>
+				</div>
+            </div>
+        </div>
+		<!-- Section Banner END -->
+		<!-- Our Job -->
+		<div class="section-full bg-white content-inner-2">
+			<div class="container">
+				<div class="d-flex job-title-bx section-head">
+					<div class="mr-auto">
+						<h2 class="m-b5">Recent Candidates</h2>
+					</div>
+					<div class="align-self-end">
+						<a href="{{ path('candidate') }}" class="site-button button-sm">Browse All candidates <i class="fa fa-long-arrow-right"></i></a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-9">
+                    	{% for emp in employees %}
+                            
+                        <ul class="post-job-bx">
+                        {% for role in emp.roles%}
+							
+								<li >{% if role=='ROLE_EMPLOYEE'%}
+                            
+									<a href="{{path('candidateDetail',{ 'id': emp.id})}}" style="margin-top: 3%;">
+										<div class="d-flex m-b30">
+											<div class="job-post-company">
+												<span><img src="{{asset('uploads/photos/'~ emp.image) }}"/></span>
+											</div>
+											<div class="job-post-info">
+												<h4>{{ emp.username }} | {{ emp.prof }}</h4>
+												<ul>
+													<li><i class="fa fa-map-marker"></i>{{ emp.location }}</li>
+													<li><i class="fa fa-usd"></i> {{ emp.type.name }}</li>
+                                                    <li><i class="fa fa-clock-o"></i> Published {{ emp.createdAt|ago}}</li>
+													
+												</ul>
+											</div>
+										</div>
+										<div class="d-flex">
+											<div class="job-time mr-auto">
+												<span>{{ emp.comp1 }}</span>
+												<span>{{ emp.comp2 }}</span>
+												<span>{{ emp.comp3 }}</span>
+												<span>{{ emp.comp4 }}</span>
+											</div>
+											<div class="salary-bx">
+												<span>{{ emp.salary }}DT Per Hour</span>
+											</div>
+										</div>
+									</a>
+{%endif%}
+								</li>
+								
+									                                    
+								{%endfor%}
+								
+							</ul>	{%endfor%}			
+
+						<div class="pagination-bx m-t40">
+							{{ knp_pagination_render(employees) }}	
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<div class="sticky-top">
+							<div class="quote-bx">
+									<div class="quote-info">
+										<h4>Make a Difference with Your Online Offer!</h4>
+										<p>Your offer in minutes with JobBoard resume assistant is ready!</p>
+										<a href="#" class="site-button text-center" style="margin-left:25px">Create an Offer</a>
+									</div>
+								</div>
+								<br>
+							
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Our Job END -->
+		
+		<!-- Call To Action -->
+			<div class="section-full content-inner-2 call-to-action overlay-black-dark text-white text-center bg-img-fix" style="background-image: url(images/background/bg4.jpg);">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12">
+							<h2 class="m-b10">Make a Difference with Your Online Offer!</h2>
+							<p class="m-b0">Your offer in minutes with JobBoard resume assistant is ready!</p>
+							<a href="#" class="site-button m-t20 outline outline-2 radius-xl">Create an Offer</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- Call To Action END -->
+			
+		
+		<!-- Our Latest Blog -->
+			<div class="section-full content-inner-2 overlay-white-middle">
+				<div class="container">
+					<div class="section-head text-black text-center">
+						<h2 class="text-uppercase m-b0">candidates</h2>
+						<p>JobBoard.com offers companies and recruiters high-level services allowing them to better manage the recruitment process and to succeed in their HR strategies.</p>
+					</div>
+					<div class="blog-carousel owl-carousel owl-btn-center-lr owl-btn-3 owl-theme owl-btn-center-lr owl-btn-1">
+					{% for emp in employee %}
+                      {% for role in emp.roles%}
+                        {% if role=='ROLE_EMPLOYEE'%}
+						<div class="item">
+							<div class="blog-post blog-grid blog-style-1">
+								<div class="dez-post-media dez-img-effect radius-sm"> <a href="#"><img src="{{asset(emp.image)}}" alt="" style="height: 300px"></a> </div>
+								<div class="dez-info">
+									 <div class="dez-post-meta">
+										<ul class="d-flex align-items-center">
+											<li class="post-date"><i class="fa fa-map-marker"></i>{{emp.location}}</li>
+										</ul>
+									</div>
+									<div class="dez-post-title ">
+										<h5 class="post-title font-20"><a href="#">{{emp.username}}</a></h5>
+									</div>
+									<div class="dez-post-text">
+										<p>{{emp.prof}}</p>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+                        {%endif%}
+				{%endfor%}		
+				{%endfor%}		
+					</div>
+				</div>
+			
+			</div>
+				<div class="dez-post-readmore blog-share text-center" > 
+					<a  style="width:300px" href="{{ path('candidate') }}" title="READ MORE" rel="bookmark" class="site-button outline">MORE CANDIDATES</a>
+				</div>
+			<!-- Our Latest Blog -->	
+			</div>
+{% endblock %}

@@ -40,7 +40,7 @@ class EmployerController extends AbstractController
      * @Route("/candidate", name="candidate")
      */
 
-    public function index(UserInterface $user,UserRepository $repository,Request $request, PaginatorInterface $paginator)
+    public function index(UserRepository $repository,Request $request, PaginatorInterface $paginator)
     {   
 
         $data=new SearchData();
@@ -74,10 +74,10 @@ class EmployerController extends AbstractController
               $sn -> flush();
       return $this->redirectToRoute("candidate");   
       }
-      $e = $user->getId(); 
+ 
         
         return $this->render('employer/browseCandidate.html.twig', 
-        ['employees' => $jobs,'employee'=> $e, 'form' => $form->createView(),'formS' => $formS->createView()]);
+        ['employees' => $jobs, 'form' => $form->createView(),'formS' => $formS->createView()]);
     }
 
     /**

@@ -28,8 +28,11 @@ class ProfileFormType extends AbstractType
         ->add('education', TextareaType::class,[ 'label'=>false], array('attr' => array('class' => 'form-control')))
         ->add('experience', TextareaType::class, [ 'label'=>false], array('attr' => array('class' => 'form-control')))
         ->add('comp1', TextType::class,[ 'label'=>false], array('attr' => array('class' => 'form-control')))
-        ->add('salary', NumberType::class,[ 'label'=>false], array('attr' => array('class' => 'form-control')))
-        ->add('password', PasswordType::class,[ 'label'=>false], array('attr' => array('class' => 'form-control')))
+        ->add('comp2', TextType::class,[ 'label'=>false], array('attr' => array('class' => 'form-control')))
+        ->add('comp3', TextType::class,[ 'label'=>false], array('attr' => array('class' => 'form-control')))
+        ->add('comp4', TextType::class,[ 'label'=>false], array('attr' => array('class' => 'form-control')))
+        ->add('salary', NumberType::class,['label'=>false], array('attr' => array('class' => 'form-control')))
+        ->add('password', PasswordType::class,['label'=>false], array('attr' => array('class' => 'form-control')))
         ->add('type',EntityType::class,[
           'label'=>false,
           'required'=>false,

@@ -33,20 +33,39 @@
 				</div>
                 <div class="row">
 					<div class="col-md-12 m-b30">
-						<div class="p-a30 border-1  max-w500 m-auto" style="height:720px">
+						<div class="p-a30 border-1  max-w500 m-auto" style="height:103%">
 							<div class="tab-content">
 							
 									<h4 class="font-weight-700">PERSONAL INFORMATION</h4>
 									<p class="font-weight-600">If you have an account with us, please log in.</p>
 									{{ form_start(form1) }}
-
+									<div class="form-group">
+										<label class="font-weight-700">Username</label>
 										{{ form_row(form1.username) }}
+									</div>
+									<div class="form-group">
+										<label class="font-weight-700">E-mail</label>
 										{{ form_row(form1.email) }}
+									</div>
+									<div class="form-group">
+										<label class="font-weight-700">Location</label>
 										{{ form_row(form1.location) }}
+									</div>
+									<div class="form-group">
+										<label class="font-weight-700">Phone</label>
 										{{ form_row(form1.phone) }}
+									</div>
+									<div class="form-group">
 										{{ form_row(form1.roles) }}
+									</div>
+									<div class="form-group">
+										<label class="font-weight-700">Category</label>
+										{{ form_row(form1.category) }}
+									</div>
+									<div class="form-group">
 										{{ form_row(form1.password) }}
-										<br><button class="site-button pull-left button-lg">Create</button>
+									</div>
+									<button class="site-button pull-left button-lg">Create</button>
 								{{ form_end(form1) }}
 							</div>
 						</div>

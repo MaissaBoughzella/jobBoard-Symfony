@@ -37,15 +37,16 @@ use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 //use Symfony\Component\Validator\Constraints\DateTime;
 class ProfileController extends AbstractController
 {
 
     /**
-     * @Route("/profile/{id}", name="profile")
+     * @Route("/profile", name="profile")
     */
-    public function detail($id,Request $request)
+    public function detail(TokenStorageInterface $tokenStorage, Request $request)
     {
     $contact = new NewsLetter;     
           # Add form fields
@@ -71,9 +72,8 @@ class ProfileController extends AbstractController
                 $sn -> flush();
         return $this->redirectToRoute("JobDetail");   
         }
-
-    $e=$this->getDoctrine()->getRepository(User::class)->find($id);
-    return $this->render('profile/index.html.twig',['employee'=>$e ,'form' => $form->createView()]);
+        $e=$tokenStorage->getToken()->getUser();
+        return $this->render('profile/index.html.twig',['employee'=>$e ,'form' => $form->createView()]);
   }
 
   /**

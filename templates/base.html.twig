@@ -79,7 +79,7 @@
 					{% if is_granted('ROLE_EMPLOYEE') or is_granted('ROLE_COMPANY')%}
                     <div class="extra-nav" style="margin-right: -75px;">
                           <div class="extra-cell" style="margin-right:40px">
-							<a href="{{path('profile',{ 'id': employee})}}" class="site-button"><i class="fa fa-user"></i><span>  </span>My Account</a>
+							<a href="{{ path('profile') }}" class="site-button"><i class="fa fa-user"></i><span>  </span>My Account</a>
 							<a href="{{ path('app_logout') }}" class="site-button"><i class="fa fa-sign-out"></i></i><span>  </span>Logout</a>
 						</div>
                     </div>
@@ -102,7 +102,7 @@
 					 <!-- main nav -->
                     <div class="header-nav navbar-collapse collapse justify-content-start" id="navbarNavDropdown">
                         <ul class="nav navbar-nav">
-							<li class="active" style="margin: 0 20px 0 20px;"><a href="{{ path('home') }}">Home</a></li>
+							<li class="active" style="margin: 0 20px 0 20px;"><a href="{{ path('home')}}">Home</a></li>
 							<li style="margin: 0 20px 0 0;"><a href="{{ path('about') }}" class="dez-page">About Us</a></li>
 							<li style="margin: 0 20px 0 0;"><a href="{{ path('job') }}" class="dez-page">Browse Job</a></li>
 							<li style="margin: 0 20px 0 0;"><a href="{{ path('companies') }}" class="dez-page">Companies</a></li>
@@ -118,7 +118,7 @@
 							 <!-- main nav -->
                     <div class="header-nav navbar-collapse collapse justify-content-start" id="navbarNavDropdown">
                         <ul class="nav navbar-nav">
-							<li class="active" style="margin: 0 20px 0 20px;"><a href="{{ path('home') }}">Home</a></li>
+							<li class="active" style="margin: 0 20px 0 20px;"><a href="{{ path('home')}}">Home</a></li>
 							<li style="margin: 0 20px 0 0;"><a href="{{ path('about') }}" class="dez-page">About Us</a></li>
 							<li style="margin: 0 20px 0 0;"><a href="{{ path('candidate') }}" class="dez-page">Browse Candidate</a></li>
 							<li style="margin: 0 20px 0 0;"><a href="#" class="dez-page">Jobs</a></li>

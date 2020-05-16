@@ -12,16 +12,25 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Category;
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class,['attr'=>['class'=>'form-control']])
-            ->add('username', TextType::class,['attr'=>['class'=>'form-control']])
-            ->add('location', TextType::class,['attr'=>['class'=>'form-control']])
-            ->add('phone', TextType::class,['attr'=>['class'=>'form-control']])
+            ->add('email', EmailType::class,['label'=>false,'attr'=>['class'=>'form-control']])
+            ->add('username', TextType::class,['label'=>false,'attr'=>['class'=>'form-control']])
+            ->add('location', TextType::class,['label'=>false,'attr'=>['class'=>'form-control']])
+            ->add('phone', TextType::class,['label'=>false,'attr'=>['class'=>'form-control']])
+            ->add('category',EntityType::class,[
+                'label'=>false,
+                'required'=>false,
+                'class'=> Category::class,
+                'choice_label' => 'name',
+                'multiple'=> false,
+
+            ])
             ->add('roles', CollectionType::class, [
                 'entry_type'   => ChoiceType::class,
                 'entry_options'  => [

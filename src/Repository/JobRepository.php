@@ -52,29 +52,31 @@ class JobRepository extends ServiceEntityRepository
     }
     
 
-    /*
-    public function findOneBySomeField($value): ?Job
-    {
-        return $this->createQueryBuilder('j')
-            ->andWhere('j.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+    
+    // public function findOneById($id): ?Job
+    // {
+    //     return $this->createQueryBuilder('j')
+    //         ->andWhere('j.exampleField = :val')
+    //         ->setParameter('val', $value)
+    //         ->getQuery()
+    //         ->getOneOrNullResult()
+    //     ;
+    // }
+    
     
     /**
      * @return PaginationInterface
      */
-    public function findSearch(SearchData $search ): PaginationInterface
+    public function findSearch(SearchData $search , $id): PaginationInterface
     {
        
         $query=$this->createQueryBuilder('j')
         ->select('j')
         ->orderBy('j.createdAt', 'DESC')
         ->leftJoin('j.category', 'c')
-        ->leftJoin('j.type', 't');
+        ->leftJoin('j.type', 't')
+        ->andWhere('j.user = :id')
+        ->setParameter('id', $id);
         if(!empty($search->q))
         { 
             $query=$query

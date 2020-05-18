@@ -140,7 +140,7 @@ class CandidateController extends AbstractController
                 $sn -> flush();
         return $this->redirectToRoute("JobDetail");   
         }
-        $e = $user->getId(); 
+     
 
     $j=$this->getDoctrine()->getRepository(job::class)->find($id);
     

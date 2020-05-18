@@ -137,8 +137,7 @@ use Doctrine\Common\Collections\Collection;
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TypeJob", inversedBy="users")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypeJob", inversedBy="users",cascade={"persist"})
      */
     private $type;
 
@@ -156,7 +155,7 @@ use Doctrine\Common\Collections\Collection;
 
 
     public function __construct() {
-        $this->type=1;
+        $this->type= $this->getType();
         $this->created_at = new \DateTime();
         $this->jobs = new ArrayCollection();
     }
@@ -179,12 +178,12 @@ use Doctrine\Common\Collections\Collection;
         return $this->id;
     }
 
-    public function setId(integer $id): self
-    {
-        $this->id = $id;
+    // public function setId(integer $id): self
+    // {
+    //     $this->id = $id;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
      /**
      * @return Collection|Job[]

@@ -33,8 +33,9 @@ class TypeJob
      */
     private $jobs;
 
-    public function __construct()
-    {
+    public function __construct($id,string $name)
+    {   $this->id=$id;
+        $this->name=$name;
         $this->users = new ArrayCollection();
         $this->jobs = new ArrayCollection();
     }

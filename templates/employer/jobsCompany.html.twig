@@ -1,0 +1,155 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EmployerController!{% endblock %}
+
+{% block body %}
+<!-- Content -->
+    <div class="page-content bg-white">
+        <!-- inner page banner -->
+        <div class="dez-bnr-inr overlay-black-middle" style="background-image:url(images/banner/bnr1.jpg);">
+            <div class="container">
+                <div class="dez-bnr-inr-entry">
+                    <h1 class="text-white">Browse Jobs</h1>
+					<!-- Breadcrumb row -->
+					<div class="breadcrumb-row">
+						<ul class="list-inline">
+							<li><a href="{{path('home')}}">Home</a></li>
+							<li>Browse Jobs</li>
+						</ul>
+					</div>
+					<!-- Breadcrumb row END -->
+                </div>
+            </div>
+        </div>
+        <!-- inner page banner END -->
+        <!-- contact area -->
+        <div class="content-block">
+			<!-- Browse Jobs -->
+			<div class="section-full bg-white browse-job content-inner-2">
+				<div class="container">
+					<div class="row">
+						<div class="col-xl-9 col-lg-8">
+
+							<h5 class="widget-title font-weight-700 text-uppercase">Recent Jobs</h5>
+                            <a href="#" class="site-button" style="margin-top: -9%;margin-left: 86.7%;"data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i><span>  </span>Add Job</a>
+							<ul class="post-job-bx">
+							{% for job in jobs %}
+								<li>
+                                    <div class="row">
+										<div class="d-flex m-b30 col-md-10">
+                                        <a href="{{path('JobDetail',{'id': job.id})}}" style:"cursor:pointer"><h4>{{ job.name }}</h4>
+											<div class="job-post-company">
+												<span><img src="images/logo/icon1.png"/></span>
+											</div>
+                                            
+											<div class="job-post-info">
+									            <h4>{{ job.name }}</h4>       
+												<ul>
+													<li><i class="fa fa-map-marker"></i> {{ job.location }}</li>
+													<li><i class="fa fa-bookmark-o"></i>{{ job.type.name }}</li>
+													<li><i class="fa fa-clock-o"></i> Published {{ job.createdAt|ago}}</li>
+												</ul>
+												
+											</div>
+										</div>
+                                     <div class="d-flex m-b30 col-md-2">
+                                     <a href={{path('DeleteJob',{ 'id': job.id})}}>
+                                       <button class="btn btn-danger" style="margin-left: 55%;height: 70%;"><i class="fa fa-trash"></i></button>
+                                     </a>
+                                     </div>
+
+                                  </div>
+										<div class="d-flex">
+                                        
+											<div class="job-time mr-auto">
+												<span>{{ job.type.name }}</span>
+											</div>
+											<div class="salary-bx">
+												<span>{{ job.wage }} DT</span>
+											</div>
+                                            </a>
+										</div>
+								</li>
+								{%endfor%}
+							</ul>
+							<div class="pagination-bx m-t40">
+							{{ knp_pagination_render(jobs) }}	
+							</div>
+						</div>
+		                <div class="col-xl-3 col-lg-4">
+						{% include 'filter.html.twig' with {formS:formS} only %}
+						</div>
+				</div>
+			</div>
+            <!-- Browse Jobs END -->
+		</div>
+    </div>
+    <!-- Modal add job -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background:white;">
+        <h5 class="modal-title" style="color: black;" id="exampleModalLabel">New Job</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{form_start(formAdd)}}
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            {{form_row(formAdd.name)}}
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Location:</label>
+            {{form_row(formAdd.location)}}
+          </div>
+         <div class="form-group">
+            <label for="message-text" class="col-form-label">Wage:</label>
+            {{form_row(formAdd.wage)}}
+          </div>
+        <div class="form-group">
+        <label for="message-text" class="col-form-label">Experience required:</label>
+            {{form_row(formAdd.experience)}}
+        </div>
+        <div class="form-group">
+            <label for="message-text" class="col-form-label">Offer:</label>
+            {{form_row(formAdd.offre)}}
+          </div>
+        <div class="form-group">
+            <label for="message-text" class="col-form-label">Description:</label>
+            {{form_row(formAdd.description)}}
+        </div>
+        <div class="form-group">
+            <label for="message-text" class="col-form-label">requirements:</label>
+            {{form_row(formAdd.req)}}
+            {{form_row(formAdd.req2)}}
+            {{form_row(formAdd.req3)}}
+            {{form_row(formAdd.req4)}}
+        </div>
+        <div class="form-group">
+            <label for="message-text" class="col-form-label">Category:</label>
+            {{form_row(formAdd.category)}}
+        </div>
+        <div class="form-group">
+            <label for="message-text" class="col-form-label">Type:</label>
+            {{form_row(formAdd.type)}}
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success" style="width: 16%;">Add</button>
+      </div>
+      {{form_end(formAdd)}}
+    </div>
+  </div>
+</div>
+    <!-- Content END-->
+
+
+
+
+
+
+{% endblock %}

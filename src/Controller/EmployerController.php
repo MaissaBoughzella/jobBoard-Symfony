@@ -30,10 +30,12 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use App\Data\SearchData;
 use App\Form\SearchForm;
 use App\Form\SearchEmployee;
+use App\Form\AddJobFormType;
 use App\Form\ResumeType;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 class EmployerController extends AbstractController
 {
     /**
@@ -214,4 +216,72 @@ class EmployerController extends AbstractController
     return $this->render('employer/CandidateDetail.html.twig',['employee'=>$e ,'form' => $form->createView()]);
   }
 
+      /**
+     * @Route("/jobs", name="jobsCompany")
+     */
+    public function jobs(TokenStorageInterface $tokenStorage,JobRepository $repository,Request $request, PaginatorInterface $paginator)
+    {   $c=$tokenStorage->getToken()->getUser();
+        $data=new SearchData();
+        $data->page=$request->get('page',1);
+        $formS=$this->createForm(SearchForm::class, $data);
+        $formS->handleRequest($request);
+        $jobs = $repository->findSearch($data,$c);
+       
+        $contact = new NewsLetter;     
+        # Add form fields
+          $form = $this->createFormBuilder($contact)
+          ->add('email', EmailType::class, array('label'=> 'Email','attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+          ->add('subscribe', SubmitType::class, array(
+            'label' => 'Subscribe',
+            'attr'=>array('style' => 'margin-top:-5%;')
+           // 'attr' => array('class' => 'site-button')
+        ))
+          ->getForm();
+        # Handle form response
+          $form->handleRequest($request);
+  
+          if($form->isSubmitted() &&  $form->isValid()){
+              $this->addFlash('success','You are subscribed!');
+              $email = $form['email']->getData();
+        # set form data   
+              $contact->setEmail($email);                             
+         # finally add data in database
+              $sn = $this->getDoctrine()->getManager();      
+              $sn -> persist($contact);
+              $sn -> flush();
+      return $this->redirectToRoute("jobsCompany");   
+      }
+       $job=new Job();
+       $formAdd = $this->createForm(AddJobFormType::class, $job);
+       $formAdd->handleRequest($request);
+       if ($formAdd->isSubmitted() && $formAdd->isValid()) {
+
+          // 4) save the User!
+          $job->setUser($c);
+          $entityManager = $this->getDoctrine()->getManager();
+          $entityManager->persist($job);
+          $entityManager->flush();
+          return $this->redirectToRoute('jobsCompany');
+       }
+      
+        
+        return $this->render('employer/jobsCompany.html.twig', 
+        ['jobs' => $jobs, 'company'=>$c,'form' => $form->createView(),'formAdd' => $formAdd->createView(),'formS' => $formS->createView()]);
+    }
+
+    /**
+    * @Route("/delete/{id}", name="DeleteJob")
+    */
+    public function deleteJob($id,Request $request)
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $e=$this->getDoctrine()->getRepository(Job::class)->find($id);
+        
+        $entityManager->remove($e);
+        $entityManager->flush();
+        return $this->redirectToRoute('jobsCompany', [
+            'job' => $e
+        ]);
+    }
 }

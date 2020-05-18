@@ -13,7 +13,7 @@ class Job
 {
     public function __construct()
     {
-        $this->createdAt = new DateTime();
+        $this->createdAt = new \DateTime();
         $this->user = new ArrayCollection();
     }
     /**
@@ -39,7 +39,7 @@ class Job
     private $createdAt;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      */
     private $wage;
 

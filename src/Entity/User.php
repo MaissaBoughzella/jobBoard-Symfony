@@ -153,10 +153,7 @@ use Doctrine\Common\Collections\Collection;
 
 
     public function __construct() {
-<<<<<<< HEAD
         //$this->type= new TypeJob();
-=======
->>>>>>> 89a9b47b5a014a3693c4c96950d8df2cd266be33
         $this->created_at = new \DateTime();
         $this->jobs = new ArrayCollection();
     }

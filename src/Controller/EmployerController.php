@@ -225,7 +225,7 @@ class EmployerController extends AbstractController
         $data->page=$request->get('page',1);
         $formS=$this->createForm(SearchForm::class, $data);
         $formS->handleRequest($request);
-        $jobs = $repository->findSearch($data,$c);
+        $jobs = $repository->findSearch1($data,$c);
        
         $contact = new NewsLetter;     
         # Add form fields
@@ -284,4 +284,33 @@ class EmployerController extends AbstractController
             'job' => $e
         ]);
     }
+
+
+    /**
+   * @Route("edit/{id}", name="EditJob")
+   */
+  public function Edit($id,Request $request)
+  {
+   
+
+  $job = new Job();
+  $job = $this->getDoctrine()->getRepository(Job::class)->find($id);
+
+  $formE=$this->createForm(AddJobFormType::class, $job);
+  $formE->handleRequest($request);
+    if($formE->isSubmitted() && $formE->isValid()) {
+
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->flush();
+
+      return $this->redirectToRoute('JobDetail', ['id'=>$id]);
+    }
+   
+  
+          $entityManager = $this->getDoctrine()->getManager();
+          $entityManager->flush();
+  
+
+    return $this->render('candidate/JobDetail.html.twig',['job'=>$job ,'formE' => $formE->createView()]);
+  }
 }

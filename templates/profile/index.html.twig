@@ -34,27 +34,43 @@
 											<img class="rounded-circle m-b10" style="width: 50%;" src="{{asset('uploads/photos/'~ employee.image) }}" alt="">
 										
                                         <h5 class="text-center">{{employee.username}}</h5>
+                                        {%if is_granted('ROLE_EMPLOYEE')%}
                                         <p class="text-muted text-center">{{employee.prof}}</p>  
                                         <ul class="text-left" style="margin-left:6%">
                                             <li>
                                                 <i class="ti-desktop"></i><strong class="font-weight-700 text-black">Job Type</strong>
                                                 <span class="text-black-light">{{employee.type.name}}</span>
                                             </li>
+                                        
                                              <li>
                                                 <i class="ti-settings"></i><strong class="font-weight-700 text-black">Job Category</strong>
                                                 <span class="text-black-light">{{employee.category.name}}</span>
-                                            </li> 
+                                            </li>
                                             <li>
                                                 <i class="ti-money"></i><strong class="font-weight-700 text-black">Salary</strong>
                                                 <span class="text-black-light">{{employee.salary}}DT Per Hour</span>
                                             </li>  
 												
 									    </ul>
+                                        {%elseif is_granted('ROLE_COMPANY')%}
+                                        <ul class="text-left" style="margin-left:6%">
+                                             <li>
+                                                <i class="ti-settings"></i><strong class="font-weight-700 text-black">Job Category</strong>
+                                                <span class="text-black-light">{{employee.category.name}}</span>
+                                            </li>
+                                             
+												
+									    </ul>
+                                        {%endif%}
 									</div>
                                     </div>
 									<div class="col-lg-12 col-md-6">
 										<div class="widget bg-white p-lr20 p-t20  widget_getintuch radius-sm">
+                                            {%if is_granted('ROLE_EMPLOYEE')%}
 											<h4 class="text-black font-weight-700 p-t10 m-b15">Candidate Info</h4>
+                                            {%elseif is_granted('ROLE_COMPANY')%}
+                                            <h4 class="text-black font-weight-700 p-t10 m-b15">Company Info</h4>
+                                            {%endif%}
 											<ul>
 												<li>
                                                     <i class="ti-location-pin"></i><strong class="font-weight-700 text-black">Address</strong>
@@ -76,6 +92,7 @@
 						</div>
 						<div class="col-lg-8">
 							<div class="job-info-box">
+                            {%if is_granted('ROLE_EMPLOYEE')%}
 								<h5 class="font-weight-600">Education</h5>
 								<div class="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>
 								<p>{{employee.education}}</p>
@@ -93,7 +110,13 @@
 								
 								</ul>
 								<a href="{{path('EditProfile',{ 'id': employee.id})}}" class="site-button">Edit Profile</a>
-							</div>
+                                {%elseif is_granted('ROLE_COMPANY')%}
+                                <h5 class="font-weight-600">Description</h5>
+								<div class="dez-divider divider-2px bg-gray-dark mb-4 mt-0"></div>
+								<p>{{employee.description}}</p>
+								<a href="{{path('EditCompany',{ 'id': employee.id})}}" class="site-button">Edit Profile</a>
+                                {%endif%}
+                            </div>
 						</div>
 					</div>
 				</div>

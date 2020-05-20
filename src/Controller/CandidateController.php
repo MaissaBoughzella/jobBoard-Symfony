@@ -27,6 +27,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use App\Data\SearchData;
 use App\Form\SearchCompany;
 use App\Form\SearchForm;
+use App\Form\AddJobFormType;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 class CandidateController extends AbstractController
 {
@@ -142,10 +143,27 @@ class CandidateController extends AbstractController
         }
      
 
-    $j=$this->getDoctrine()->getRepository(job::class)->find($id);
+  $j=$this->getDoctrine()->getRepository(job::class)->find($id);
+    
+  $job = new Job();
+  $job = $this->getDoctrine()->getRepository(Job::class)->find($id);
+
+  $formE=$this->createForm(AddJobFormType::class, $job);
+  $formE->handleRequest($request);
+    if($formE->isSubmitted() && $formE->isValid()) {
+
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->flush();
+
+      return $this->redirectToRoute('JobDetail', ['id'=>$id]);
+    }
+   
+  
+          $entityManager = $this->getDoctrine()->getManager();
+          $entityManager->flush();
     
     $jobs=$this->getDoctrine()->getRepository(job::class)->findByCat($j->getCategory());
-    return $this->render('candidate/JobDetail.html.twig',['job'=>$j ,'jobs'=>$jobs,'form' => $form->createView()]);
+    return $this->render('candidate/JobDetail.html.twig',['job'=>$j ,'j'=>$job,'jobs'=>$jobs,'form' => $form->createView(),'formE' => $formE->createView()]);
   }
 
 

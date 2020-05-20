@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Category;
 class UserType extends AbstractType
@@ -44,11 +45,12 @@ class UserType extends AbstractType
                 ],
                 
       ])
-                
-                
-            
-        
-            ->add('password',PasswordType::class,['attr'=>['class'=>'form-control']]);
+      ->add('image', HiddenType::class, [
+        'data' => 'profile.jpg',
+
+    ])
+ 
+    ->add('password',PasswordType::class,['attr'=>['class'=>'form-control']]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

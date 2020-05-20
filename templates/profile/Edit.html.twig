@@ -28,7 +28,7 @@
     <div class="row">
   		<div class="col-sm-3"><!--left col-->
               
-
+     {% if is_granted('ROLE_EMPLOYEE') %}
       <div class="text-center">
         <img src="{{asset('uploads/photos/'~ employee.image) }}" class="avatar img-circle" alt="avatar">
         <h4 class="text-center" style="margin-top:10px">{{employee.username}}</h4>
@@ -53,7 +53,6 @@
               
           <div class="tab-content">
             <div class="tab-pane active">
-               
                  {{form_start(formE)}}
                   <br>
                   
@@ -71,13 +70,13 @@
                           
                           <div class="col-xs-6">
                               <label for="email"><h5>Email</h5></label>
-							{{form_row(formE.email,{ 'attr': {'class': 'form-control'}} )}}
+						                	{{form_row(formE.email,{ 'attr': {'class': 'form-control'}} )}}
                           </div>
                       </div>
                         <div class="form-group">
                           <div class="col-xs-6">
                               <label for="phone"><h5 style="margin-top: 12px;">Phone</h5></label>
-							{{form_row(formE.phone,{ 'attr': {'class': 'form-control'}} )}}
+							                {{form_row(formE.phone,{ 'attr': {'class': 'form-control'}} )}}
                           </div>
                         </div>
                       <div class="form-group">
@@ -85,7 +84,7 @@
                       
                           <div class="col-xs-6">
                               <label for="email"><h5 style="margin-top: 12px;">Location</h5></label>
-							{{form_row(formE.location,{ 'attr': {'class': 'form-control'}} )}}
+							                {{form_row(formE.location,{ 'attr': {'class': 'form-control'}} )}}
                           </div>
                       </div>
 
@@ -104,12 +103,12 @@
                          <div class="form-group">
                           <div class="col-xs-6">
                               <label for="occ"><h5>Occupation</h5></label>
-							{{form_row(formE.prof,{ 'attr': {'class': 'form-control'}} )}}
+						                	{{form_row(formE.prof,{ 'attr': {'class': 'form-control'}} )}}
                           </div>
                          </div>
                           <div class="col-xs-6">
                               <label for="occ"><h5>Job Type</h5></label>
-							{{form_row(formE.type,{ 'attr': {'style': 'height:20px'}} )}}
+							                {{form_row(formE.type,{ 'attr': {'style': 'height:20px'}} )}}
                          </div>
 
                          <div class="form-group">
@@ -123,7 +122,7 @@
                          <div class="form-group">
                           <div class="col-xs-6">
                               <label for="experience"><h5 style="margin-top: 12px;">Experience</h5></label>
-							{{form_row(formE.experience,{ 'attr': {'class': 'form-control'}} )}}
+							                {{form_row(formE.experience,{ 'attr': {'class': 'form-control'}} )}}
                           </div>
                          </div>
 
@@ -143,12 +142,10 @@
                         <div class="form-group">
                           <div class="col-xs-6">
                               <label for="salary"><h5 style="margin-top: 12px;">Salary Per Hour (DT)</h5></label>
-							{{form_row(formE.salary,{ 'attr': {'class': 'form-control'}} )}}
+						                	{{form_row(formE.salary,{ 'attr': {'class': 'form-control'}} )}}
                           </div>
                          </div>
                         </div>
-                      
-
                       <div class="form-group">
                            <div class="col-xs-12">
                                 <br>
@@ -161,7 +158,95 @@
                             </div>
                       </div>
               	{{form_end(formE)}}
-               
+               {%elseif is_granted('ROLE_COMPANY')%}
+              <div class="text-center">
+                      <img src="{{asset('uploads/photos/'~ company.image) }}" class="avatar img-circle" alt="avatar">
+                      <h4 class="text-center" style="margin-top:10px">{{company.username}}</h4>
+              {{form_start(formP)}}
+                      <div style="margin-left:-30px" >
+                      {{form_row(formP.image,{ 'attr': {'class': 'text-center center-block file-upload','style':'height:200px,width:200px'}} )}}
+                      </div>
+                    </div>
+                    <div class="form-group">
+                                        <div class="col-xs-12">
+                                              <br>
+                                              {{form_row(formP.photo,{ 'attr': {'class': 'btn','style':'margin-top: -45%;margin-left: 72%;height: 40px;width: 100px;'}} )}}
+                                          </div>
+                                    </div>
+              {{form_end(formP)}}
+                    </hr><br>      
+                        
+                      </div><!--/col-3-->
+                      <div class="col-sm-9">
+          <div class="tab-content">
+            <div class="tab-pane active">
+                {{form_start(formC)}}
+                  <br>
+                  
+                    <h4>Contact</h4>
+                    <hr>
+                      <div class="form-group">
+                          <div class="col-xs-6">
+                              <label for="first_name"><h5>Name</h5></label>
+						                	{{form_row(formC.username,{ 'attr': {'class': 'form-control'}} )}}
+
+                          </div>
+                      </div>
+          
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                              <label for="email"><h5>Email</h5></label>
+						                	{{form_row(formC.email,{ 'attr': {'class': 'form-control'}} )}}
+                          </div>
+                      </div>
+                        <div class="form-group">
+                          <div class="col-xs-6">
+                              <label for="phone"><h5 style="margin-top: 12px;">Phone</h5></label>
+							                {{form_row(formC.phone,{ 'attr': {'class': 'form-control'}} )}}
+                          </div>
+                        </div>
+                      <div class="form-group">
+
+                      
+                          <div class="col-xs-6">
+                              <label for="email"><h5 style="margin-top: 12px;">Location</h5></label>
+							                {{form_row(formC.location,{ 'attr': {'class': 'form-control'}} )}}
+                          </div>
+                      </div>
+
+                       <div class="form-group">
+                          <div class="col-xs-6">
+                              <label for="password"><h5 style="margin-top: 12px;">Password</h5></label>
+                              {{form_row(formC.password,{ 'attr': {'class': 'form-control'}} )}}
+                          </div>
+                      </div>
+                      
+                        <div class="col-xs-12">
+                        <br>
+                        <br>
+                         <h4>About Company</h4>
+                         <hr>
+                         <div class="form-group">
+                          <div class="col-xs-12">
+                              <label for="occ"><h5>Description</h5></label>
+						                	{{form_row(formC.description,{ 'attr': {'class': 'form-control'}} )}}
+                          </div>
+                         </div>
+                            
+                      <div class="form-group">
+                           <div class="col-xs-12">
+                                <br>
+                                {{form_row(formC.save,{ 'attr': {'class': 'site-button'}} )}}
+                               	<button class="site-button" type="reset" 
+                                    style="width: 136px;
+                                    background-color: lightgrey;
+                                    margin-top: -70px;
+                                    margin-left: 150px;">Reset</button>
+                            </div>
+                      </div>
+              	{{form_end(formC)}}
+                {%endif%}
               </div>
              </div><!--/tab-pane-->
           </div><!--/tab-content-->

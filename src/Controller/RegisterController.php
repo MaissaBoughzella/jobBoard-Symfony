@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\NewsLetter;
+use App\Entity\TypeJob;
 use App\Repository\NewsLetterRepository;
 use App\Entity\Employee;
 use App\Repository\EmployeeRepository;
@@ -28,6 +29,8 @@ class RegisterController extends Controller
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder,AuthenticationUtils $authenticationUtils)
     {
+      $type = new TypeJob();
+      $type = $this->getDoctrine()->getRepository(TypeJob::class)->find(1);
         $contact = new NewsLetter;     
         # Add form fields
           $form = $this->createFormBuilder($contact)
@@ -61,7 +64,8 @@ class RegisterController extends Controller
         // 2) handle the submit (will only happen on POST)
         $form1->handleRequest($request);
         if ($form1->isSubmitted() && $form1->isValid()) {
-            
+          
+            $user->setType($type);
             // 3) Encode the password (you could also do this via Doctrine listener)
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);

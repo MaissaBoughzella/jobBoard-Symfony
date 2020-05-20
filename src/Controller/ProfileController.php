@@ -30,6 +30,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use App\Data\SearchData;
 use App\Form\SearchForm;
 use App\Form\ProfileFormType;
+use App\Form\EditCompanyType;
 use App\Form\PhotoFormType;
 use App\Form\SearchEmployee;
 use App\Form\ResumeType;
@@ -152,6 +153,84 @@ class ProfileController extends AbstractController
 
     $emp=$this->getDoctrine()->getRepository(User::class)->find($id);
     return $this->render('profile/edit.html.twig',['employee'=>$emp ,'form' => $form->createView(),'formE' => $formE->createView(),'formP' => $formP->createView()]);
+  }
+
+  /**
+   * @Route("company/edit/{id}", name="EditCompany")
+   */
+  public function EditCompany($id,Request $request)
+  {
+    $contact = new NewsLetter;     
+    # Add form fields
+      $form = $this->createFormBuilder($contact)
+      ->add('email', EmailType::class, array('label'=> 'Email','attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+      ->add('subscribe', SubmitType::class, array(
+        'label' => 'Subscribe',
+        'attr'=>array('style' => 'margin-top:-5%;')
+       // 'attr' => array('class' => 'site-button')
+    ))
+      ->getForm();
+    # Handle form response
+      $form->handleRequest($request);
+
+      if($form->isSubmitted() &&  $form->isValid()){
+          $this->addFlash('success','You are subscribed!');
+          $email = $form['email']->getData();
+    # set form data   
+          $contact->setEmail($email);                             
+    # finally add data in database
+          $sn = $this->getDoctrine()->getManager();      
+          $sn -> persist($contact);
+          $sn -> flush();
+  return $this->redirectToRoute("EditCompany");   
+  }
+
+  $company = new User();
+  $company = $this->getDoctrine()->getRepository(User::class)->find($id);
+
+  $formC=$this->createForm(EditCompanyType::class, $company);
+  $formC->handleRequest($request);
+    if($formC->isSubmitted() && $formC->isValid()) {
+
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->flush();
+
+      return $this->redirectToRoute('profile', ['id'=>$id]);
+    }
+    $formP=$this->createForm(PhotoFormType::class, $company);
+    $formP->handleRequest($request);
+        if($formP->isSubmitted() && $formP->isValid()) {
+            
+            $imageFile = $formP['image']->getData();
+            if ($imageFile) {
+              $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+              // this is needed to safely include the file name as part of the URL
+              $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+              $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+      
+              //Move the file to the directory where brochures are stored
+              try {
+                  $imageFile->move(
+                      $this->getParameter('photo_directory'),
+                      $newFilename
+                  );
+              } catch (FileException $e) {
+                  // ... handle exception if something happens during file upload
+              }
+      
+              // updates the 'brochureFilename' property to store the PDF file name
+              // instead of its contents
+              $company->setImage($newFilename);
+          }
+  
+          $entityManager = $this->getDoctrine()->getManager();
+          $entityManager->flush();
+  
+          return $this->redirectToRoute('profile', ['id'=>$id]);
+        }
+
+    $comp=$this->getDoctrine()->getRepository(User::class)->find($id);
+    return $this->render('profile/edit.html.twig',['company'=>$comp ,'form' => $form->createView(),'formC' => $formC->createView(),'formP' => $formP->createView()]);
   }
 
 

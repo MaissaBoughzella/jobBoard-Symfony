@@ -33,7 +33,7 @@ class TypeJob
      */
     private $jobs;
 
-    public function __construct($id,string $name)
+    public function __construct()
     {  
         //  $this->id=$id;
         // $this->name=$name;

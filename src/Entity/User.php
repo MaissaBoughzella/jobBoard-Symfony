@@ -155,7 +155,7 @@ use Doctrine\Common\Collections\Collection;
 
 
     public function __construct() {
-        $this->type= $this->getType();
+        //$this->type= new TypeJob();
         $this->created_at = new \DateTime();
         $this->jobs = new ArrayCollection();
     }

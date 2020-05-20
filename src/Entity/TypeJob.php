@@ -16,12 +16,12 @@ class TypeJob
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private $id=10;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $name="temporary";
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="typr")
@@ -34,8 +34,9 @@ class TypeJob
     private $jobs;
 
     public function __construct($id,string $name)
-    {   $this->id=$id;
-        $this->name=$name;
+    {  
+        //  $this->id=$id;
+        // $this->name=$name;
         $this->users = new ArrayCollection();
         $this->jobs = new ArrayCollection();
     }

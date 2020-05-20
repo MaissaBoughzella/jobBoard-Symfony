@@ -36,7 +36,7 @@ class HomeController extends AbstractController
       $data->page=$request->get('page',1);
       $formS=$this->createForm(SearchHome::class, $data);
       $formS->handleRequest($request);
-      $jobs = $repo->findSearch($data);
+      $jobs = $repo->findSearchHome($data);
 
         $contact = new NewsLetter;     
         # Add form fields

@@ -31,45 +31,38 @@
 						<div class="col-xl-9 col-lg-8">
 
 							<h5 class="widget-title font-weight-700 text-uppercase">Recent Jobs</h5>
-                            <a href="#" class="site-button" style="margin-top: -9%;margin-left: 86.7%;"data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i><span>  </span>Add Job</a>
+              <a href="#" class="site-button" style="margin-top: -9%;margin-left: 86.7%;"data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i><span>  </span>Add Job</a>
 							<ul class="post-job-bx">
 							{% for job in jobs %}
-								<li>
-                                    <div class="row">
-										<div class="d-flex m-b30 col-md-10">
-                                        <a href="{{path('JobDetail',{'id': job.id})}}" style:"cursor:pointer"><h4>{{ job.name }}</h4>
+								<li style="margin-top: 2%;">                    
+                 <a href="#">
+										<div class="d-flex m-b30 col-md-12">
 											<div class="job-post-company">
 												<span><img src="images/logo/icon1.png"/></span>
-											</div>
-                                            
+											</div>                     
 											<div class="job-post-info">
-									            <h4>{{ job.name }}</h4>       
+									      <h4>{{ job.name }}</h4>     
 												<ul>
 													<li><i class="fa fa-map-marker"></i> {{ job.location }}</li>
 													<li><i class="fa fa-bookmark-o"></i>{{ job.type.name }}</li>
 													<li><i class="fa fa-clock-o"></i> Published {{ job.createdAt|ago}}</li>
 												</ul>
-												
 											</div>
 										</div>
-                                     <div class="d-flex m-b30 col-md-2">
-                                     <a href={{path('DeleteJob',{ 'id': job.id})}}>
-                                       <button class="btn btn-danger" style="margin-left: 55%;height: 70%;"><i class="fa fa-trash"></i></button>
-                                     </a>
-                                     </div>
-
-                                  </div>
-										<div class="d-flex">
-                                        
+										<div class="d-flex">               
 											<div class="job-time mr-auto">
-												<span>{{ job.type.name }}</span>
+												<span style=" margin-top: 75px; margin-left: -700px;">{{ job.type.name }}</span>
 											</div>
-											<div class="salary-bx">
+											<div class="salary-bx" style="margin-top: 75px; margin-left: -100px;">
 												<span>{{ job.wage }} DT</span>
 											</div>
-                                            </a>
 										</div>
+                    </a>
 								</li>
+                      <a href="{{path('DeleteJob',{ 'id': job.id})}}" style="display: contents;">
+                       <button class="btn btn-danger" style="margin-left: 90%;margin-top: -52%; height: 70%;}"><i class="fa fa-trash"></i></button>
+                      </a>
+                
 								{%endfor%}
 							</ul>
 							<div class="pagination-bx m-t40">
@@ -87,7 +80,7 @@
     <!-- Modal add job -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content" style="width: 600px;margin-left: -15%; margin-top: 20%;">
       <div class="modal-header" style="background:white;">
         <h5 class="modal-title" style="color: black;" id="exampleModalLabel">New Job</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -96,46 +89,63 @@
       </div>
       <div class="modal-body">
         {{form_start(formAdd)}}
-          <div class="form-group">
+        <div class="row">
+          <div class="form-group col-6">
             <label for="recipient-name" class="col-form-label">Name:</label>
-            {{form_row(formAdd.name)}}
+            {{form_row(formAdd.name,{ 'attr': {'class': 'form-control'}} )}}
           </div>
-          <div class="form-group">
+          <div class="form-group col-6">
             <label for="message-text" class="col-form-label">Location:</label>
-            {{form_row(formAdd.location)}}
+            {{form_row(formAdd.location,{ 'attr': {'class': 'form-control'}} )}}
           </div>
-         <div class="form-group">
-            <label for="message-text" class="col-form-label">Wage:</label>
-            {{form_row(formAdd.wage)}}
           </div>
-        <div class="form-group">
-        <label for="message-text" class="col-form-label">Experience required:</label>
-            {{form_row(formAdd.experience)}}
+         <div class="row">
+          <div class="form-group col-6">
+            <label for="message-text" class="col-form-label">Wage(DT):</label>
+            {{form_row(formAdd.wage,{ 'attr': {'class': 'form-control'}} )}}
+          </div>
+        <div class="form-group col-6">
+        <label for="message-text" class="col-form-label">Experience required (Year):</label>
+            {{form_row(formAdd.experience,{ 'attr': {'class': 'form-control'}} )}}
         </div>
-        <div class="form-group">
+         </div>
+         <div class="row">
+        <div class="form-group col-6">
             <label for="message-text" class="col-form-label">Offer:</label>
-            {{form_row(formAdd.offre)}}
-          </div>
-        <div class="form-group">
+            {{form_row(formAdd.offre,{ 'attr': {'class': 'form-control'}} )}}
+        </div>
+        <div class="form-group col-6">
             <label for="message-text" class="col-form-label">Description:</label>
-            {{form_row(formAdd.description)}}
+            {{form_row(formAdd.description,{ 'attr': {'class': 'form-control'}} )}}
         </div>
-        <div class="form-group">
+         </div>
+          <div class="form-group">
             <label for="message-text" class="col-form-label">requirements:</label>
-            {{form_row(formAdd.req)}}
-            {{form_row(formAdd.req2)}}
-            {{form_row(formAdd.req3)}}
-            {{form_row(formAdd.req4)}}
+            <div class="row">
+            <div class="col-3">
+            {{form_row(formAdd.req,{ 'attr': {'class': 'form-control'}} )}}
+            </div>
+            <div class="col-3">
+            {{form_row(formAdd.req2,{ 'attr': {'class': 'form-control'}} )}}
+            </div>
+            <div class="col-3">
+            {{form_row(formAdd.req3,{ 'attr': {'class': 'form-control'}} )}}
+            </div>
+            <div class="col-3">
+            {{form_row(formAdd.req4,{ 'attr': {'class': 'form-control'}} )}}
+            </div>
         </div>
-        <div class="form-group">
+        </div>
+         <div class="row">
+          <div class="form-group col-6">
             <label for="message-text" class="col-form-label">Category:</label>
             {{form_row(formAdd.category)}}
         </div>
-        <div class="form-group">
+          <div class="form-group col-6">
             <label for="message-text" class="col-form-label">Type:</label>
             {{form_row(formAdd.type)}}
+          </div>
         </div>
-        
       </div>
       <div class="modal-footer">
         <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>

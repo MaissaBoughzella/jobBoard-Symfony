@@ -225,7 +225,7 @@ class EmployerController extends AbstractController
         $data->page=$request->get('page',1);
         $formS=$this->createForm(SearchForm::class, $data);
         $formS->handleRequest($request);
-        $jobs = $repository->findSearch($data,$c);
+        $jobs = $repository->findSearch1($data,$c);
        
         $contact = new NewsLetter;     
         # Add form fields

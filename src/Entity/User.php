@@ -115,10 +115,7 @@ use Doctrine\Common\Collections\Collection;
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $genre;
-    /**
-     * @ORM\Column(type="integer")
-     */
+    
     private $salary;
     /**
      * @ORM\Column(type="datetime" ,options={"default": "CURRENT_TIMESTAMP"})
@@ -137,7 +134,8 @@ use Doctrine\Common\Collections\Collection;
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TypeJob", inversedBy="users",cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypeJob", inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $type;
 
@@ -155,7 +153,10 @@ use Doctrine\Common\Collections\Collection;
 
 
     public function __construct() {
+<<<<<<< HEAD
         //$this->type= new TypeJob();
+=======
+>>>>>>> 89a9b47b5a014a3693c4c96950d8df2cd266be33
         $this->created_at = new \DateTime();
         $this->jobs = new ArrayCollection();
     }
@@ -178,12 +179,12 @@ use Doctrine\Common\Collections\Collection;
         return $this->id;
     }
 
-    // public function setId(integer $id): self
-    // {
-    //     $this->id = $id;
+    public function setId(integer $id): self
+    {
+        $this->id = $id;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
      /**
      * @return Collection|Job[]

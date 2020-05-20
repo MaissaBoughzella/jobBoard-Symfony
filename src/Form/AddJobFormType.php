@@ -26,7 +26,7 @@ class AddJobFormType extends AbstractType
             ->add('location',TextType::class,[ 'label'=>false],array('attr' => array('class' => 'form-control')))
             ->add('wage',NumberType::class,[ 'label'=>false],array('attr' => array('class' => 'form-control')))
             ->add('experience',TextType::class,[ 'label'=>false],array('attr' => array('class' => 'form-control')))
-            ->add('offre',TextType::class,[ 'label'=>false],array('attr' => array('class' => 'form-control')))
+            ->add('offre',TextareaType::class,[ 'label'=>false],array('attr' => array('class' => 'form-control')))
             ->add('description',TextareaType::class,[ 'label'=>false],array('attr' => array('class' => 'form-control')))
             ->add('req',TextType::class,[ 'label'=>false],array('attr' => array('class' => 'form-control')))
             ->add('req2',TextType::class,[ 'label'=>false],array('attr' => array('class' => 'form-control')))

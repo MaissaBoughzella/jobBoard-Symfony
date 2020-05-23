@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -85,7 +85,7 @@ class EmployerController extends AbstractController
     /**
      * @Route("/resume/{id}", name="resume")
      */
-    public function resume($id,Request $request)
+    public function resume($id,Request $request,\Swift_Mailer $mailer, LoggerInterface $logger,TokenStorageInterface $tokenStorage)
     {
         $contact = new NewsLetter;     
         # Add form fields
@@ -121,6 +121,7 @@ class EmployerController extends AbstractController
       // 2) handle the submit (will only happen on POST)
       $form1->handleRequest($request);
       if ($form1->isSubmitted() && $form1->isValid()) {
+        $ourFormData = $form1->getData();
 
 
         $brochureFile = $form1['cv']->getData();
@@ -128,13 +129,13 @@ class EmployerController extends AbstractController
           $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
           // this is needed to safely include the file name as part of the URL
           $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-          $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
+          $newFile = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
 
           // Move the file to the directory where brochures are stored
           try {
               $brochureFile->move(
                   $this->getParameter('brochures_directory'),
-                  $newFilename
+                  $newFile
               );
           } catch (FileException $e) {
               // ... handle exception if something happens during file upload
@@ -142,7 +143,7 @@ class EmployerController extends AbstractController
 
           // updates the 'brochureFilename' property to store the PDF file name
           // instead of its contents
-          $resume->setCv($newFilename);
+          $res=$resume->setCv($newFile);
       }
       $imageFile = $form1['photo']->getData();
       if ($imageFile) {
@@ -173,9 +174,35 @@ class EmployerController extends AbstractController
 
           // ... do any other work - like sending them an email, etc
           // maybe set a "flash" success message for the user
+          $name = $request->query->get('username');
+          $email=$tokenStorage->getToken()->getUser();
+          $to=$j->getUser();
+          $attach = $res->getCv();
+          $attachment = new \Swift_Attachment($attach, $newFile, 'application/pdf', 'r');
+          $message = new \Swift_Message();
+          $message->setFrom($email->getEmail());
+          $message->setTo($to->getEmail());
+          $message->attach($attachment);
+          $msg=$form1['name']->getData()." ".$form1['profession']->getData()." ".$form1['location']->getData()." ".$form1['rate']->getData();
+          $message->setBody(
+            $msg,
+            'text/plain','utf-8',
+            $attach,
+            'application/pdf'
+     
+            // $form1['cv']->getData(),
+           
+        
+           
+            
+          );  
 
-          return $this->redirectToRoute('job');
-      }
+          $mailer->send($message);
+  
+          $logger->info('email sent');
+          $this->addFlash('notice', 'Email sent');
+        }
+
 
         return $this->render('employer/resume.html.twig', ['job'=>$j,
             'form' => $form->createView(), 'form1' => $form1->createView()

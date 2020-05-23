@@ -20,6 +20,7 @@
         "symfony/mailer": "4.4.*",
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "*",
+        "symfony/polyfill-mbstring": "^1.17",
         "symfony/process": "4.4.*",
         "symfony/security-bundle": "4.4.*",
         "symfony/security-csrf": "4.4.*",
@@ -33,7 +34,7 @@
     },
     "require-dev": {
         "symfony/debug-pack": "*",
-        "symfony/maker-bundle": "^1.0",
+        "symfony/maker-bundle": "^1.18",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",
         "symfony/web-server-bundle": "4.4.*"

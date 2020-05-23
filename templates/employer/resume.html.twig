@@ -24,6 +24,11 @@
         <!-- inner page banner END -->
         <!-- contact area -->
         <div class="content-block">
+		    {% for message in app.flashes('notice') %}
+				<div id="flash-notice" class="flash-notice">
+				{{ message }}
+				</div>
+			{% endfor %}
 			<!-- Submit Resume -->
 			<div class="section-full bg-white submit-resume content-inner-2">
 				<div class="container">

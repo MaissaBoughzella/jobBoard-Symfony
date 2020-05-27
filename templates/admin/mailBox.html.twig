@@ -8,12 +8,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Inbox</h1>
+            <h1>Mail Box</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Inbox</li>
+              <li class="breadcrumb-item"><a href="{{path('admin')}}">Home</a></li>
+              <li class="breadcrumb-item active">MailBox</li>
             </ol>
           </div>
         </div>
@@ -40,7 +40,7 @@
                 <li class="nav-item">
                   <a class="nav-link active" data-toggle="tab" href="#inbox" >
                     <i class="fas fa-inbox"></i> Inbox
-                    <span class="badge bg-primary float-right">12</span>
+                    <span class="badge bg-primary float-right">{{mails|length}}</span>
                   </a>
                 </li>
                 <li class="nav-item">

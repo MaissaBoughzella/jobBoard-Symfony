@@ -23,11 +23,8 @@ use Doctrine\Common\Collections\Collection;
 
  /**
   * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
-  */
-  /**
- * @Entity
- * @Table(name="User")
  */
+
 
  class User implements UserInterface
 {
@@ -257,6 +254,11 @@ use Doctrine\Common\Collections\Collection;
         $this->roles = $roles;
 
         return $this;
+    }
+
+    public function hasRole($role)
+    {
+        return in_array(strtoupper($role), $this->getRoles(), true);
     }
 
     public function getPhone(): ?string

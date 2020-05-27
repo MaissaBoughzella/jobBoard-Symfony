@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Contact
 {
+    
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -31,6 +32,15 @@ class Contact
      * @ORM\Column(type="string", length=255)
      */
     private $message;
+    
+    /**
+     * @ORM\Column(type="datetime" ,options={"default": "CURRENT_TIMESTAMP"})
+    */
+    private $created_at;
+
+    public function __construct() {
+        $this->created_at = new \DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +79,17 @@ class Contact
     public function setMessage(string $message): self
     {
         $this->message = $message;
+
+        return $this;
+    }
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }

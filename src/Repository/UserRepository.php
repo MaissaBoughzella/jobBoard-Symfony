@@ -23,22 +23,22 @@ class UserRepository extends ServiceEntityRepository
         $this->paginator=$paginator;
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return User[] Returns an array of User objects
+     */
+   
+    public function findByRoles($value)
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('u.roles = :ROLE_EMPLOYEE')
+            ->setParameter('ROLE_EMPLOYEE', $value)
             ->orderBy('u.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+   
 
     
     //public function findOneBySomeField($value): ?User
@@ -85,7 +85,7 @@ class UserRepository extends ServiceEntityRepository
         return $this->paginator->paginate(
             $query,
             $search->page,
-            4
+           6
         );
     }
 

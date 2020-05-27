@@ -179,7 +179,7 @@ class EmployerController extends AbstractController
           $to=$j->getUser();
           $attach = $res->getCv();
           $attachment = new \Swift_Attachment($attach, $newFile, 'application/pdf', 'r');
-          $message = new \Swift_Message();
+          $message = new \Swift_Message('Job Request');
           $message->setFrom($email->getEmail());
           $message->setTo($to->getEmail());
           $message->attach($attachment);
@@ -212,7 +212,7 @@ class EmployerController extends AbstractController
     /**
      * @Route("/candidate/{id}", name="candidateDetail")
     */
-    public function detail($id,Request $request)
+    public function detail($id,Request $request,\Swift_Mailer $mailer, LoggerInterface $logger,TokenStorageInterface $tokenStorage)
     {
     $contact = new NewsLetter;     
           # Add form fields
@@ -240,6 +240,21 @@ class EmployerController extends AbstractController
         }
 
     $e=$this->getDoctrine()->getRepository(User::class)->find($id);
+    $name = $request->query->get('username');
+    $email=$tokenStorage->getToken()->getUser();
+    $to=$e->getEmail();
+    $message = new \Swift_Message('Recruitment');
+    $message->setFrom($email->getEmail());
+    $message->setTo($to);
+    $message->setBody(
+      $msg="Hello ".$e->getUsername().", \n  You are selected to pass an interview in our company for ".$email->getUsername()."\n  Please contact us : ".$email->getPhone().", ".$email->getLocation().".\nRegards.",
+      'text/plain','utf-8'
+    );  
+
+    $mailer->send($message);
+
+    $logger->info('email sent');
+    $this->addFlash('notice', 'Email sent');
     return $this->render('employer/CandidateDetail.html.twig',['employee'=>$e ,'form' => $form->createView()]);
   }
 

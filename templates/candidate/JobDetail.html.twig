@@ -71,8 +71,10 @@
 								</ul>
 								{% if is_granted('ROLE_COMPANY')%}
 								<a href="#" class="site-button outline" data-toggle="modal" data-target="#exampleModal">Update This Job</a>
-								{%else%}
+								{%elseif is_granted('ROLE_EMPLOYEE')%}
 								<a href="{{path('resume',{ 'id': job.id})}}" class="site-button">Apply This Job</a>
+                {%elseif not app.user %}
+                <a href="http://localhost:8000/login" class="site-button">Apply This Job</a>
 								{%endif%}
 							</div>
 						</div>

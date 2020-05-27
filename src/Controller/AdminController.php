@@ -13,6 +13,8 @@ use App\Entity\User;
 use App\Repository\JobRepository;
 use App\Entity\NewsLetter;
 use App\Repository\NewsLetterRepository;
+use App\Entity\Contact;
+use App\Repository\ContactRepository;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,8 +47,9 @@ class AdminController extends AbstractController
         $comp=$this->getDoctrine()->getRepository(User::class)->findU();
         $emp=$this->getDoctrine()->getRepository(User::class)->findU();
         $new=$this->getDoctrine()->getRepository(NewsLetter::class)->findByN();
+       // $c=count($employees);
         return $this->render('admin/adminIndex.html.twig', [
-            'c' => $companies, 'j' => $jobs, 'e' => $employees,'s' => $subscribers,'job'=>$job,'comp'=>$comp,
+            'c' => $companies, 'j' => $jobs,'e' => $employees,'s' => $subscribers,'job'=>$job,'comp'=>$comp,
             'emp'=>$emp,'new'=>$new
         ]);
     }
@@ -107,13 +110,14 @@ class AdminController extends AbstractController
         // or add an optional message - seen by developers
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $employees=$this->getDoctrine()->getRepository(User::class)->findAll();
+
         $employee = $paginator->paginate(
             // Doctrine Query, not results
             $employees,
             // Define the page parameter
             $request->query->getInt('page', 1),
             // Items per page
-            3
+           6
         );
         return $this->render('admin/employee.html.twig', [
             'employee' => $employee
@@ -246,5 +250,16 @@ class AdminController extends AbstractController
         $entityManager->remove($s);
         $entityManager->flush();
         return $this->redirectToRoute('subscribersAdmin', ['s' => $s]);
+    }
+
+    /**
+     *@Route("/admin/mailBox", name="mailBox")
+     *@IsGranted("ROLE_ADMIN")
+     */
+
+    public function mails(NewsLetterRepository $repository,Request $request, PaginatorInterface $paginator)
+    {
+        $mails=$this->getDoctrine()->getRepository(Contact::class)->findAll();
+        return $this->render('admin/mailBox.html.twig', ['mails' => $mails]);
     }
 }

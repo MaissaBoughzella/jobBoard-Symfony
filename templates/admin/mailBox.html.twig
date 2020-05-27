@@ -1,0 +1,215 @@
+{% extends 'adminBase.html.twig' %}
+
+{% block body %}
+ <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Inbox</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Inbox</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-3">
+          <a  class="btn btn-primary btn-block mb-3" data-toggle="modal" data-target="#modalCompose">Compose</a>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Folders</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#inbox" >
+                    <i class="fas fa-inbox"></i> Inbox
+                    <span class="badge bg-primary float-right">12</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#sent" >
+                    <i class="far fa-envelope"></i> Sent
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <!-- /.card-body -->
+          </div>
+        
+        </div>
+        <!-- /.col -->
+        <div class="tab-content col-md-9">
+          <div class="tab-pane active card card-primary card-outline" id="inbox">
+            <div class="card-header">
+              <h3 class="card-title">Inbox</h3>
+              <!-- /.card-tools -->
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+              <div class="mailbox-controls">
+                <!-- Check all button -->
+                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
+                </button>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>
+                </div>
+                <div class="float-right">
+                  1-50/200
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
+                    <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
+                  </div>
+                  <!-- /.btn-group -->
+                </div>
+                <!-- /.float-right -->
+              </div>
+              <div class="table-responsive mailbox-messages">
+                <table class="table table-hover table-striped">
+                  <tbody>
+                  {%for mail in mails%}
+                  <tr>
+                    <td>
+                      <div class="icheck-primary">
+                        <input type="checkbox" value="" id="check1">
+                        <label for="check1"></label>
+                      </div>
+                    </td>
+                    <td class="mailbox-name"><a href="#">{{mail.name}}</a></td>
+                    <td class="mailbox-name">{{mail.email}}</td>
+                    <td class="mailbox-subject">{{mail.message}}</td>
+                    <td class="mailbox-date" style="width: 150px;">{{ mail.createdAt | ago}}</td>
+                  </tr>
+                  {%endfor%}
+                  </tbody>
+                </table>
+                <!-- /.table -->
+              </div>
+              <!-- /.mail-box-messages -->
+            </div>
+            <!-- /.card-body -->
+       </div>
+          <div class="tab-pane card card-primary card-outline" id="sent">
+            <div class="card-header">
+              <h3 class="card-title">Sent</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+              <div class="mailbox-controls">
+                <!-- Check all button -->
+                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
+                </button>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>
+                </div>
+                <div class="float-right">
+                  1-50/200
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
+                    <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
+                  </div>
+                  <!-- /.btn-group -->
+                </div>
+                <!-- /.float-right -->
+              </div>
+              <div class="table-responsive mailbox-messages">
+                <table class="table table-hover table-striped">
+                  <tbody>
+                  <tr>
+                    <td>
+                      <div class="icheck-primary">
+                        <input type="checkbox" value="" id="check1">
+                        <label for="check1"></label>
+                      </div>
+                    </td>
+                    <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
+                    <td class="mailbox-subject"><b>AdminLTE 3.0 Issue</b> - Trying to find a solution to this problem...
+                    </td>
+                    <td class="mailbox-date">5 mins ago</td>
+                  </tr>
+                  </tbody>
+                </table>
+                <!-- /.table -->
+              </div>
+              <!-- /.mail-box-messages -->
+            </div>
+            <!-- /.card-body -->
+            </div>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+ 
+<!-- /.modal compose message -->
+    <div class="modal show" id="modalCompose">
+      <div class="modal-dialog">
+        <div class="modal-content" style="width: 130%; margin-left: -20%;">
+          <div class="modal-header modal-header-info">
+            <h4 class="modal-title"><span class="fa fa-envelope"></span> Compose Message</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          </div>
+          <div class="modal-body">
+            <form role="form" class="form-horizontal">
+                <div class="form-group">
+                  <label class="col-sm-2" for="inputTo"><span class="fa fa-user"></span>To</label>
+                  <div class="col-sm-10"><input type="email" class="form-control" id="inputTo" placeholder="comma separated list of recipients"></div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2" for="inputSubject"><span class="fa fa-list-alt"></span>Subject</label>
+                  <div class="col-sm-10"><input type="text" class="form-control" id="inputSubject" placeholder="subject"></div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-12" for="inputBody"><span class="fa fa-list"></span>Message</label>
+                  <div class="col-sm-12"><textarea class="form-control" id="inputBody" rows="8"></textarea></div>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button> 
+            <button type="button" class="btn btn-primary ">Send</button>
+            
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal compose message -->
+<style>
+
+
+.modal-header-info {
+    color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #5bc0de;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+
+
+</style>
+
+
+{% endblock %}

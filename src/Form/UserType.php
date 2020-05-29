@@ -38,7 +38,6 @@ class UserType extends AbstractType
                     'label' => false,
                     'choices' => [
                         '' => '',
-                        'Admin' => 'ROLE_ADMIN',
                         'Employee' => 'ROLE_EMPLOYEE',
                         'Company' => 'ROLE_COMPANY',
                     ],

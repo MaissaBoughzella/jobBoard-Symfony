@@ -74,7 +74,7 @@ class HomeController extends AbstractController
       if(TRUE== $this->get('security.authorization_checker')->isGranted('ROLE_COMPANY')){
           return $this->redirectToRoute('company');
       }
-     
+
         return $this->render('home/index.html.twig', 
             array('form' => $form->createView(),'companies'=> $company,'jobs' => $jobs, 'formS' => $formS->createView())
         );

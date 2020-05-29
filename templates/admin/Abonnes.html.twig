@@ -27,7 +27,6 @@
                   <thead>
                     <tr>
                       <th style="width: 10%;padding-left:3%;">
-                      <input type="checkbox" class="custom-control custom-checkbox" style="width: 30%;">
                       </th>
                       <th style="width: 20%;">ID</th>
                       <th>Email</th>
@@ -37,9 +36,7 @@
                   <tbody>
                   {%for s in subscriber%}
                     <tr>
-                      <td style="padding-left:3%;">
-                      <input type="checkbox" class="custom-control custom-checkbox" style="width: 30%;">
-                      </td>
+                      <td style="padding-left:3%;"></td>
                       <td>{{s.id}}</td>
                       <td>{{s.email}}</td>
                       <td style="width: 76px;">

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Company;
@@ -20,6 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Entity\MessageAdmin;
+use App\Repository\MessageAdminRepository;
+use App\Form\MessageAdminType;
 
 /**
  * Require ROLE_ADMIN for only this controller method.
@@ -39,18 +42,19 @@ class AdminController extends AbstractController
         // or add an optional message - seen by developers
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
 
-        $companies=$this->getDoctrine()->getRepository(User::class)->findAll();
+        $companies=$this->getDoctrine()->getRepository(User::class)->findLength();
         $jobs=$this->getDoctrine()->getRepository(Job::class)->findAll();
-        $employees=$this->getDoctrine()->getRepository(User::class)->findAll();
+        $employees=$this->getDoctrine()->getRepository(User::class)->findLengthEmp();
         $subscribers=$this->getDoctrine()->getRepository(NewsLetter::class)->findAll();
         $job=$this->getDoctrine()->getRepository(Job::class)->findJ();
         $comp=$this->getDoctrine()->getRepository(User::class)->findU();
         $emp=$this->getDoctrine()->getRepository(User::class)->findU();
         $new=$this->getDoctrine()->getRepository(NewsLetter::class)->findByN();
+        $contact=$this->getDoctrine()->getRepository(Contact::class)->findM();
        // $c=count($employees);
         return $this->render('admin/adminIndex.html.twig', [
             'c' => $companies, 'j' => $jobs,'e' => $employees,'s' => $subscribers,'job'=>$job,'comp'=>$comp,
-            'emp'=>$emp,'new'=>$new
+            'emp'=>$emp,'new'=>$new,'contact'=>$contact
         ]);
     }
     /**
@@ -72,8 +76,9 @@ class AdminController extends AbstractController
             // Items per page
             3
         );
+        $contact=$this->getDoctrine()->getRepository(Contact::class)->findM();
         return $this->render('admin/companies.html.twig', [
-            'company' => $company
+            'company' => $company,'contact'=>$contact
         ]);
     }
     /**
@@ -95,8 +100,9 @@ class AdminController extends AbstractController
             // Items per page
            1
         );
+        $contact=$this->getDoctrine()->getRepository(Contact::class)->findM();
         return $this->render('admin/job.html.twig', [
-            'job' => $job
+            'job' => $job,'contact'=>$contact
         ]);
     }
     /**
@@ -119,8 +125,9 @@ class AdminController extends AbstractController
             // Items per page
            6
         );
+        $contact=$this->getDoctrine()->getRepository(Contact::class)->findM();
         return $this->render('admin/employee.html.twig', [
-            'employee' => $employee
+            'employee' => $employee,'contact'=>$contact
         ]);
     }
 
@@ -144,8 +151,9 @@ class AdminController extends AbstractController
             // Items per page
             10
         );
+        $contact=$this->getDoctrine()->getRepository(Contact::class)->findM();
         return $this->render('admin/Abonnes.html.twig', [
-            'subscriber' => $subscriber
+            'subscriber' => $subscriber,'contact'=>$contact
         ]);
     }
     /**
@@ -162,7 +170,8 @@ class AdminController extends AbstractController
     $j=$this->getDoctrine()->getRepository(job::class)->find($id);
     
     $jobs=$this->getDoctrine()->getRepository(job::class)->findByCat($j->getCategory());
-    return $this->render('admin/JobDetails.html.twig',['job'=>$j ,'jobs'=>$jobs]);
+    $contact=$this->getDoctrine()->getRepository(Contact::class)->findM();
+    return $this->render('admin/JobDetails.html.twig',['job'=>$j ,'jobs'=>$jobs,'contact'=>$contact]);
   }
 
       /**
@@ -177,12 +186,13 @@ class AdminController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
     $e=$this->getDoctrine()->getRepository(User::class)->find($id);
     // $employees=$this->getDoctrine()->getRepository(employee::class)->findByCat($e->getCategory());
-    return $this->render('admin/ProfileDetails.html.twig',['employee'=>$e ,//'employees'=>$employees
+    $contact=$this->getDoctrine()->getRepository(Contact::class)->findM();
+    return $this->render('admin/ProfileDetails.html.twig',['employee'=>$e ,'contact'=>$contact
     ]);
   }
 
     /**
-    * @Route("/admin/member/delete/{id}", name="DeleteMember")
+    *@Route("/admin/member/delete/{id}", name="DeleteMember")
     *@IsGranted("ROLE_ADMIN")
     */
     public function deleteM($id,Request $request)
@@ -193,11 +203,11 @@ class AdminController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $entityManager = $this->getDoctrine()->getManager();
         $e=$this->getDoctrine()->getRepository(User::class)->find($id);
-        
         $entityManager->remove($e);
         $entityManager->flush();
+        $contact=$this->getDoctrine()->getRepository(Contact::class)->findM();
         return $this->redirectToRoute('membersAdmin', [
-            'employee' => $e
+            'employee' => $e,'contact'=>$contact
         ]);
     }
     /**
@@ -214,8 +224,9 @@ class AdminController extends AbstractController
         $c=$this->getDoctrine()->getRepository(User::class)->find($id);
         $entityManager->remove($c);
         $entityManager->flush();
+        $contact=$this->getDoctrine()->getRepository(Contact::class)->findM();
         return $this->redirectToRoute('companiesAdmin', [
-            'company' => $c
+            'company' => $c,'contact'=>$contact
         ]);
     }
     /**
@@ -232,7 +243,8 @@ class AdminController extends AbstractController
         $j=$this->getDoctrine()->getRepository(Job::class)->find($id);
         $entityManager->remove($j);
         $entityManager->flush();
-        return $this->redirectToRoute('jobsAdmin', ['job' => $j]);
+        $contact=$this->getDoctrine()->getRepository(Contact::class)->findM();
+        return $this->redirectToRoute('jobsAdmin', ['job' => $j, 'contact'=>$contact]);
     }
 
     /**
@@ -249,7 +261,8 @@ class AdminController extends AbstractController
         $s=$this->getDoctrine()->getRepository(NewsLetter::class)->find($id);
         $entityManager->remove($s);
         $entityManager->flush();
-        return $this->redirectToRoute('subscribersAdmin', ['s' => $s]);
+        $contact=$this->getDoctrine()->getRepository(Contact::class)->findM();
+        return $this->redirectToRoute('subscribersAdmin', ['s' => $s,'contact'=>$contact]);
     }
 
     /**
@@ -257,9 +270,89 @@ class AdminController extends AbstractController
      *@IsGranted("ROLE_ADMIN")
      */
 
-    public function mails(NewsLetterRepository $repository,Request $request, PaginatorInterface $paginator)
+    public function mails(MessageAdminRepository $repository,\Swift_Mailer $mailer, LoggerInterface $logger,Request $request, PaginatorInterface $paginator)
     {
         $mails=$this->getDoctrine()->getRepository(Contact::class)->findAll();
-        return $this->render('admin/mailBox.html.twig', ['mails' => $mails]);
+         // 1) build the form
+      $compose = new MessageAdmin();
+      $form = $this->createForm(MessageAdminType::class, $compose);
+
+      // 2) handle the submit (will only happen on POST)
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
+        // 3) save the User!
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($compose);
+        $entityManager->flush();
+
+        // ... do any other work - like sending them an email, etc
+        // maybe set a "flash" success message for the user
+        $name = $request->query->get('username');
+       //$to=$form['sendTo']->getData();
+        $message = new \Swift_Message($form['subject']->getData());
+        $message->setFrom('admin@admin.com');
+        $message->setTo($form['sendTo']->getData());
+        $msg=$form['message']->getData();
+        $message->setBody(
+          $msg,
+          'text/plain','utf-8'
+
+        );  
+
+        $mailer->send($message);
+
+        $logger->info('email sent');
+        $this->addFlash('notice', 'Email sent');
+
+        unset($compose);
+        unset($form);
+        $compose = new MessageAdmin();
+        $form = $this->createForm(MessageAdminType::class, $compose);
+        
+      }
+        $contact=$this->getDoctrine()->getRepository(Contact::class)->findM();
+        $sent=$this->getDoctrine()->getRepository(MessageAdmin::class)->findAll();
+        return $this->render('admin/mailBox.html.twig', ['mails' => $mails,'sent' => $sent,'form' => $form->createView(),'contact'=>$contact]);
+    }
+
+    /**
+    * @Route("/admin/sent/delete/{id}", name="DeleteSent")
+    * @IsGranted("ROLE_ADMIN")
+    */
+    public function deleteSent($id, Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // or add an optional message - seen by developers
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+        $entityManager = $this->getDoctrine()->getManager();
+        $s=$this->getDoctrine()->getRepository(MessageAdmin::class)->find($id);
+        $entityManager->remove($s);
+        $entityManager->flush();
+        $contact=$this->getDoctrine()->getRepository(Contact::class)->findM();
+        return $this->redirect($this-> generateUrl('mailBox', [
+            's' => $s,'contact'=>$contact
+        ]).'#sent');
+    }
+
+    
+    /**
+    * @Route("/admin/inbox/delete/{id}", name="DeleteInbox")
+    * @IsGranted("ROLE_ADMIN")
+    */
+    public function deleteInbox($id, Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        // or add an optional message - seen by developers
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+        $entityManager = $this->getDoctrine()->getManager();
+        $c=$this->getDoctrine()->getRepository(Contact::class)->find($id);
+        $entityManager->remove($c);
+        $entityManager->flush();
+        $contact=$this->getDoctrine()->getRepository(Contact::class)->findM();
+        return $this->redirectToRoute('mailBox', [
+            'mail' => $c,'contact'=>$contact
+        ]);
     }
 }

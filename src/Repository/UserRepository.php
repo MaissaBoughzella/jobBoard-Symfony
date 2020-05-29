@@ -41,15 +41,28 @@ class UserRepository extends ServiceEntityRepository
    
 
     
-    //public function findOneBySomeField($value): ?User
-    // {
-    //     return $this->createQueryBuilder('u')
-    //         ->andWhere('u.exampleField = :val')
-    //         ->setParameter('val', $value)
-    //         ->getQuery()
-    //         ->getOneOrNullResult()
-    //     ;
-    // }
+    public function findLength()
+    {
+        return $this->createQueryBuilder('u')
+        ->select('count(u.id)')
+        ->where('u.roles LIKE :role')
+        ->setParameter('role', '%"'.'ROLE_COMPANY'.'"%') 
+        ->getQuery()
+        ->getSingleScalarResult();
+        
+
+    }
+    public function findLengthEmp()
+    {
+        return $this->createQueryBuilder('u')
+        ->select('count(u.id)')
+        ->where('u.roles LIKE :role')
+        ->setParameter('role', '%"'.'ROLE_EMPLOYEE'.'"%') 
+        ->getQuery()
+        ->getSingleScalarResult();
+        
+
+    }
     
 
 
@@ -98,6 +111,8 @@ class UserRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+   
 
     
     

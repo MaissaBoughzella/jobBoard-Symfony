@@ -47,4 +47,19 @@ class ContactRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findM()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->orderBy('c.created_at', 'DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    public function findAll()
+    {
+        return $this->findBy(array(), array('created_at' => 'DESC'));
+    }
 }

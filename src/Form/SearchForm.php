@@ -44,7 +44,6 @@ class SearchForm extends AbstractType
             ->add('subscribe', SubmitType::class, array(
                 'label' => 'Filter',
                'attr'=>array('style' => 'margin-top:10%;width:100%','class' => 'site-button'),
-               //'attr' => array('class' => 'site-button')
             ))
             ;
     }

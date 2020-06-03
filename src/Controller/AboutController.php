@@ -21,9 +21,9 @@ class AboutController extends AbstractController
      */
     public function index(UserRepository $repository, Request $request)
     {
-
+      //récupérer toutes les entreprises de la base 
         $company=$this->getDoctrine()->getRepository(User::class)->findAll();
-
+      //formulaire d'inscription au Newsletter
         $contact = new NewsLetter;     
         # Add form fields
           $form = $this->createFormBuilder($contact)
@@ -31,7 +31,6 @@ class AboutController extends AbstractController
           ->add('subscribe', SubmitType::class, array(
             'label' => 'Subscribe',
             'attr'=>array('style' => 'margin-top:-5%;')
-           // 'attr' => array('class' => 'site-button')
         ))
           ->getForm();
         # Handle form response
@@ -48,6 +47,6 @@ class AboutController extends AbstractController
               $sn -> flush();
       return $this->redirectToRoute("about");   
       }
-        return $this->render('about/about.html.twig',  ['companies'=> $company,'form' => $form->createView()]);
+      return $this->render('about/about.html.twig',  ['companies'=> $company,'form' => $form->createView()]);
     }
 }

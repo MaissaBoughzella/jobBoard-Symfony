@@ -36,12 +36,21 @@ class CandidateController extends AbstractController
      */
     public function index(JobRepository $repository,Request $request, PaginatorInterface $paginator)
     {   
+      /*formulaire SearchForm de recherche de candidat de poste selon un mot clé 
+      et/ou catégorie de job et/ou type de job */
+
+      //creer instance de SearchData
         $data=new SearchData();
+        //1ere page par defaut est 1
         $data->page=$request->get('page',1);
+        //create form
         $formS=$this->createForm(SearchForm::class, $data);
+        //Handle form response
         $formS->handleRequest($request);
+        // appel fonction de filtrage des jobs
         $jobs = $repository->findSearch($data);
-       
+
+      //formulaire d'inscription au Newsletter
         $contact = new NewsLetter;     
         # Add form fields
           $form = $this->createFormBuilder($contact)
@@ -49,8 +58,7 @@ class CandidateController extends AbstractController
           ->add('subscribe', SubmitType::class, array(
             'label' => 'Subscribe',
             'attr'=>array('style' => 'margin-top:-5%;')
-           // 'attr' => array('class' => 'site-button')
-        ))
+          ))
           ->getForm();
         # Handle form response
           $form->handleRequest($request);
@@ -73,17 +81,25 @@ class CandidateController extends AbstractController
 
     /**
      * @Route("/companies", name="companies")
+     * Page des entreprises 
      */
     public function companies(UserRepository $repository,Request $request, PaginatorInterface $paginator)
     {  
-         
+      /*formulaire SearchCompany de recherche de compagnies selon un mot clé 
+      et/ou sa catégorie et/ou adresse */
+    
+      //creer instance de SearchData
       $data=new SearchData();
+      //1ere page par defaut est 1
       $data->page=$request->get('page',1);
+      //create form
       $formS=$this->createForm(SearchCompany::class, $data);
+      //Handle form response
       $formS->handleRequest($request);
+      // appel fonction de filtrage des jobs
       $companies = $repository->findSearch($data);
 
-        
+     //formulaire d'inscription au Newsletter
         $contact = new NewsLetter;     
         # Add form fields
           $form = $this->createFormBuilder($contact)
@@ -114,9 +130,11 @@ class CandidateController extends AbstractController
 
     /**
      * @Route("/job/{id}", name="JobDetail")
+     * page de detail de chaque job
     */
     public function detail($id,Request $request)
     {
+   //formulaire d'inscription au Newsletter
     $contact = new NewsLetter;     
           # Add form fields
             $form = $this->createFormBuilder($contact)
@@ -124,13 +142,12 @@ class CandidateController extends AbstractController
             ->add('subscribe', SubmitType::class, array(
               'label' => 'Subscribe',
               'attr'=>array('style' => 'margin-top:-5%;')
-             // 'attr' => array('class' => 'site-button')
           ))
             ->getForm();
           # Handle form response
             $form->handleRequest($request);
-    
             if($form->isSubmitted() &&  $form->isValid()){
+              //afficher un message flash après l'envoi du form correctement
                 $this->addFlash('success','You are subscribed!');
                 $email = $form['email']->getData();
           # set form data   
@@ -142,26 +159,26 @@ class CandidateController extends AbstractController
         return $this->redirectToRoute("JobDetail");   
         }
      
-
-  $j=$this->getDoctrine()->getRepository(job::class)->find($id);
-    
-  $job = new Job();
-  $job = $this->getDoctrine()->getRepository(Job::class)->find($id);
-
-  $formE=$this->createForm(AddJobFormType::class, $job);
-  $formE->handleRequest($request);
-    if($formE->isSubmitted() && $formE->isValid()) {
-
-      $entityManager = $this->getDoctrine()->getManager();
-      $entityManager->flush();
-
-      return $this->redirectToRoute('JobDetail', ['id'=>$id]);
-    }
-   
-  
+    //find un job par son id
+      $j=$this->getDoctrine()->getRepository(job::class)->find($id); 
+    //creer nouvelle instance de job
+      $job = new Job();
+      $job = $this->getDoctrine()->getRepository(Job::class)->find($id);
+      # create form
+      $formE=$this->createForm(AddJobFormType::class, $job);
+      # Handle form response
+      $formE->handleRequest($request);
+        if($formE->isSubmitted() && $formE->isValid()) {
+          # add data in database
           $entityManager = $this->getDoctrine()->getManager();
           $entityManager->flush();
-    
+          #redirect to route JobDetail
+          return $this->redirectToRoute('JobDetail', ['id'=>$id]);
+        }
+       #add data in database
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+    // recuperer les jobs par categorie     
     $jobs=$this->getDoctrine()->getRepository(job::class)->findByCat($j->getCategory());
     return $this->render('candidate/JobDetail.html.twig',['job'=>$j ,'j'=>$job,'jobs'=>$jobs,'form' => $form->createView(),'formE' => $formE->createView()]);
   }

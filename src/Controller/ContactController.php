@@ -28,6 +28,7 @@ class ContactController extends AbstractController
 
     public function createAction(NewsLetterRepository $cont,Request $request)
     {   
+    //formulaire d'inscription au Newsletter
       $cont = new NewsLetter;     
         # Add form fields
           $form = $this->createFormBuilder($cont)
@@ -53,7 +54,7 @@ class ContactController extends AbstractController
       return $this->redirectToRoute("contact");   
       }
 
-    
+      //formulaire de contact de l'admin
        $contact = new Contact;     
       # Add form fields
         $formC = $this->createFormBuilder($contact)
@@ -80,8 +81,6 @@ class ContactController extends AbstractController
     return $this->redirectToRoute("contact");   
     }
     return $this->render('contact/contact.html.twig', ['form' => $form->createView(),'formC' => $formC->createView()]);
-   
-
   }
 
 }

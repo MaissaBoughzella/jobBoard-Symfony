@@ -19,6 +19,27 @@ class ContactRepository extends ServiceEntityRepository
         parent::__construct($registry, Contact::class);
     }
 
+    //
+    public function findM()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c') //selection de tous les messages de contact
+            ->orderBy('c.created_at', 'DESC') //ordre descendant selon la date de d'envoi de message
+            ->setMaxResults(3) //3 messages maximum
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /*fonction qui permet de recuperer tous les messages envoyés à l'admin
+    avec un ordre descendant selon la date d'envoi des messages */
+    public function findAll()
+    {
+        return $this->findBy(array(), array('created_at' => 'DESC'));
+    }
+
+    
+
     // /**
     //  * @return Contact[] Returns an array of Contact objects
     //  */
@@ -47,19 +68,4 @@ class ContactRepository extends ServiceEntityRepository
         ;
     }
     */
-
-    public function findM()
-    {
-        return $this->createQueryBuilder('c')
-            ->select('c')
-            ->orderBy('c.created_at', 'DESC')
-            ->setMaxResults(3)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    public function findAll()
-    {
-        return $this->findBy(array(), array('created_at' => 'DESC'));
-    }
 }

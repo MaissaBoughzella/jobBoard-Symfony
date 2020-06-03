@@ -19,6 +19,14 @@ class MessageAdminRepository extends ServiceEntityRepository
         parent::__construct($registry, MessageAdmin::class);
     }
 
+    /*fonction qui permet de recuperer tous les messages de l'admin au utilisateurs 
+  avec un ordre descendant selon la date d'envoi des messages */
+
+    public function findAll()
+    {
+        return $this->findBy(array(), array('created_at' => 'DESC'));
+    }
+
     // /**
     //  * @return MessageAdmin[] Returns an array of MessageAdmin objects
     //  */
@@ -48,8 +56,4 @@ class MessageAdminRepository extends ServiceEntityRepository
     }
     */
 
-    public function findAll()
-    {
-        return $this->findBy(array(), array('created_at' => 'DESC'));
-    }
 }

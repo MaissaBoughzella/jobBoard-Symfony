@@ -29,8 +29,10 @@ class RegisterController extends Controller
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder,AuthenticationUtils $authenticationUtils)
     {
+      //set type job by default with function find
       $type = new TypeJob();
       $type = $this->getDoctrine()->getRepository(TypeJob::class)->find(1);
+      //newsletter form
         $contact = new NewsLetter;     
         # Add form fields
           $form = $this->createFormBuilder($contact)
@@ -75,7 +77,7 @@ class RegisterController extends Controller
             $entityManager->persist($user);
             $entityManager->flush();
 
-
+           //to change user password 
             $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
             $this->container->get('security.token_storage')->setToken($token);
             $this->container->get('session')->set('_security_main', serialize($token));

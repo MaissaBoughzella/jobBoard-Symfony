@@ -36,7 +36,7 @@ class CandidateController extends AbstractController
      */
     public function index(JobRepository $repository,Request $request, PaginatorInterface $paginator)
     {   
-      /*formulaire SearchForm de recherche de candidat de poste selon un mot clé 
+      /*formulaire SearchForm de recherche  de poste selon un mot clé 
       et/ou catégorie de job et/ou type de job */
 
       //creer instance de SearchData

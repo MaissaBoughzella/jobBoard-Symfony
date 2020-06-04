@@ -17,12 +17,14 @@ class SecurityController extends AbstractController
      * @Route("/login", name="login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
-    {
+    {   
+      // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
+      // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
 
-
+      //newsletter form
         $contact = new NewsLetter;     
         # Add form fields
           $form = $this->createFormBuilder($contact)
@@ -43,7 +45,7 @@ class SecurityController extends AbstractController
      * @Route("/logout", name="app_logout")
      */
     public function logout()
-    {
+    {   //logout function the path after login is in services.yaml file
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

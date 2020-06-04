@@ -37,7 +37,7 @@ class NewsLetterRepository extends ServiceEntityRepository
     }
     */
 
-    
+    //get only 8 emails of subscribers 
     public function findByN()
     {
         return $this->createQueryBuilder('n')

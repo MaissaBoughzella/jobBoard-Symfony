@@ -42,7 +42,7 @@
 						<ul class="post-job-bx">
 						{%for job in jobs%}
 							<li>
-								<a href="#">
+								<a href="{{path('JobDetail',{ 'id': job.id})}}">
 									<div class="d-flex m-b30">
 										<div class="job-post-company">
 											<span><img src="images/logo/icon1.png"/></span>

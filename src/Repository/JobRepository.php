@@ -26,7 +26,7 @@ class JobRepository extends ServiceEntityRepository
     // /**
     //  * @return Job[] Returns an array of Job objects
     //  */
-    
+    //find jobs by category
     public function findByCat($value)
     {
         return $this->createQueryBuilder('j')
@@ -40,6 +40,7 @@ class JobRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    //to  get only 8 jobs
     public function findJ()
     {
         return $this->createQueryBuilder('j')
@@ -63,7 +64,7 @@ class JobRepository extends ServiceEntityRepository
     //     ;
     // }
     
-    
+    // findSearch to filter jobs by key word or/and category or/and type job
     /**
      * @return PaginationInterface
      */
@@ -102,7 +103,7 @@ class JobRepository extends ServiceEntityRepository
             2
         );
     }
-    
+    //get the jobs offer of comapny and filter by key word or/and category or/and type job
     /**
      * @return PaginationInterface
      */
@@ -143,8 +144,8 @@ class JobRepository extends ServiceEntityRepository
             2
         );
     }
-
-        /**
+    //filter job with same parameters
+    /**
      * @return PaginationInterface
      */
     public function findSearchHome(SearchData $search): PaginationInterface

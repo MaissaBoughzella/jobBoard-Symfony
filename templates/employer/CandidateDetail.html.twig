@@ -97,7 +97,12 @@
                                     <li>{{employee.comp4}}</li>
 								
 								</ul>
-								<a href="" class="site-button">Hire Now</a>
+                                {% if is_granted('ROLE_COMPANY')%}
+								<a href="{{path('Hire',{ 'id': employee.id})}}" class="site-button">Hire Now</a>
+                                 {%elseif not app.user %}
+                                <a href="http://localhost:8000/login" class="site-button">Hire Now</a>
+								{%endif%}
+
 							</div>
 						</div>
 					</div>

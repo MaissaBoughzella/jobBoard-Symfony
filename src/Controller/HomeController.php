@@ -29,15 +29,23 @@ class HomeController extends AbstractController
      * @Route("/", name="home")
      */
     public function index(UserRepository $repository,JobRepository $repo,Request $request,AuthenticationUtils $authenticationUtils)
-    { 
+    {  
+      //get the company 
       $company=$this->getDoctrine()->getRepository(User::class)->findAll();
+      /*formulaire SearchEmployee de recherche de job selon un mot clé 
+      et/ou catégorie de job et/ou type de job et/ou salaire min et max*/
 
       $data=new SearchData();
-      $data->page=$request->get('page',1);
-      $formS=$this->createForm(SearchHome::class, $data);
-      $formS->handleRequest($request);
-      $jobs = $repo->findSearch($data);
 
+      //page  1 as default page 
+      $data->page=$request->get('page',1);
+      //creat form for the filter 
+      $formS=$this->createForm(SearchHome::class, $data);
+      //handle request
+      $formS->handleRequest($request);
+      //filter the jobs 
+      $jobs = $repo->findSearch($data);
+      //formulaire d'inscription au Newsletter
         $contact = new NewsLetter;     
         # Add form fields
           $form = $this->createFormBuilder($contact)
@@ -67,7 +75,7 @@ class HomeController extends AbstractController
       $error = $authenticationUtils->getLastAuthenticationError();
       // last username entered by the user
       $lastUsername = $authenticationUtils->getLastUsername();
-     
+      //redirect after login depends on role 
       if(TRUE== $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
         return $this->redirectToRoute('admin');
       }
@@ -85,14 +93,22 @@ class HomeController extends AbstractController
      * @Route("/company", name="company")
      */
     public function indexCompany(UserRepository $repository,JobRepository $repo,Request $request,AuthenticationUtils $authenticationUtils)
-    { 
-      $emp=$this->getDoctrine()->getRepository(User::class)->findAll();
-      $data=new SearchData();
-      $data->page=$request->get('page',1);
-      $formS=$this->createForm(SearchHomeCompany::class, $data);
-      $formS->handleRequest($request);
-      $employees = $repository->findSearch($data);
+    {  
+      //home of company after login company
 
+      //get the employee in the data base
+      $emp=$this->getDoctrine()->getRepository(User::class)->findAll();
+      //formulaire SearchHomeCompany de recherche de condidat selon profession 
+      $data=new SearchData();
+      //first pge is number 1 per default 
+      $data->page=$request->get('page',1);
+      //create form
+      $formS=$this->createForm(SearchHomeCompany::class, $data);
+      //handle request
+      $formS->handleRequest($request);
+      // call function to find employee depends on occupation
+      $employees = $repository->findSearch($data);
+      //Newsletter form
         $contact = new NewsLetter;     
         # Add form fields
           $form = $this->createFormBuilder($contact)

@@ -49,6 +49,7 @@ class ProfileController extends AbstractController
     */
     public function detail(TokenStorageInterface $tokenStorage, Request $request)
     {
+    //newsletter form
     $contact = new NewsLetter;     
           # Add form fields
             $form = $this->createFormBuilder($contact)
@@ -73,6 +74,7 @@ class ProfileController extends AbstractController
                 $sn -> flush();
         return $this->redirectToRoute("JobDetail");   
         }
+        //get the information of employee from token 
         $e=$tokenStorage->getToken()->getUser();
         return $this->render('profile/index.html.twig',['employee'=>$e ,'form' => $form->createView()]);
   }
@@ -82,6 +84,7 @@ class ProfileController extends AbstractController
    */
   public function Edit($id,Request $request)
   {
+    //newsletter form
     $contact = new NewsLetter;     
     # Add form fields
       $form = $this->createFormBuilder($contact)
@@ -106,11 +109,13 @@ class ProfileController extends AbstractController
           $sn -> flush();
   return $this->redirectToRoute("EditProfile");   
   }
-
+  //edit the profile information
   $employee = new User();
+  //get employee by id
   $employee = $this->getDoctrine()->getRepository(User::class)->find($id);
-
+  //create form to edit profile
   $formE=$this->createForm(ProfileFormType::class, $employee);
+  //handle request
   $formE->handleRequest($request);
     if($formE->isSubmitted() && $formE->isValid()) {
 
@@ -119,18 +124,21 @@ class ProfileController extends AbstractController
 
       return $this->redirectToRoute('profile', ['id'=>$id]);
     }
+    //create form to upload photo 
     $formP=$this->createForm(PhotoFormType::class, $employee);
+    //handle request
     $formP->handleRequest($request);
         if($formP->isSubmitted() && $formP->isValid()) {
-            
+            //get image from form
             $imageFile = $formP['image']->getData();
             if ($imageFile) {
+              //get the original path
               $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
               // this is needed to safely include the file name as part of the URL
               $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
               $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
       
-              //Move the file to the directory where brochures are stored
+              //Move the file to the directory where photos are stored
               try {
                   $imageFile->move(
                       $this->getParameter('photo_directory'),
@@ -150,7 +158,7 @@ class ProfileController extends AbstractController
   
           return $this->redirectToRoute('profile', ['id'=>$id]);
         }
-
+    //get employee by id
     $emp=$this->getDoctrine()->getRepository(User::class)->find($id);
     return $this->render('profile/edit.html.twig',['employee'=>$emp ,'form' => $form->createView(),'formE' => $formE->createView(),'formP' => $formP->createView()]);
   }
@@ -159,7 +167,8 @@ class ProfileController extends AbstractController
    * @Route("company/edit/{id}", name="EditCompany")
    */
   public function EditCompany($id,Request $request)
-  {
+  { 
+    //newsletter form
     $contact = new NewsLetter;     
     # Add form fields
       $form = $this->createFormBuilder($contact)
@@ -184,11 +193,13 @@ class ProfileController extends AbstractController
           $sn -> flush();
   return $this->redirectToRoute("EditCompany");   
   }
-
+  //edit company profile
   $company = new User();
+  //get company by id
   $company = $this->getDoctrine()->getRepository(User::class)->find($id);
-
+ //create form
   $formC=$this->createForm(EditCompanyType::class, $company);
+  //handle request 
   $formC->handleRequest($request);
     if($formC->isSubmitted() && $formC->isValid()) {
 
@@ -197,10 +208,11 @@ class ProfileController extends AbstractController
 
       return $this->redirectToRoute('profile', ['id'=>$id]);
     }
+    //edit photo profile
     $formP=$this->createForm(PhotoFormType::class, $company);
     $formP->handleRequest($request);
         if($formP->isSubmitted() && $formP->isValid()) {
-            
+            //get image from form
             $imageFile = $formP['image']->getData();
             if ($imageFile) {
               $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
